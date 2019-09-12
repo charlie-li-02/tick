@@ -2,7 +2,8 @@ package ui;
 
 import java.util.ArrayList;
 import java.util.Scanner;
-import categories.*;
+import categories.LogReminder;
+import categories.LogToDo;
 
 public class ToDoList {
 
@@ -18,7 +19,7 @@ public class ToDoList {
     }
 
     private void processInput() {
-        String type = "";
+        String type;
         while (true) {
             System.out.println("Add a new to do, reminder, show current lists, or exit (to do/reminder/list/exit):");
             type = takeInput.nextLine();
