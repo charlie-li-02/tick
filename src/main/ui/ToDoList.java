@@ -2,8 +2,6 @@ package ui;
 
 import java.util.ArrayList;
 import java.util.Scanner;
-import categories.LogReminder;
-import categories.LogToDo;
 
 public class ToDoList {
 

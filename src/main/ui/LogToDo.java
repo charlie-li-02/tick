@@ -1,4 +1,4 @@
-package categories;
+package ui;
 
 public class LogToDo {
     String title;
