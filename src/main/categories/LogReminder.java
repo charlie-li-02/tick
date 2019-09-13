@@ -1,4 +1,4 @@
-package ui;
+package categories;
 
 public class LogReminder {
     String reminder;

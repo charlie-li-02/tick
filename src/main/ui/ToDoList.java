@@ -1,5 +1,8 @@
 package ui;
 
+import categories.LogReminder;
+import categories.LogToDo;
+
 import java.util.ArrayList;
 import java.util.Scanner;
 
