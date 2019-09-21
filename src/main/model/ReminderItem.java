@@ -39,7 +39,7 @@ public class ReminderItem {
     //MODIFIES: nothing
     //EFFECTS: formats the reminder list it was called on and converts it to a string
     public String toString() {
-        return "Remind me to: " + reminder + " at " + time;
+        return "Remind me to: " + this.getReminder() + " at " + this.getTime() + " Done?: " + this.getIsDone();
     }
 
     //REQUIRES: nothing
@@ -54,5 +54,16 @@ public class ReminderItem {
     //EFFECTS: sets the this as undone represented by false
     public void markUndone() {
         this.isDone = false;
+    }
+
+    //REQUIRES: nothing
+    //MODIFIES: this
+    //EFFECTS:  flips the status of this
+    public void flipStatus() {
+        if (this.getIsDone()) {
+            this.markUndone();
+        } else {
+            this.markDone();
+        }
     }
 }

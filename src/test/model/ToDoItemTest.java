@@ -13,8 +13,8 @@ class ToDoItemTest {
 
     private ToDoItem tdi1;
     private ToDoItem tdi2;
-    private String ltd1ToString = "To do:\n" + "Title: a\n" + "Description: b\n";
-    private String ltd2ToString = "To do:\n" + "Title: c\n" + "Description: d\n";
+    private String ltd1ToString = "Title: a, Description: b, Done?: " + false;
+    private String ltd2ToString = "Title: c, Description: d, Done?: " + true;
 
     @BeforeEach
     void setup(){
@@ -61,5 +61,18 @@ class ToDoItemTest {
     void testMarkUndone() {
         tdi2.markUndone();
         assertFalse(tdi2.getIsDone());
+    }
+
+    @Test
+    void testFlipStatus() {
+        tdi1.flipStatus();
+        assertTrue(tdi1.getIsDone());
+        tdi1.flipStatus();
+        assertFalse(tdi1.getIsDone());
+
+        tdi2.flipStatus();
+        assertFalse(tdi2.getIsDone());
+        tdi2.flipStatus();
+        assertTrue(tdi2.getIsDone());
     }
 }

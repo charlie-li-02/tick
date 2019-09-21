@@ -39,9 +39,7 @@ public class ToDoItem {
     //MODIFIES: noting
     //EFFECTS: formats the to do it was called on and coverts it to a string
     public String toString() {
-        return "To do:\n"
-                + "Title: " + title + "\n"
-                + "Description: " + description + "\n";
+        return "Title: " + this.getTitle() + ", Description: " + this.getDescription() + ", Done?: " + this.getIsDone();
     }
 
     //REQUIRES: nothing
@@ -58,5 +56,15 @@ public class ToDoItem {
         this.isDone = false;
     }
 
+    //REQUIRES: nothing
+    //MODIFIES: this
+    //EFFECTS:  flips the status of this
+    public void flipStatus() {
+        if (this.getIsDone()) {
+            this.markUndone();
+        } else {
+            this.markDone();
+        }
+    }
 
 }

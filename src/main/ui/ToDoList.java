@@ -48,12 +48,15 @@ public class ToDoList {
         String choice = takeInput.nextLine();
         if (choice.equals("to do")) {
             System.out.println(listToDo);
+
         } else if (choice.equals("reminder")) {
             System.out.println(listReminder);
+
         } else {
             System.out.println("Your entrance did not match any options, please try again. \n");
         }
     }
+
 
     public static void main(String[] args) {
         new ToDoList();

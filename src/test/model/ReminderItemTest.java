@@ -13,8 +13,8 @@ public class ReminderItemTest {
 
     private ReminderItem ri1;
     private ReminderItem ri2;
-    private String lr1ToString = "Remind me to: water at 2:00";
-    private String lr2ToString = "Remind me to: eat at 6:00";
+    private String lr1ToString = "Remind me to: water at 2:00 Done?: " + false;
+    private String lr2ToString = "Remind me to: eat at 6:00 Done?: " + true;
 
     @BeforeEach
     void setup() {
@@ -60,6 +60,19 @@ public class ReminderItemTest {
     void testMarkUndone() {
         ri2.markUndone();
         assertFalse(ri2.getIsDone());
+    }
+
+    @Test
+    void testFlipStatus() {
+        ri1.flipStatus();
+        assertTrue(ri1.getIsDone());
+        ri1.flipStatus();
+        assertFalse(ri1.getIsDone());
+
+        ri2.flipStatus();
+        assertFalse(ri2.getIsDone());
+        ri2.flipStatus();
+        assertTrue(ri2.getIsDone());
     }
 
 }
