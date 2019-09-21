@@ -1,15 +1,15 @@
 package ui;
 
-import categories.LogReminder;
-import categories.LogToDo;
+import model.ReminderItem;
+import model.ToDoItem;
 
 import java.util.ArrayList;
 import java.util.Scanner;
 
 public class ToDoList {
 
-    private ArrayList<LogToDo> listToDo;
-    private ArrayList<LogReminder> listReminder;
+    public ArrayList<ToDoItem> listToDo;
+    public ArrayList<ReminderItem> listReminder;
     private Scanner takeInput;
 
     public ToDoList() {
@@ -19,7 +19,7 @@ public class ToDoList {
         processInput();
     }
 
-    private void processInput() {
+    public void processInput() {
         String type;
         while (true) {
             System.out.println("Add a new to do, reminder, show current lists, or exit (to do/reminder/list/exit):");
@@ -29,12 +29,10 @@ public class ToDoList {
                 break;
 
             } else if (type.equals("to do")) {
-                LogToDo ltd = new LogToDo();
-                processToDo(ltd);
+                new model.ToDo(listToDo);
 
             } else if (type.equals("reminder")) {
-                LogReminder lr = new LogReminder();
-                processReminder(lr);
+                new model.Reminder(listReminder);
 
             } else if (type.equals("list")) {
                 processOutput();
@@ -45,35 +43,7 @@ public class ToDoList {
         }
     }
 
-    private String processToDo(LogToDo logToDo) {
-        System.out.println("Enter a title for your new to do:");
-        String title = takeInput.nextLine();
-        System.out.println("Enter a description for your new to do:");
-        String description = takeInput.nextLine();
-        addToDo(logToDo, title, description);
-        return ("Title: " + title + "\nDescription: " + description);
-    }
-
-    private void addToDo(LogToDo logToDo, String title, String description) {
-        logToDo.toDoMaker(title, description);
-        listToDo.add(logToDo);
-    }
-
-    private String processReminder(LogReminder logReminder) {
-        System.out.println("Enter a new reminder:");
-        String reminder = takeInput.nextLine();
-        System.out.println("Enter a time for your new reminder:");
-        String time = takeInput.nextLine();
-        addReminder(logReminder, reminder, time);
-        return ("Remind me to: " + reminder + " at " + time);
-    }
-
-    private void addReminder(LogReminder logReminder, String reminder, String time) {
-        logReminder.reminderMaker(reminder, time);
-        listReminder.add(logReminder);
-    }
-
-    private void processOutput() {
+    public void processOutput() {
         System.out.println("Which list would you like to open? (to do/reminder)");
         String choice = takeInput.nextLine();
         if (choice.equals("to do")) {
