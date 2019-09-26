@@ -4,6 +4,16 @@ public interface Item {
 
     //REQUIRES: nothing
     //MODIFIES: nothing
+    //EFFECTS: returns the title of the to do
+    public String getTitle();
+
+    //REQUIRES: nothing
+    //MODIFIES: nothing
+    //EFFECTS: returns the description of the to do
+    public String getAttribute();
+
+    //REQUIRES: nothing
+    //MODIFIES: nothing
     //EFFECTS: returns whether an item is done or not
     Boolean getIsDone();
 

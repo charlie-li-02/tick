@@ -32,10 +32,10 @@ class ToDoItemTest {
 
     @Test
     void testGetDescription() {
-        assertEquals("b", tdi1.getDescription());
-        assertEquals("d", tdi2.getDescription());
-        assertFalse(tdi1.getDescription() == "a");
-        assertFalse(tdi2.getDescription() == "c");
+        assertEquals("b", tdi1.getAttribute());
+        assertEquals("d", tdi2.getAttribute());
+        assertFalse(tdi1.getAttribute() == "a");
+        assertFalse(tdi2.getAttribute() == "c");
 
     }
 

@@ -17,14 +17,14 @@ public class ReminderItem implements Item {
     //REQUIRES: nothing
     //MODIFIES: nothing
     //EFFECTS: returns the name of the reminder
-    public String getReminder() {
+    public String getTitle() {
         return this.reminder;
     }
 
     //REQUIRES: nothing
     //MODIFIES: nothing
     //EFFECTS: returns the time of the reminder
-    public String getTime() {
+    public String getAttribute() {
         return this.time;
     }
 
@@ -39,7 +39,7 @@ public class ReminderItem implements Item {
     //MODIFIES: nothing
     //EFFECTS: formats the reminder list it was called on and converts it to a string
     public String toString() {
-        return "Remind me to: " + this.getReminder() + " at " + this.getTime() + " Done?: " + this.getIsDone();
+        return "Remind me to: " + this.getTitle() + " at " + this.getAttribute() + " Done?: " + this.getIsDone();
     }
 
     //REQUIRES: nothing

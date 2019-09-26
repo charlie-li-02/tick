@@ -24,7 +24,7 @@ public class ToDoItem implements Item {
     //REQUIRES: nothing
     //MODIFIES: nothing
     //EFFECTS: returns the description of the to do
-    public String getDescription() {
+    public String getAttribute() {
         return this.description;
     }
 
@@ -39,7 +39,7 @@ public class ToDoItem implements Item {
     //MODIFIES: noting
     //EFFECTS: formats the to do it was called on and coverts it to a string
     public String toString() {
-        return "Title: " + this.getTitle() + ", Description: " + this.getDescription() + ", Done?: " + this.getIsDone();
+        return "Title: " + this.getTitle() + ", Description: " + this.getAttribute() + ", Done?: " + this.getIsDone();
     }
 
     //REQUIRES: nothing

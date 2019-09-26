@@ -1,6 +1,6 @@
 package model;
 
-public interface List {
+public interface ListOfItems {
 
     //REQUIRES: nothing
     //MODIFIES: nothing

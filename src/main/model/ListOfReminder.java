@@ -1,9 +1,17 @@
 package model;
 
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.io.UnsupportedEncodingException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.util.Arrays;
+import java.util.List;
 import java.util.Scanner;
 import java.util.ArrayList;
 
-public class ListOfReminder implements List {
+public class ListOfReminder implements ListOfItems, Save, Load {
 
     private ArrayList<Item> listOfRI;
     private Scanner input;
@@ -11,9 +19,10 @@ public class ListOfReminder implements List {
     //REQUIRES: nothing
     //MODIFIES: this
     //EFFECTS: constructor for Reminder
-    public ListOfReminder(ArrayList<Item> listOfRI) {
+    public ListOfReminder(ArrayList<Item> listOfRI) throws IOException {
         this.listOfRI = listOfRI;
         input = new Scanner(System.in);
+        load();
         processInput();
     }
 
@@ -109,4 +118,69 @@ public class ListOfReminder implements List {
         return this.listOfRI.remove(i);
     }
 
+    //REQUIRES: reminders.txt is in the right path
+    //MODIFIES: this, ReminderItem
+    //EFFECTS: reads the save file and adds the saved reminder items into the list
+    public void load() throws IOException {
+        List<String> lines = Files.readAllLines(Paths.get("reminders.txt"));;
+        for (String line : lines) {
+            ArrayList<String> parts = split(line);
+            Item ri = new ReminderItem(parts.get(0), parts.get(1), stringToBoolean(parts.get(2)));
+            addItem(ri);
+        }
+    }
+
+    //REQUIRES: reminders.txt is in the right path
+    //MODIFIES: reminders.txt
+    //EFFECTS: adds the ReminderItems into the save file
+    public void save() throws FileNotFoundException, UnsupportedEncodingException {
+        PrintWriter fileClearer = new PrintWriter("reminders.txt", "UTF-8");
+        fileClearer.close();
+        PrintWriter writer = new PrintWriter("reminders.txt", "UTF-8");
+        for (Item item: this.listOfRI) {
+            String line = merge(item);
+            writer.println(line);
+        }
+        writer.close();
+    }
+
+    //REQUIRES: nothing
+    //MODIFIES: nothing
+    //EFFECTS: splits a single line of the save file into pieces at where there are spaces
+    public static ArrayList<String> split(String line) {
+        String[] splits = line.split(" ");
+        return new ArrayList<>(Arrays.asList(splits));
+    }
+
+    //REQUIRES: nothing
+    //MODIFIES: nothing
+    //EFFECTS: converts an item into an entry for the save file
+    public String merge(Item item) {
+        String entry = item.getTitle() + " " + item.getAttribute() + " " + booleanToString(item.getIsDone());
+        return entry;
+    }
+
+    //REQUIRES: nothing
+    //MODIFIES: nothing
+    //EFFECTS: converts a string representation of a boolean value into a boolean
+    public static Boolean stringToBoolean(String s) {
+        if (s.equals("true")) {
+            return true;
+        } else if (s.equals("false")) {
+            return false;
+        } else {
+            return false;
+        }
+    }
+
+    //REQUIRES: nothing
+    //MODIFIES: nothing
+    //EFFECTS: converts a boolean into a string representation of that boolean
+    public static String booleanToString(Boolean b) {
+        if (b) {
+            return "true";
+        } else {
+            return "false";
+        }
+    }
 }

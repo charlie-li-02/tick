@@ -1,9 +1,17 @@
 package model;
 
-import java.util.Scanner;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.io.UnsupportedEncodingException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Scanner;
 
-public class ListOfToDo implements List {
+public class ListOfToDo implements ListOfItems, Save, Load {
 
     private ArrayList<Item> listOfTDI;
     private Scanner input;
@@ -11,9 +19,10 @@ public class ListOfToDo implements List {
     //REQUIRES: nothing
     //MODIFIES: this
     //EFFECTS: the constructor for To Do
-    public ListOfToDo(ArrayList<Item> ltdi) {
+    public ListOfToDo(ArrayList<Item> ltdi) throws IOException {
         this.listOfTDI = ltdi;
         input = new Scanner(System.in);
+        load();
         processInput();
     }
 
@@ -91,7 +100,6 @@ public class ListOfToDo implements List {
         if (i + 1 > this.listOfTDI.size()) {
             System.out.println("Invalid index, try again");
         } else {
-            //flipStatus(get(i));
             get(i).flipStatus();
         }
     }
@@ -110,5 +118,70 @@ public class ListOfToDo implements List {
         return this.listOfTDI.remove(i);
     }
 
+    //REQUIRES: todos.txt is in the right path
+    //MODIFIES: this, ToDoItem
+    //EFFECTS: reads the save file and adds the saved to do items into the list
+    public void load() throws IOException {
+        List<String> lines = Files.readAllLines(Paths.get("todos.txt"));;
+        for (String line : lines) {
+            ArrayList<String> parts = split(line);
+            Item tdi = new ToDoItem(parts.get(0), parts.get(1), stringToBoolean(parts.get(2)));
+            addItem(tdi);
+        }
+    }
+
+    //REQUIRES: todos.txt is in the right path
+    //MODIFIES: todos.txt
+    //EFFECTS: adds the ToDoItems into the save file
+    public void save() throws FileNotFoundException, UnsupportedEncodingException {
+        PrintWriter fileClearer = new PrintWriter("todos.txt", "UTF-8");
+        fileClearer.close();
+        PrintWriter writer = new PrintWriter("todos.txt", "UTF-8");
+        for (Item item: this.listOfTDI) {
+            String line = merge(item);
+            writer.println(line);
+        }
+        writer.close();
+    }
+
+    //REQUIRES: nothing
+    //MODIFIES: nothing
+    //EFFECTS: splits a single line of the save file into pieces at where there are spaces
+    public static ArrayList<String> split(String line) {
+        String[] splits = line.split(" ");
+        return new ArrayList<>(Arrays.asList(splits));
+    }
+
+    //REQUIRES: nothing
+    //MODIFIES: nothing
+    //EFFECTS: converts an item into an entry for the save file
+    public String merge(Item item) {
+        String entry = item.getTitle() + " " + item.getAttribute() + " " + booleanToString(item.getIsDone());
+        return entry;
+    }
+
+    //REQUIRES: nothing
+    //MODIFIES: nothing
+    //EFFECTS: converts a string representation of a boolean value into a boolean
+    public static Boolean stringToBoolean(String s) {
+        if (s.equals("true")) {
+            return true;
+        } else if (s.equals("false")) {
+            return false;
+        } else {
+            return false;
+        }
+    }
+
+    //REQUIRES: nothing
+    //MODIFIES: nothing
+    //EFFECTS: converts a boolean into a string representation of that boolean
+    public static String booleanToString(Boolean b) {
+        if (b) {
+            return "true";
+        } else {
+            return "false";
+        }
+    }
 }
 

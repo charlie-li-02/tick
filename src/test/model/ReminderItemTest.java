@@ -24,18 +24,18 @@ public class ReminderItemTest {
 
     @Test
     void testGetReminder() {
-        assertEquals("water", ri1.getReminder());
-        assertEquals("eat", ri2.getReminder());
-        assertFalse("sleep" == ri1.getReminder());
-        assertFalse("water" == ri2.getReminder());
+        assertEquals("water", ri1.getTitle());
+        assertEquals("eat", ri2.getTitle());
+        assertFalse("sleep" == ri1.getTitle());
+        assertFalse("water" == ri2.getTitle());
     }
 
     @Test
     void testGetTime() {
-        assertEquals("2:00", ri1.getTime());
-        assertEquals("6:00", ri2.getTime());
-        assertFalse("5:00" == ri1.getTime());
-        assertFalse("5:00" == ri2.getTime());
+        assertEquals("2:00", ri1.getAttribute());
+        assertEquals("6:00", ri2.getAttribute());
+        assertFalse("5:00" == ri1.getAttribute());
+        assertFalse("5:00" == ri2.getAttribute());
     }
 
     @Test
