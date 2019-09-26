@@ -35,12 +35,10 @@ public class ToDoList {
                 break;
 
             } else if (type.equals("to do")) {
-                ListOfToDo ltd = new ListOfToDo(listOfToDo);
-                ltd.save();
+                handleToDo();
 
             } else if (type.equals("reminder")) {
-                ListOfReminder ri = new ListOfReminder(listOfReminder);
-                ri.save();
+                handleReminder();
 
             } else if (type.equals("list")) {
                 processOutput();
@@ -49,6 +47,20 @@ public class ToDoList {
                 System.out.println("Your entrance did not match any options, please try again. \n");
             }
         }
+    }
+
+    public void handleToDo() throws IOException {
+        ListOfToDo ltd = new ListOfToDo(listOfToDo);
+        ltd.load("todos.txt");
+        ltd.processInput();
+        ltd.save("todos.txt");
+    }
+
+    public void handleReminder() throws IOException {
+        ListOfReminder ri = new ListOfReminder(listOfReminder);
+        ri.load("reminders.txt");
+        ri.processInput();
+        ri.save("reminders.txt");
     }
 
     //REQUIRES: nothing

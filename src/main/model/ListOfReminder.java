@@ -19,26 +19,32 @@ public class ListOfReminder implements ListOfItems, Save, Load {
     //REQUIRES: nothing
     //MODIFIES: this
     //EFFECTS: constructor for Reminder
-    public ListOfReminder(ArrayList<Item> listOfRI) throws IOException {
+    public ListOfReminder(ArrayList<Item> listOfRI) {
         this.listOfRI = listOfRI;
         input = new Scanner(System.in);
-        load();
-        processInput();
+    }
+
+    //REQUIRES: nothing
+    //MODIFIES: ReminderItem
+    //EFFECTS: creates a new apparent type Item actual type ReminderItem
+    public Item reminderMaker(String reminder, String time) {
+        Item ri = new ReminderItem(reminder, time, false);
+        return ri;
     }
 
     //REQUIRES: nothing
     //MODIFIES: RemainderItem
     //EFFECTS: creates a new ReminderItem based on the user's input
-    private void processInput() {
+    public void processInput() {
         while (true) {
             System.out.println("Enter a new reminder:");
             String reminder = input.nextLine();
             System.out.println("Enter a time for your new reminder:");
             String time = input.nextLine();
-            Item ri = new ReminderItem(reminder, time, false);
-            addItem(ri);
+            addItem(reminderMaker(reminder, time));
             System.out.println("Do you want to add another reminder? (y/n)");
-            if (input.nextLine().equals("n")) {
+            String choice = input.nextLine();
+            if (choice.equals("n")) {
                 break;
             }
         }
@@ -48,7 +54,7 @@ public class ListOfReminder implements ListOfItems, Save, Load {
     //REQUIRES: nothing
     //MODIFIES: this
     //EFFECTS: adds the ReminderItem to the list of remainder items
-    private void addItem(Item ri) {
+    public void addItem(Item ri) {
         this.listOfRI.add(ri);
     }
 
@@ -121,8 +127,8 @@ public class ListOfReminder implements ListOfItems, Save, Load {
     //REQUIRES: reminders.txt is in the right path
     //MODIFIES: this, ReminderItem
     //EFFECTS: reads the save file and adds the saved reminder items into the list
-    public void load() throws IOException {
-        List<String> lines = Files.readAllLines(Paths.get("reminders.txt"));;
+    public void load(String path) throws IOException {
+        List<String> lines = Files.readAllLines(Paths.get(path));
         for (String line : lines) {
             ArrayList<String> parts = split(line);
             Item ri = new ReminderItem(parts.get(0), parts.get(1), stringToBoolean(parts.get(2)));
@@ -133,10 +139,10 @@ public class ListOfReminder implements ListOfItems, Save, Load {
     //REQUIRES: reminders.txt is in the right path
     //MODIFIES: reminders.txt
     //EFFECTS: adds the ReminderItems into the save file
-    public void save() throws FileNotFoundException, UnsupportedEncodingException {
-        PrintWriter fileClearer = new PrintWriter("reminders.txt", "UTF-8");
+    public void save(String path) throws FileNotFoundException, UnsupportedEncodingException {
+        PrintWriter fileClearer = new PrintWriter(path, "UTF-8");
         fileClearer.close();
-        PrintWriter writer = new PrintWriter("reminders.txt", "UTF-8");
+        PrintWriter writer = new PrintWriter(path, "UTF-8");
         for (Item item: this.listOfRI) {
             String line = merge(item);
             writer.println(line);
@@ -155,19 +161,17 @@ public class ListOfReminder implements ListOfItems, Save, Load {
     //REQUIRES: nothing
     //MODIFIES: nothing
     //EFFECTS: converts an item into an entry for the save file
-    public String merge(Item item) {
+    public static String merge(Item item) {
         String entry = item.getTitle() + " " + item.getAttribute() + " " + booleanToString(item.getIsDone());
         return entry;
     }
 
-    //REQUIRES: nothing
+    //REQUIRES: s to be either "true" or "false"
     //MODIFIES: nothing
     //EFFECTS: converts a string representation of a boolean value into a boolean
     public static Boolean stringToBoolean(String s) {
         if (s.equals("true")) {
             return true;
-        } else if (s.equals("false")) {
-            return false;
         } else {
             return false;
         }
