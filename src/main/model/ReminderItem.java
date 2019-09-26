@@ -1,6 +1,6 @@
 package model;
 
-public class ReminderItem {
+public class ReminderItem implements Item {
     private String reminder;
     private String time;
     private Boolean isDone;

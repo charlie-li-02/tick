@@ -7,7 +7,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import java.util.ArrayList;
 
-public class ReminderTest {
+public class ListOfReminderTest {
 
     private ReminderItem ri1;
     private ReminderItem ri2;

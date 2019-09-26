@@ -7,7 +7,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import java.util.ArrayList;
 
-public class ToDoTest {
+public class ListOfToDoTest {
 
     private ToDoItem tdi1;
     private ToDoItem tdi2;

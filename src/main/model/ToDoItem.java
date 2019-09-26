@@ -1,6 +1,6 @@
 package model;
 
-public class ToDoItem {
+public class ToDoItem implements Item {
     private String title;
     private String description;
     private Boolean isDone;
