@@ -11,12 +11,9 @@ public abstract class ListOfItems {
     }
 
     //REQUIRES: nothing
-    //MODIFIES: ToDoItem
-    //EFFECTS: creates a new apparent type Item actual type ToDoItem
-    public Item itemMaker(String title, String description) {
-        Item i = new Item(title, description, false);
-        return i;
-    }
+    //MODIFIES: Item
+    //EFFECTS: creates a new Item
+    public abstract Item itemMaker(String title, String attribute);
 
     //REQUIRES: nothing
     //MODIFIES: this

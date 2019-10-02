@@ -29,19 +29,6 @@ public class ListOfItemsTest {
     }
 
     @Test
-    void testItemMaker() {
-        Item testItem1 = li.itemMaker("a", "b");
-        assertFalse(testItem1.getIsDone());
-        assertEquals("a", testItem1.getTitle());
-        assertEquals("b", testItem1.getAttribute());
-
-        Item testItem2 = li.itemMaker("c", "d");
-        assertFalse(testItem2.getIsDone());
-        assertEquals("c", testItem2.getTitle());
-        assertEquals("d", testItem2.getAttribute());
-    }
-
-    @Test
     void testAddItem() {
         li.addItem(i1);
         assertEquals(4, temp.size());
@@ -62,12 +49,12 @@ public class ListOfItemsTest {
 
     @Test
     void testRemove() {
-        temp.remove(2);
-        assertEquals(2, temp.size());
-        temp.remove(1);
-        assertEquals(1, temp.size());
-        temp.remove(0);
-        assertEquals(0, temp.size());
+        li.remove(2);
+        assertEquals(2, li.getSize());
+        li.remove(1);
+        assertEquals(1, li.getSize());
+        li.remove(0);
+        assertEquals(0, li.getSize());
     }
 
 
