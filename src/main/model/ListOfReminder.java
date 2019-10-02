@@ -23,7 +23,6 @@ public class ListOfReminder extends ListOfItems implements Save, Load {
         this.listOfRI = lri;
     }
 
-    @Override
     //REQUIRES: nothing
     //MODIFIES: ReminderItem
     //EFFECTS: creates a new apparent type Item actual type ReminderItem

@@ -7,14 +7,11 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.io.UnsupportedEncodingException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 public class ListOfToDoTest {
@@ -53,19 +50,41 @@ public class ListOfToDoTest {
 
     @Test
     void testLoad() throws IOException {
-        ArrayList<Item> empty = new ArrayList<>();
-        ListOfToDo loadList = new ListOfToDo(empty);
+//        ArrayList<Item> empty = new ArrayList<>();
+//        ListOfToDo loadList = new ListOfToDo(empty);
+//
+//        loadList.load("TDLoadTest.txt");
+//
+//        assertEquals("hi", loadList.get(0).getTitle());
+//        assertEquals("bye", loadList.get(0).getAttribute());
+//        assertTrue(loadList.get(0).getIsDone());
+//
+//        assertEquals("yo", loadList.get(1).getTitle());
+//        assertEquals("hello", loadList.get(1).getAttribute());
+//        assertFalse(loadList.get(1).getIsDone());
 
-        loadList.load("TDLoadTest.txt");
 
-        assertEquals("hi", loadList.get(0).getTitle());
-        assertEquals("bye", loadList.get(0).getAttribute());
-        assertTrue(loadList.get(0).getIsDone());
+        ltdi.save("TDLoadTest.txt");
 
-        assertEquals("yo", loadList.get(1).getTitle());
-        assertEquals("hello", loadList.get(1).getAttribute());
-        assertFalse(loadList.get(1).getIsDone());
+        ltdi.remove(2);
+        ltdi.remove(1);
+        ltdi.remove(0);
 
+        ltdi.load("TDLoadTest.txt");
+
+        assertEquals(3, ltdi.getSize());
+
+        assertEquals("a", ltdi.get(0).getTitle());
+        assertEquals("b", ltdi.get(0).getAttribute());
+        assertFalse(ltdi.get(0).getIsDone());
+
+        assertEquals("c", ltdi.get(1).getTitle());
+        assertEquals("d", ltdi.get(1).getAttribute());
+        assertTrue(ltdi.get(1).getIsDone());
+
+        assertEquals("e", ltdi.get(2).getTitle());
+        assertEquals("f", ltdi.get(2).getAttribute());
+        assertFalse(ltdi.get(2).getIsDone());
     }
 
     @Test

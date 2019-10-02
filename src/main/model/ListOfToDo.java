@@ -23,7 +23,6 @@ public class ListOfToDo extends ListOfItems implements Save, Load {
         this.listOfTDI = ltdi;
     }
 
-    @Override
     //REQUIRES: nothing
     //MODIFIES: ToDoItem
     //EFFECTS: creates a new apparent type Item actual type ToDoItem
