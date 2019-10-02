@@ -39,40 +39,16 @@ public class ListOfToDoTest {
     }
 
     @Test
-    void testToDoMaker() {
-        Item testItem1 = ltdi.toDoMaker("a", "b");
+    void testItemMaker() {
+        Item testItem1 = ltdi.itemMaker("a", "b");
         assertFalse(testItem1.getIsDone());
         assertEquals("a", testItem1.getTitle());
         assertEquals("b", testItem1.getAttribute());
 
-        Item testItem2 = ltdi.toDoMaker("c", "d");
+        Item testItem2 = ltdi.itemMaker("c", "d");
         assertFalse(testItem2.getIsDone());
         assertEquals("c", testItem2.getTitle());
         assertEquals("d", testItem2.getAttribute());
-    }
-
-    @Test
-    void testAddItem() {
-        ltdi.addItem(tdi1);
-        assertEquals(4, temp.size());
-        assertEquals(tdi1, ltdi.get(3));
-    }
-
-    @Test
-    void testGet() {
-        assertEquals(tdi1, ltdi.get(0));
-        assertEquals(tdi2, ltdi.get(1));
-        assertEquals(tdi3, ltdi.get(2));
-    }
-
-    @Test
-    void testRemove() {
-        temp.remove(2);
-        assertEquals(2, temp.size());
-        temp.remove(1);
-        assertEquals(1, temp.size());
-        temp.remove(0);
-        assertEquals(0, temp.size());
     }
 
     @Test
@@ -103,47 +79,9 @@ public class ListOfToDoTest {
         List<String> savedItems = Files.readAllLines(Paths.get(path));
 
         assertEquals(3, savedItems.size());
-        assertEquals("a b false", savedItems.get(0));
-        assertEquals("c d true", savedItems.get(1));
-        assertEquals("e f false", savedItems.get(2));
-    }
-
-    @Test
-    void testSplit() {
-        String testString1 = "hi";
-        ArrayList<String> testArray1 = ltdi.split(testString1);
-        assertEquals(1, testArray1.size());
-        assertEquals("hi", testArray1.get(0));
-
-        String testString2 = "hi bye hello nihao";
-        ArrayList<String> testArray2 = ltdi.split(testString2);
-        assertEquals(4, testArray2.size());
-        assertEquals("hi", testArray2.get(0));
-        assertEquals("bye", testArray2.get(1));
-        assertEquals("hello", testArray2.get(2));
-        assertEquals("nihao", testArray2.get(3));
-    }
-
-    @Test
-    void testMerge() {
-        assertEquals("a b false", ltdi.merge(tdi1));
-        assertEquals("c d true", ltdi.merge(tdi2));
-        assertEquals("e f false", ltdi.merge(tdi3));
-    }
-
-    @Test
-    void testStringToBoolean() {
-        String t = "true";
-        String f = "false";
-
-        assertTrue(ltdi.stringToBoolean(t));
-        assertFalse(ltdi.stringToBoolean(f));
-    }
-
-    @Test
-    void testBooleanToString() {
-        assertEquals("true", ltdi.booleanToString(true));
-        assertEquals("false", ltdi.booleanToString(false));
+        assertEquals("a;b;false", savedItems.get(0));
+        assertEquals("c;d;true", savedItems.get(1));
+        assertEquals("e;f;false", savedItems.get(2));
     }
 
 }

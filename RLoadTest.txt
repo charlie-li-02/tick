@@ -1,2 +1,2 @@
-hi 2 true
-yo 7 false
+hi;2;true
+yo;7;false

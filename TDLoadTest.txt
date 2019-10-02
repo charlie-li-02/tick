@@ -1,2 +1,2 @@
-hi bye true
-yo hello false
+hi;bye;true
+yo;hello;false

@@ -1,39 +1,70 @@
 package model;
 
-public interface Item {
+public class Item {
+    private String title;
+    private String attribute;
+    private Boolean isDone;
+
+    //REQUIRES: nothing
+    //MODIFIES: this
+    //EFFECTS: constructor for Item
+    public Item(String title, String attribute, Boolean isDone) {
+        this.title = title;
+        this.attribute = attribute;
+        this.isDone = isDone;
+    }
 
     //REQUIRES: nothing
     //MODIFIES: nothing
-    //EFFECTS: returns the title of the to do
-    public String getTitle();
+    //EFFECTS: returns the title of the item
+    public String getTitle() {
+        return title;
+    }
 
     //REQUIRES: nothing
     //MODIFIES: nothing
-    //EFFECTS: returns the description of the to do
-    public String getAttribute();
+    //EFFECTS: returns the attribute of the item
+    public String getAttribute() {
+        return attribute;
+    }
 
     //REQUIRES: nothing
     //MODIFIES: nothing
     //EFFECTS: returns whether an item is done or not
-    Boolean getIsDone();
+    public Boolean getIsDone() {
+        return isDone;
+    }
 
     //REQUIRES: nothing
     //MODIFIES: noting
     //EFFECTS: formats the item it was called on and coverts it to a string
-    String toString();
+    public String toString() {
+        return "Title: " + this.getTitle() + ", Description: " + this.getAttribute() + ", Done?: " + this.getIsDone();
+    }
 
     //REQUIRES: nothing
-    //MODIFIES: item
-    //EFFECTS: sets the item as done represented by true
-    void markDone();
+    //MODIFIES: this
+    //EFFECTS: sets the this as done represented by true
+    public void markDone() {
+        this.isDone = true;
+    }
 
     //REQUIRES: nothing
-    //MODIFIES: item
-    //EFFECTS: sets the item as undone represented by false
-    void markUndone();
+    //MODIFIES: this
+    //EFFECTS: sets the this as undone represented by false
+    public void markUndone() {
+        this.isDone = false;
+    }
 
     //REQUIRES: nothing
-    //MODIFIES: item
-    //EFFECTS:  flips the status of the item
-    void flipStatus();
+    //MODIFIES: this
+    //EFFECTS:  flips the status of this
+    public void flipStatus() {
+        if (this.getIsDone()) {
+            this.markUndone();
+        } else {
+            this.markDone();
+        }
+    }
+
 }

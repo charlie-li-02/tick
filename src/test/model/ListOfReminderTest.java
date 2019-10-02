@@ -3,10 +3,8 @@ package model;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.io.UnsupportedEncodingException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.ArrayList;
@@ -36,40 +34,16 @@ public class ListOfReminderTest {
     }
 
     @Test
-    void testReminderMaker() {
-        Item testItem1 = lri.reminderMaker("a", "b");
+    void testItemMaker() {
+        Item testItem1 = lri.itemMaker("a", "b");
         assertFalse(testItem1.getIsDone());
         assertEquals("a", testItem1.getTitle());
         assertEquals("b", testItem1.getAttribute());
 
-        Item testItem2 = lri.reminderMaker("c", "d");
+        Item testItem2 = lri.itemMaker("c", "d");
         assertFalse(testItem2.getIsDone());
         assertEquals("c", testItem2.getTitle());
         assertEquals("d", testItem2.getAttribute());
-    }
-
-    @Test
-    void testAddItem() {
-        lri.addItem(ri1);
-        assertEquals(4, temp.size());
-        assertEquals(ri1, lri.get(3));
-    }
-
-    @Test
-    void testGet() {
-        assertEquals(ri1, lri.get(0));
-        assertEquals(ri2, lri.get(1));
-        assertEquals(ri3, lri.get(2));
-    }
-
-    @Test
-    void testRemove() {
-        temp.remove(2);
-        assertEquals(2, temp.size());
-        temp.remove(1);
-        assertEquals(1, temp.size());
-        temp.remove(0);
-        assertEquals(0, temp.size());
     }
 
     @Test
@@ -99,46 +73,8 @@ public class ListOfReminderTest {
         List<String> savedItems = Files.readAllLines(Paths.get(path));
 
         assertEquals(3, savedItems.size());
-        assertEquals("a 2 false", savedItems.get(0));
-        assertEquals("b 3 true", savedItems.get(1));
-        assertEquals("c 7 false", savedItems.get(2));}
-
-    @Test
-    void testSplit() {
-        String testString1 = "hi";
-        ArrayList<String> testArray1 = lri.split(testString1);
-        assertEquals(1, testArray1.size());
-        assertEquals("hi", testArray1.get(0));
-
-        String testString2 = "hi bye hello nihao";
-        ArrayList<String> testArray2 = lri.split(testString2);
-        assertEquals(4, testArray2.size());
-        assertEquals("hi", testArray2.get(0));
-        assertEquals("bye", testArray2.get(1));
-        assertEquals("hello", testArray2.get(2));
-        assertEquals("nihao", testArray2.get(3));
-    }
-
-    @Test
-    void testMerge() {
-        assertEquals("a 2 false", lri.merge(ri1));
-        assertEquals("b 3 true", lri.merge(ri2));
-        assertEquals("c 7 false", lri.merge(ri3));
-    }
-
-    @Test
-    void testStringToBoolean() {
-        String t = "true";
-        String f = "false";
-
-        assertTrue(lri.stringToBoolean(t));
-        assertFalse(lri.stringToBoolean(f));
-    }
-
-    @Test
-    void testBooleanToString() {
-        assertEquals("true", lri.booleanToString(true));
-        assertEquals("false", lri.booleanToString(false));
-    }
+        assertEquals("a;2;false", savedItems.get(0));
+        assertEquals("b;3;true", savedItems.get(1));
+        assertEquals("c;7;false", savedItems.get(2));}
 
 }

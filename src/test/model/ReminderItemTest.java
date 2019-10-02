@@ -13,8 +13,8 @@ public class ReminderItemTest {
 
     private ReminderItem ri1;
     private ReminderItem ri2;
-    private String lr1ToString = "Remind me to: water at 2:00 Done?: " + false;
-    private String lr2ToString = "Remind me to: eat at 6:00 Done?: " + true;
+    private String lr1ToString = "Remind me to: water at 2:00, Done?: " + false;
+    private String lr2ToString = "Remind me to: eat at 6:00, Done?: " + true;
 
     @BeforeEach
     void setup() {
