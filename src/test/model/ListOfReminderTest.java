@@ -49,7 +49,7 @@ public class ListOfReminderTest {
     @Test
     void testLoad() throws IOException {
         ArrayList<Item> empty = new ArrayList<>();
-        ListOfToDo loadList = new ListOfToDo(empty);
+        ListOfReminder loadList = new ListOfReminder(empty);
 
         loadList.load("RLoadTest.txt");
 

@@ -56,6 +56,11 @@ public class ListOfItemsTest {
     }
 
     @Test
+    void testGetSize() {
+        assertEquals(3, li.getSize());
+    }
+
+    @Test
     void testRemove() {
         temp.remove(2);
         assertEquals(2, temp.size());

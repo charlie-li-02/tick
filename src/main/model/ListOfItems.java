@@ -1,6 +1,5 @@
 package model;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 
@@ -15,8 +14,8 @@ public abstract class ListOfItems {
     //MODIFIES: ToDoItem
     //EFFECTS: creates a new apparent type Item actual type ToDoItem
     public Item itemMaker(String title, String description) {
-        Item tdi = new Item(title, description, false);
-        return tdi;
+        Item i = new Item(title, description, false);
+        return i;
     }
 
     //REQUIRES: nothing
