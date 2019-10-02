@@ -50,20 +50,6 @@ public class ListOfToDoTest {
 
     @Test
     void testLoad() throws IOException {
-//        ArrayList<Item> empty = new ArrayList<>();
-//        ListOfToDo loadList = new ListOfToDo(empty);
-//
-//        loadList.load("TDLoadTest.txt");
-//
-//        assertEquals("hi", loadList.get(0).getTitle());
-//        assertEquals("bye", loadList.get(0).getAttribute());
-//        assertTrue(loadList.get(0).getIsDone());
-//
-//        assertEquals("yo", loadList.get(1).getTitle());
-//        assertEquals("hello", loadList.get(1).getAttribute());
-//        assertFalse(loadList.get(1).getIsDone());
-
-
         ltdi.save("TDLoadTest.txt");
 
         ltdi.remove(2);

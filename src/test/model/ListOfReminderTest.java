@@ -48,18 +48,27 @@ public class ListOfReminderTest {
 
     @Test
     void testLoad() throws IOException {
-        ArrayList<Item> empty = new ArrayList<>();
-        ListOfReminder loadList = new ListOfReminder(empty);
+        lri.save("RLoadTest.txt");
 
-        loadList.load("RLoadTest.txt");
+        lri.remove(2);
+        lri.remove(1);
+        lri.remove(0);
 
-        assertEquals("hi", loadList.get(0).getTitle());
-        assertEquals("2", loadList.get(0).getAttribute());
-        assertTrue(loadList.get(0).getIsDone());
+        lri.load("RLoadTest.txt");
 
-        assertEquals("yo", loadList.get(1).getTitle());
-        assertEquals("7", loadList.get(1).getAttribute());
-        assertFalse(loadList.get(1).getIsDone());
+        assertEquals(3, lri.getSize());
+
+        assertEquals("a", lri.get(0).getTitle());
+        assertEquals("2", lri.get(0).getAttribute());
+        assertFalse(lri.get(0).getIsDone());
+
+        assertEquals("b", lri.get(1).getTitle());
+        assertEquals("3", lri.get(1).getAttribute());
+        assertTrue(lri.get(1).getIsDone());
+
+        assertEquals("c", lri.get(2).getTitle());
+        assertEquals("7", lri.get(2).getAttribute());
+        assertFalse(lri.get(2).getIsDone());
     }
 
     @Test

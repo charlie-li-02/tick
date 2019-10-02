@@ -176,7 +176,6 @@ public class ToDoList {
     //MODIFIES: nothing
     //EFFECTS: asks the user if they wish to remove an item from the list
     private void delete(ListOfItems li) {
-        //System.out.println(listOfToDo);
         System.out.println("Which item would you like to remove? (enter an integer)");
         int i = takeInput.nextInt();
         takeInput.nextLine();
@@ -191,7 +190,6 @@ public class ToDoList {
     //MODIFIES: nothing
     //EFFECTS: asks the user if they wish to change the status of an item in the list
     private void mark(ListOfItems li) {
-        //System.out.println(listOfToDo);
         System.out.println("Which item's status would you like to change? (enter an integer)");
         int i = takeInput.nextInt();
         takeInput.nextLine();
