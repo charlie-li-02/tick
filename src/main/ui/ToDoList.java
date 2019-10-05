@@ -11,6 +11,8 @@ public class ToDoList {
     public ArrayList<Item> listOfToDo;
     public ArrayList<Item> listOfReminder;
     private Scanner takeInput;
+    private String toDoSavePath = "todos.txt";
+    private String reminderSavePath = "reminders.txt";
 
     //REQUIRES: nothing
     //MODIFIES: this
@@ -19,29 +21,43 @@ public class ToDoList {
         listOfToDo = new ArrayList<>();
         listOfReminder = new ArrayList<>();
         takeInput = new Scanner(System.in);
-        processInput();
+        startUp();
+    }
+
+    //REQUIRES: nothing
+    //MODIFIES: makes a new ListOfToDo and a new ListOfReminder
+    //EFFECTS: loads the saved items into the righ lists
+    public void startUp() throws IOException {
+        ListOfToDo ltd = new ListOfToDo(listOfToDo);
+        ListOfReminder lr = new ListOfReminder(listOfReminder);
+        ltd.load(toDoSavePath);
+        lr.load(reminderSavePath);
+        processInput(ltd, lr);
     }
 
     //REQUIRES: nothing
     //MODIFIES: nothing
     //EFFECTS: gives the user the choice of adding a to do, reminder, show current lists, or close the program
-    public void processInput() throws IOException {
+    public void processInput(ListOfToDo ltd, ListOfReminder lr) throws IOException {
         String type;
         while (true) {
-            System.out.println("Add a new to do, reminder, show current lists, or exit (to do/reminder/list/exit):");
+            System.out.println("Please enter one of: (to do/reminder/to do list/reminder list/exit)");
             type = takeInput.nextLine();
 
             if (type.equals("exit")) {
                 break;
 
             } else if (type.equals("to do")) {
-                handleToDo();
+                handleToDo(ltd);
 
             } else if (type.equals("reminder")) {
-                handleReminder();
+                handleReminder(lr);
 
-            } else if (type.equals("list")) {
-                processOutput();
+            } else if (type.equals("to do list")) {
+                System.out.println(ltd.print());
+
+            } else if (type.equals("reminder list")) {
+                System.out.println(lr.print());
 
             } else {
                 System.out.println("Your entrance did not match any options, please try again. \n");
@@ -52,11 +68,9 @@ public class ToDoList {
     //REQUIRES: nothing
     //MODIFIES: ListOfToDo, todos.txt
     //EFFECTS: starts off the processing of adding a to do item
-    public void handleToDo() throws IOException {
-        ListOfToDo ltd = new ListOfToDo(listOfToDo);
-        ltd.load("todos.txt");
+    public void handleToDo(ListOfToDo ltd) throws IOException {
         processToDo(ltd);
-        ltd.save("todos.txt");
+        ltd.save(toDoSavePath);
     }
 
     //REQUIRES: nothing
@@ -75,18 +89,17 @@ public class ToDoList {
                 break;
             }
         }
-        processOptionsToDo(ltd);
+        processOptions(ltd);
     }
 
     //REQUIRES: nothing
     //MODIFIES: ListOfReminder, reminders.txt
     //EFFECTS: starts off the processing of adding a reminder item
-    public void handleReminder() throws IOException {
-        ListOfReminder lr = new ListOfReminder(listOfReminder);
-        lr.load("reminders.txt");
+    public void handleReminder(ListOfReminder lr) throws IOException {
         processReminder(lr);
-        lr.save("reminders.txt");
+        lr.save(reminderSavePath);
     }
+
 
     //REQUIRES: nothing
     //MODIFIES: RemainderItem
@@ -104,71 +117,30 @@ public class ToDoList {
                 break;
             }
         }
-        processOptionsReminder(lr);
+        processOptions(lr);
     }
 
     //REQUIRES: nothing
     //MODIFIES: nothing
-    //EFFECTS: prompts the user the option to delete or change the status of a to do
-    private void processOptionsToDo(ListOfItems li) {
+    //EFFECTS: prompts the user the option to delete or change the status of an item
+    private void processOptions(ListOfItems li) {
         while (li.getSize() > 0) {
             System.out.println("Would you like to delete an item or change an item's status? (delete/mark/no)");
             String choice = takeInput.nextLine();
             if (choice.equals("delete")) {
-                System.out.println(listOfToDo);
+                System.out.println(li.print());
                 delete(li);
-                System.out.println(listOfToDo);
+                System.out.println(li.print());
             } else if (choice.equals("mark")) {
-                System.out.println(listOfToDo);
+                System.out.println(li.print());
                 mark(li);
-                System.out.println(listOfToDo);
+                System.out.println(li.print());
             } else if (choice.equals("no")) {
-                System.out.println(listOfToDo);
+                System.out.println(li.print());
                 break;
             } else {
                 System.out.println("Try again");
             }
-        }
-    }
-
-    //REQUIRES: nothing
-    //MODIFIES: nothing
-    //EFFECTS: prompts the user the option to delete or change the status of a to do
-    private void processOptionsReminder(ListOfItems li) {
-        while (li.getSize() > 0) {
-            System.out.println("Would you like to delete an item or change an item's status? (delete/mark/no)");
-            String choice = takeInput.nextLine();
-            if (choice.equals("delete")) {
-                System.out.println(listOfReminder);
-                delete(li);
-                System.out.println(listOfReminder);
-            } else if (choice.equals("mark")) {
-                System.out.println(listOfReminder);
-                mark(li);
-                System.out.println(listOfReminder);
-            } else if (choice.equals("no")) {
-                System.out.println(listOfReminder);
-                break;
-            } else {
-                System.out.println("Try again");
-            }
-        }
-    }
-
-    //REQUIRES: nothing
-    //MODIFIES: nothing
-    //EFFECTS: prints out the appropriate list or a warning that the user made a typo
-    public void processOutput() {
-        System.out.println("Which list would you like to open? (to do/reminder)");
-        String choice = takeInput.nextLine();
-        if (choice.equals("to do")) {
-            System.out.println(listOfToDo);
-
-        } else if (choice.equals("reminder")) {
-            System.out.println(listOfReminder);
-
-        } else {
-            System.out.println("Your entrance did not match any options, please try again. \n");
         }
     }
 
@@ -196,7 +168,7 @@ public class ToDoList {
         if (i + 1 > li.getSize()) {
             System.out.println("Invalid index, try again");
         } else {
-            li.get(i).flipStatus();
+            li.get(i).markDone();
         }
     }
 

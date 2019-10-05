@@ -39,7 +39,7 @@ public class Item {
     //MODIFIES: noting
     //EFFECTS: formats the item it was called on and coverts it to a string
     public String toString() {
-        return "Title: " + this.getTitle() + ", Description: " + this.getAttribute() + ", Done?: " + this.getIsDone();
+        return "Title: " + title + ", Description: " + attribute + ", Done?: " + isDone;
     }
 
     //REQUIRES: nothing
@@ -60,10 +60,10 @@ public class Item {
     //MODIFIES: this
     //EFFECTS:  flips the status of this
     public void flipStatus() {
-        if (this.getIsDone()) {
-            this.markUndone();
+        if (this.isDone) {
+            markUndone();
         } else {
-            this.markDone();
+            markDone();
         }
     }
 

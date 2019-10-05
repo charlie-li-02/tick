@@ -84,6 +84,16 @@ public class ListOfReminderTest {
         assertEquals(3, savedItems.size());
         assertEquals("a;2;false", savedItems.get(0));
         assertEquals("b;3;true", savedItems.get(1));
-        assertEquals("c;7;false", savedItems.get(2));}
+        assertEquals("c;7;false", savedItems.get(2));
+    }
+
+    @Test
+    void testPrint() {
+        ArrayList<String> printed = new ArrayList<>();
+        printed = lri.print();
+        assertEquals("Remind me to a at 2 Done? false", printed.get(0));
+        assertEquals("Remind me to b at 3 Done? true", printed.get(1));
+        assertEquals("Remind me to c at 7 Done? false", printed.get(2));
+    }
 
 }

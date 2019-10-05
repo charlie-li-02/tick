@@ -89,4 +89,16 @@ public class ListOfToDoTest {
         assertEquals("e;f;false", savedItems.get(2));
     }
 
+    @Test
+    void testPrint() {
+        ArrayList<String> printed = new ArrayList<>();
+        printed = ltdi.print();
+        assertEquals("Title: a Description: b Done? false", printed.get(0));
+        assertEquals("Title: c Description: d Done? true", printed.get(1));
+        assertEquals("Title: e Description: f Done? false", printed.get(2));
+
+    }
+
+
+
 }

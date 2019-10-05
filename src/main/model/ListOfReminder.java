@@ -55,4 +55,15 @@ public class ListOfReminder extends ListOfItems implements Save, Load {
         writer.close();
     }
 
+    //REQUIRES: nothing
+    //MODIFIES: nothing
+    //EFFECTS: formats the list of items into a list of string
+    public ArrayList<String> print() {
+        ArrayList<String> result = new ArrayList<>();
+        for (Item i: this.listOfItem) {
+            String s = "Remind me to " + i.getTitle() + " at " + i.getAttribute() + " Done? " + i.getIsDone();
+            result.add(s);
+        }
+        return result;
+    }
 }

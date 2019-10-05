@@ -12,6 +12,8 @@ import java.util.List;
 public class ListOfToDo extends ListOfItems implements Save, Load {
 
     private ArrayList<Item> listOfTDI;
+    public String askForTitle;
+    public String askForAttribute;
 
     //REQUIRES: nothing
     //MODIFIES: this
@@ -53,6 +55,18 @@ public class ListOfToDo extends ListOfItems implements Save, Load {
             writer.println(line);
         }
         writer.close();
+    }
+
+    //REQUIRES: nothing
+    //MODIFIES: nothing
+    //EFFECTS: formats the list of items into a list of string
+    public ArrayList<String> print() {
+        ArrayList<String> result = new ArrayList<>();
+        for (Item i: this.listOfItem) {
+            String s = "Title: " + i.getTitle() + " Description: " + i.getAttribute() + " Done? " + i.getIsDone();
+            result.add(s);
+        }
+        return result;
     }
 
 }

@@ -18,9 +18,9 @@ public class ReminderItem extends Item {
 
     @Override
     //REQUIRES: nothing
-    //MODIFIES: noting
+    //MODIFIES: nothing
     //EFFECTS: formats the item it was called on and coverts it to a string
     public String toString() {
-        return "Remind me to: " + reminder + " at " + time + ", Done?: " + isDone;
+        return "Remind me to: " + this.reminder + " at " + this.time + ", Done?: " + this.isDone;
     }
 }

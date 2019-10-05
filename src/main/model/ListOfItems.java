@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 
 public abstract class ListOfItems {
-    private ArrayList<Item> listOfItem;
+    public ArrayList<Item> listOfItem;
 
     public ListOfItems(ArrayList<Item> li) {
         this.listOfItem = li;
@@ -80,4 +80,9 @@ public abstract class ListOfItems {
             return "false";
         }
     }
+
+    //REQUIRES: nothing
+    //MODIFIES: nothing
+    //EFFECTS: formats the list of items into a list of string
+    public abstract ArrayList<String> print();
 }
