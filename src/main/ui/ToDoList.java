@@ -26,7 +26,7 @@ public class ToDoList {
 
     //REQUIRES: nothing
     //MODIFIES: makes a new ListOfToDo and a new ListOfReminder
-    //EFFECTS: loads the saved items into the righ lists
+    //EFFECTS: loads the saved items into the right lists
     public void startUp() throws IOException {
         ListOfToDo ltd = new ListOfToDo(listOfToDo);
         ListOfReminder lr = new ListOfReminder(listOfReminder);
@@ -168,7 +168,7 @@ public class ToDoList {
         if (i + 1 > li.getSize()) {
             System.out.println("Invalid index, try again");
         } else {
-            li.get(i).markDone();
+            li.get(i).flipStatus();
         }
     }
 
