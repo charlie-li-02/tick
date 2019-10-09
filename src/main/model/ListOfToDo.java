@@ -12,8 +12,9 @@ import java.util.List;
 public class ListOfToDo extends ListOfItems implements Save, Load {
 
     private ArrayList<Item> listOfTDI;
-    public String askForTitle;
-    public String askForAttribute;
+    public String promptTitle = "Enter a title for your new to do:";
+    public String promptAttribute = "Enter a description for your new to do:";
+    public String promptAnother = "Do you want to add another to do? (y|n)";
 
     //REQUIRES: nothing
     //MODIFIES: this
@@ -67,6 +68,27 @@ public class ListOfToDo extends ListOfItems implements Save, Load {
             result.add(s);
         }
         return result;
+    }
+
+    //REQUIRES: nothing
+    //MODIFIES: nothing
+    //EFFECTS: returns the PromptTitle
+    public String getPromptTitle() {
+        return this.promptTitle;
+    }
+
+    //REQUIRES: nothing
+    //MODIFIES: nothing
+    //EFFECTS: returns the PromptAttribute
+    public String getPromptAttribute() {
+        return this.promptAttribute;
+    }
+
+    //REQUIRES: nothing
+    //MODIFIES: nothing
+    //EFFECTS: returns the PromptAnother
+    public String getPromptAnother() {
+        return this.promptAnother;
     }
 
 }

@@ -12,6 +12,9 @@ import java.util.ArrayList;
 public class ListOfReminder extends ListOfItems implements Save, Load {
 
     private ArrayList<Item> listOfRI;
+    public String promptTitle = "Enter a new reminder:";
+    public String promptAttribute = "Enter a time for your new reminder:";
+    public String promptAnother = "Do you want to add another reminder? (y|n)";
 
     //REQUIRES: nothing
     //MODIFIES: this
@@ -66,4 +69,26 @@ public class ListOfReminder extends ListOfItems implements Save, Load {
         }
         return result;
     }
+
+    //REQUIRES: nothing
+    //MODIFIES: nothing
+    //EFFECTS: returns the PromptTitle
+    public String getPromptTitle() {
+        return this.promptTitle;
+    }
+
+    //REQUIRES: nothing
+    //MODIFIES: nothing
+    //EFFECTS: returns the PromptAttribute
+    public String getPromptAttribute() {
+        return this.promptAttribute;
+    }
+
+    //REQUIRES: nothing
+    //MODIFIES: nothing
+    //EFFECTS: returns the PromptAnother
+    public String getPromptAnother() {
+        return this.promptAnother;
+    }
+
 }

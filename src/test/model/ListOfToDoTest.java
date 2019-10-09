@@ -1,5 +1,7 @@
 package model;
 
+import exceptions.ItemDoesNotExistException;
+
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -49,7 +51,7 @@ public class ListOfToDoTest {
     }
 
     @Test
-    void testLoad() throws IOException {
+    void testLoad() throws IOException, ItemDoesNotExistException {
         ltdi.save("TDLoadTest.txt");
 
         ltdi.remove(2);
@@ -99,6 +101,22 @@ public class ListOfToDoTest {
 
     }
 
+    @Test
+    void testGetPromptTitle() {
+        String temporary = ltdi.getPromptTitle();
+        assertEquals("Enter a title for your new to do:", temporary);
+    }
 
+    @Test
+    void testGetPromptAttribute() {
+        String temporary = ltdi.getPromptAttribute();
+        assertEquals("Enter a description for your new to do:", temporary);
+    }
+
+    @Test
+    void testGetPromptAnother() {
+        String temporary = ltdi.getPromptAnother();
+        assertEquals("Do you want to add another to do? (y|n)", temporary);
+    }
 
 }

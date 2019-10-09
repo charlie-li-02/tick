@@ -1,10 +1,13 @@
 package model;
 
+import exceptions.DeletingNoneExistentItem;
+import exceptions.ItemDoesNotExistException;
+import exceptions.MarkingNoneExistentItem;
+import exceptions.TooManyItemsUndoneException;
+
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-
 import java.util.ArrayList;
-
 import static org.junit.jupiter.api.Assertions.*;
 
 
@@ -14,6 +17,9 @@ public class ListOfItemsTest {
     private Item i3;
     private ListOfItems li;
     private ArrayList<Item> temp;
+
+    private ArrayList<Item> empty = new ArrayList<>();
+    private ListOfItems addNewTestList = new ListOfToDo(empty);
 
     @BeforeEach
     void setup() {
@@ -36,6 +42,55 @@ public class ListOfItemsTest {
     }
 
     @Test
+    void testAddNewItemCanAdd() throws TooManyItemsUndoneException {
+        addNewTestList.addNewItem(i1);
+        assertEquals(1, addNewTestList.getSize());
+        assertEquals(i1, addNewTestList.get(0));
+
+        addNewTestList.addNewItem(i3);
+        assertEquals(2, addNewTestList.getSize());
+        assertEquals(i3, addNewTestList.get(1));
+
+        //ADDING TOTAL OF 10 UNDONE ITEMS
+        addNewTestList.addNewItem(i3);
+        assertEquals(3, addNewTestList.getSize());
+        addNewTestList.addNewItem(i3);
+        assertEquals(4, addNewTestList.getSize());
+        addNewTestList.addNewItem(i3);
+        assertEquals(5, addNewTestList.getSize());
+        addNewTestList.addNewItem(i3);
+        assertEquals(6, addNewTestList.getSize());
+        addNewTestList.addNewItem(i3);
+        assertEquals(7, addNewTestList.getSize());
+        addNewTestList.addNewItem(i3);
+        assertEquals(8, addNewTestList.getSize());
+        addNewTestList.addNewItem(i3);
+        assertEquals(9, addNewTestList.getSize());
+        addNewTestList.addNewItem(i3);
+        assertEquals(10, addNewTestList.getSize());
+    }
+
+    @Test
+    void testAddNewItemCannotAdd() {
+        try {
+            addNewTestList.addNewItem(i3);
+            addNewTestList.addNewItem(i3);
+            addNewTestList.addNewItem(i3);
+            addNewTestList.addNewItem(i3);
+            addNewTestList.addNewItem(i3);
+            addNewTestList.addNewItem(i3);
+            addNewTestList.addNewItem(i3);
+            addNewTestList.addNewItem(i3);
+            addNewTestList.addNewItem(i3);
+            addNewTestList.addNewItem(i3);
+            addNewTestList.addNewItem(i3);
+            System.out.println(addNewTestList.getSize());
+        } catch (TooManyItemsUndoneException e) {
+            System.out.println("too many undone items");
+        }
+    }
+
+    @Test
     void testGet() {
         assertEquals(i1, li.get(0));
         assertEquals(i2, li.get(1));
@@ -48,7 +103,7 @@ public class ListOfItemsTest {
     }
 
     @Test
-    void testRemove() {
+    void testRemove() throws ItemDoesNotExistException {
         li.remove(2);
         assertEquals(2, li.getSize());
         li.remove(1);
@@ -57,6 +112,33 @@ public class ListOfItemsTest {
         assertEquals(0, li.getSize());
     }
 
+    @Test
+    void testRemovingOutOfBound() {
+        try {
+            li.remove(3);
+        } catch (DeletingNoneExistentItem e) {
+            System.out.println("out of bound");
+        }
+    }
+
+    @Test
+    void testChangeStatus() throws MarkingNoneExistentItem {
+        li.changeStatus(1);
+        assertFalse(li.get(1).getIsDone());
+        li.changeStatus(2);
+        assertTrue(li.get(2).getIsDone());
+        li.changeStatus(2);
+        assertFalse(li.get(2).getIsDone());
+    }
+
+    @Test
+    void testMarkingOutOfBound() {
+        try{
+            li.changeStatus(4);
+        } catch (MarkingNoneExistentItem e) {
+            System.out.println("out of bound");
+        }
+    }
 
     @Test
     void testSplit() {

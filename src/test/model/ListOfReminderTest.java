@@ -1,5 +1,7 @@
 package model;
 
+import exceptions.ItemDoesNotExistException;
+
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -47,7 +49,7 @@ public class ListOfReminderTest {
     }
 
     @Test
-    void testLoad() throws IOException {
+    void testLoad() throws IOException, ItemDoesNotExistException {
         lri.save("RLoadTest.txt");
 
         lri.remove(2);
@@ -94,6 +96,24 @@ public class ListOfReminderTest {
         assertEquals("Remind me to a at 2 Done? false", printed.get(0));
         assertEquals("Remind me to b at 3 Done? true", printed.get(1));
         assertEquals("Remind me to c at 7 Done? false", printed.get(2));
+    }
+
+    @Test
+    void testGetPromptTitle() {
+        String temporary = lri.getPromptTitle();
+        assertEquals("Enter a new reminder:", temporary);
+    }
+
+    @Test
+    void testGetPromptAttribute() {
+        String temporary = lri.getPromptAttribute();
+        assertEquals("Enter a time for your new reminder:", temporary);
+    }
+
+    @Test
+    void testGetPromptAnother() {
+        String temporary = lri.getPromptAnother();
+        assertEquals("Do you want to add another reminder? (y|n)", temporary);
     }
 
 }

@@ -1,10 +1,15 @@
 package model;
 
+import exceptions.DeletingNoneExistentItem;
+import exceptions.MarkingNoneExistentItem;
+import exceptions.TooManyItemsUndoneException;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 
 public abstract class ListOfItems {
     public ArrayList<Item> listOfItem;
+    public int maxUndone = 10;
 
     public ListOfItems(ArrayList<Item> li) {
         this.listOfItem = li;
@@ -20,6 +25,20 @@ public abstract class ListOfItems {
     //EFFECTS: adds the Item onto the list of items
     public void addItem(Item item) {
         this.listOfItem.add(item);
+    }
+
+    public void addNewItem(Item item) throws TooManyItemsUndoneException {
+        int undoneItems = 0;
+        for (Item i: this.listOfItem) {
+            if (!i.getIsDone()) {
+                undoneItems++;
+            }
+        }
+        if (undoneItems >= maxUndone) {
+            throw new TooManyItemsUndoneException();
+        } else {
+            this.listOfItem.add(item);
+        }
     }
 
     //REQUIRES: nothing
@@ -39,8 +58,23 @@ public abstract class ListOfItems {
     //REQUIRES: at least one item in the array
     //MODIFIES: this
     //EFFECTS: removes the ith Item
-    public Item remove(int i) {
-        return this.listOfItem.remove(i);
+    public Item remove(int i) throws DeletingNoneExistentItem {
+        if (i + 1 > this.listOfItem.size()) {
+            throw new DeletingNoneExistentItem();
+        } else {
+            return this.listOfItem.remove(i);
+        }
+    }
+
+    //REQUIRES: at least one item in the array
+    //MODIFIES: this
+    //EFFECTS: changes the status ith Item
+    public void changeStatus(int i) throws MarkingNoneExistentItem {
+        if (i + 1 > this.listOfItem.size()) {
+            throw new MarkingNoneExistentItem();
+        } else {
+            listOfItem.get(i).flipStatus();
+        }
     }
 
     //REQUIRES: nothing
@@ -85,4 +119,19 @@ public abstract class ListOfItems {
     //MODIFIES: nothing
     //EFFECTS: formats the list of items into a list of string
     public abstract ArrayList<String> print();
+
+    //REQUIRES: nothing
+    //MODIFIES: nothing
+    //EFFECTS: returns the PromptTitle
+    public abstract String getPromptTitle();
+
+    //REQUIRES: nothing
+    //MODIFIES: nothing
+    //EFFECTS: returns the PromptAttribute
+    public abstract String getPromptAttribute();
+
+    //REQUIRES: nothing
+    //MODIFIES: nothing
+    //EFFECTS: returns the PromptAnother
+    public abstract String getPromptAnother();
 }
