@@ -51,7 +51,7 @@ public class ListOfItemsTest {
         assertEquals(2, addNewTestList.getSize());
         assertEquals(i3, addNewTestList.get(1));
 
-        //ADDING TOTAL OF 10 UNDONE ITEMS
+        //ADDING 9 UNDONE ITEMS
         addNewTestList.addNewItem(i3);
         assertEquals(3, addNewTestList.getSize());
         addNewTestList.addNewItem(i3);
@@ -66,8 +66,19 @@ public class ListOfItemsTest {
         assertEquals(8, addNewTestList.getSize());
         addNewTestList.addNewItem(i3);
         assertEquals(9, addNewTestList.getSize());
-        addNewTestList.addNewItem(i3);
+
+        //ADDING MORE DONE ITEMS
+        addNewTestList.addNewItem(i2);
         assertEquals(10, addNewTestList.getSize());
+        assertEquals(i2, addNewTestList.get(9));
+        addNewTestList.addNewItem(i2);
+        assertEquals(11, addNewTestList.getSize());
+        assertEquals(i2, addNewTestList.get(10));
+
+        //ADDING ONE LAST UNDONE ITEM TO REACH maxUndone = 10
+        addNewTestList.addNewItem(i1);
+        assertEquals(12, addNewTestList.getSize());
+        assertEquals(i1, addNewTestList.get(11));
     }
 
     @Test
