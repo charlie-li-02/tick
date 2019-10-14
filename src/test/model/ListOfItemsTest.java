@@ -95,7 +95,7 @@ public class ListOfItemsTest {
             addNewTestList.addNewItem(i3);
             addNewTestList.addNewItem(i3);
             addNewTestList.addNewItem(i3);
-            System.out.println(addNewTestList.getSize());
+            fail();
         } catch (TooManyItemsUndoneException e) {
             System.out.println("too many undone items");
         }
@@ -127,6 +127,7 @@ public class ListOfItemsTest {
     void testRemovingOutOfBound() {
         try {
             li.remove(3);
+            fail();
         } catch (DeletingNoneExistentItem e) {
             System.out.println("out of bound");
         }
@@ -146,6 +147,7 @@ public class ListOfItemsTest {
     void testMarkingOutOfBound() {
         try{
             li.changeStatus(4);
+            fail();
         } catch (MarkingNoneExistentItem e) {
             System.out.println("out of bound");
         }

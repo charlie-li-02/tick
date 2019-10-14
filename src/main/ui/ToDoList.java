@@ -137,8 +137,12 @@ public class ToDoList {
     //MODIFIES: nothing
     //EFFECTS: prints out the list of items
     private void handlePrintList(ListOfItems li) {
-        System.out.println(li.print());
-        processOptions(li);
+        if (li.getSize() == 0) {
+            System.out.println("You don't have anything in that list!");
+        } else {
+            System.out.println(li.print());
+            processOptions(li);
+        }
     }
 
     //REQUIRES: nothing
