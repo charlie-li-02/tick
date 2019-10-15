@@ -114,13 +114,17 @@ public class ListOfItemsTest {
     }
 
     @Test
-    void testRemove() throws ItemDoesNotExistException {
-        li.remove(2);
-        assertEquals(2, li.getSize());
-        li.remove(1);
-        assertEquals(1, li.getSize());
-        li.remove(0);
-        assertEquals(0, li.getSize());
+    void testRemove() {
+        try {
+            li.remove(2);
+            assertEquals(2, li.getSize());
+            li.remove(1);
+            assertEquals(1, li.getSize());
+            li.remove(0);
+            assertEquals(0, li.getSize());
+        } catch (ItemDoesNotExistException e) {
+            fail();
+        }
     }
 
     @Test
@@ -134,13 +138,17 @@ public class ListOfItemsTest {
     }
 
     @Test
-    void testChangeStatus() throws MarkingNoneExistentItem {
-        li.changeStatus(1);
-        assertFalse(li.get(1).getIsDone());
-        li.changeStatus(2);
-        assertTrue(li.get(2).getIsDone());
-        li.changeStatus(2);
-        assertFalse(li.get(2).getIsDone());
+    void testChangeStatus() {
+        try {
+            li.changeStatus(1);
+            assertFalse(li.get(1).getIsDone());
+            li.changeStatus(2);
+            assertTrue(li.get(2).getIsDone());
+            li.changeStatus(2);
+            assertFalse(li.get(2).getIsDone());
+        } catch (MarkingNoneExistentItem e) {
+            fail();
+        }
     }
 
     @Test
