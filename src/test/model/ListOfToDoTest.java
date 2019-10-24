@@ -22,7 +22,6 @@ public class ListOfToDoTest {
     private Item tdi2;
     private Item tdi3;
     private ListOfToDo ltdi;
-    private ArrayList<Item> temp;
 
     @BeforeEach
     void setup() {
@@ -30,11 +29,10 @@ public class ListOfToDoTest {
         tdi2 = new ToDoItem("c", "d", true);
         tdi3 = new ToDoItem("e", "f", false);
 
-        temp = new ArrayList<>();
-        temp.add(tdi1);
-        temp.add(tdi2);
-        temp.add(tdi3);
-        ltdi = new ListOfToDo(temp);
+        ltdi = new ListOfToDo();
+        ltdi.addItem(tdi1);
+        ltdi.addItem(tdi2);
+        ltdi.addItem(tdi3);
     }
 
     @Test
@@ -52,13 +50,13 @@ public class ListOfToDoTest {
 
     @Test
     void testLoad() throws IOException, ItemDoesNotExistException {
-        ltdi.save("TDLoadTest.txt");
+        ltdi.save();
 
         ltdi.remove(2);
         ltdi.remove(1);
         ltdi.remove(0);
 
-        ltdi.load("TDLoadTest.txt");
+        ltdi.load();
 
         assertEquals(3, ltdi.getSize());
 
@@ -77,13 +75,13 @@ public class ListOfToDoTest {
 
     @Test
     void testSave() throws IOException {
-        String path = "TDSaveTest";
-        PrintWriter fileClearer = new PrintWriter(path, "UTF-8");
+
+        PrintWriter fileClearer = new PrintWriter(ltdi.getSavePath(), "UTF-8");
         fileClearer.close();
 
-        ltdi.save(path);
+        ltdi.save();
 
-        List<String> savedItems = Files.readAllLines(Paths.get(path));
+        List<String> savedItems = Files.readAllLines(Paths.get(ltdi.getSavePath()));
 
         assertEquals(3, savedItems.size());
         assertEquals("a;b;false", savedItems.get(0));
@@ -93,7 +91,7 @@ public class ListOfToDoTest {
 
     @Test
     void testPrint() {
-        ArrayList<String> printed = new ArrayList<>();
+        ArrayList<String> printed;
         printed = ltdi.print();
         assertEquals("Title: a Description: b Done? false", printed.get(0));
         assertEquals("Title: c Description: d Done? true", printed.get(1));

@@ -9,5 +9,5 @@ public interface Load {
     //REQUIRES: the save is in the right path
     //MODIFIES: List, Item
     //EFFECTS: reads the save file, create new items and add them into the list
-    void load(String path) throws IOException, TooManyItemsUndoneException;
+    void load() throws IOException, TooManyItemsUndoneException;
 }

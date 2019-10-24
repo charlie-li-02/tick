@@ -21,7 +21,7 @@ public class ToDoItem extends Item {
     //MODIFIES: nothing
     //EFFECTS: formats the item it was called on and coverts it to a string
     public String toString() {
-        return "Title: " + this.title + ", Description: " + this.description + ", Done?: " + this.isDone;
+        return "Title: " + title + ", Description: " + description + ", Done?: " + isDone;
     }
 
 }

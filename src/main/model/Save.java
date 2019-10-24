@@ -8,5 +8,5 @@ public interface Save {
     //REQUIRES: the save file is in the right path
     //MODIFIES: the save file
     //EFFECTS: adds the items into the save file
-    void save(String path) throws FileNotFoundException, UnsupportedEncodingException;
+    void save() throws FileNotFoundException, UnsupportedEncodingException;
 }

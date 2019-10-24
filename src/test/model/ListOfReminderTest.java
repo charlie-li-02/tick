@@ -20,7 +20,6 @@ public class ListOfReminderTest {
     private ReminderItem ri2;
     private ReminderItem ri3;
     private ListOfReminder lri;
-    private ArrayList<Item> temp;
 
     @BeforeEach
     void setup() {
@@ -28,11 +27,10 @@ public class ListOfReminderTest {
         ri2 = new ReminderItem("b", "3", true);
         ri3 = new ReminderItem("c", "7", false);
 
-        temp = new ArrayList<>();
-        temp.add(ri1);
-        temp.add(ri2);
-        temp.add(ri3);
-        lri = new ListOfReminder(temp);
+        lri = new ListOfReminder();
+        lri.addItem(ri1);
+        lri.addItem(ri2);
+        lri.addItem(ri3);
     }
 
     @Test
@@ -50,13 +48,13 @@ public class ListOfReminderTest {
 
     @Test
     void testLoad() throws IOException, ItemDoesNotExistException {
-        lri.save("RLoadTest.txt");
+        lri.save();
 
         lri.remove(2);
         lri.remove(1);
         lri.remove(0);
 
-        lri.load("RLoadTest.txt");
+        lri.load();
 
         assertEquals(3, lri.getSize());
 
@@ -75,13 +73,12 @@ public class ListOfReminderTest {
 
     @Test
     void testSave() throws IOException {
-        String path = "RSaveTest";
-        PrintWriter fileClearer = new PrintWriter(path, "UTF-8");
+        PrintWriter fileClearer = new PrintWriter(lri.getSavePath(), "UTF-8");
         fileClearer.close();
 
-        lri.save(path);
+        lri.save();
 
-        List<String> savedItems = Files.readAllLines(Paths.get(path));
+        List<String> savedItems = Files.readAllLines(Paths.get(lri.getSavePath()));
 
         assertEquals(3, savedItems.size());
         assertEquals("a;2;false", savedItems.get(0));

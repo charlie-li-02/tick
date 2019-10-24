@@ -46,21 +46,21 @@ public class Item {
     //MODIFIES: this
     //EFFECTS: sets the this as done represented by true
     public void markDone() {
-        this.isDone = true;
+        isDone = true;
     }
 
     //REQUIRES: nothing
     //MODIFIES: this
     //EFFECTS: sets the this as undone represented by false
     public void markUndone() {
-        this.isDone = false;
+        isDone = false;
     }
 
     //REQUIRES: nothing
     //MODIFIES: this
     //EFFECTS:  flips the status of this
     public void flipStatus() {
-        if (this.isDone) {
+        if (isDone) {
             markUndone();
         } else {
             markDone();

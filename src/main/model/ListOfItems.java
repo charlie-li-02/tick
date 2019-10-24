@@ -4,15 +4,23 @@ import exceptions.DeletingNoneExistentItem;
 import exceptions.MarkingNoneExistentItem;
 import exceptions.TooManyItemsUndoneException;
 
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.io.UnsupportedEncodingException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
-public abstract class ListOfItems {
-    public ArrayList<Item> listOfItem;
+public abstract class ListOfItems implements Save, Load {
+
+    public ArrayList<Item> listOfItems;
     public int maxUndone = 10;
 
-    public ListOfItems(ArrayList<Item> li) {
-        this.listOfItem = li;
+    public ListOfItems() {
+        this.listOfItems = new ArrayList<>();
     }
 
     //REQUIRES: nothing
@@ -24,12 +32,12 @@ public abstract class ListOfItems {
     //MODIFIES: this
     //EFFECTS: adds the Item onto the list of items
     public void addItem(Item item) {
-        this.listOfItem.add(item);
+        listOfItems.add(item);
     }
 
     public void addNewItem(Item item) throws TooManyItemsUndoneException {
         int undoneItems = 0;
-        for (Item i: this.listOfItem) {
+        for (Item i: listOfItems) {
             if (!i.getIsDone()) {
                 undoneItems++;
             }
@@ -37,7 +45,7 @@ public abstract class ListOfItems {
         if (undoneItems >= maxUndone) {
             throw new TooManyItemsUndoneException();
         } else {
-            this.listOfItem.add(item);
+            listOfItems.add(item);
         }
     }
 
@@ -45,24 +53,24 @@ public abstract class ListOfItems {
     //MODIFIES: nothing
     //EFFECTS: returns the ith Item
     public Item get(int i) {
-        return this.listOfItem.get(i);
+        return listOfItems.get(i);
     }
 
     //REQUIRES: nothing
     //MODIFIES: nothing
     //EFFECTS: returns the size of the array
     public int getSize() {
-        return this.listOfItem.size();
+        return listOfItems.size();
     }
 
     //REQUIRES: at least one item in the array
     //MODIFIES: this
     //EFFECTS: removes the ith Item
     public Item remove(int i) throws DeletingNoneExistentItem {
-        if (i + 1 > this.listOfItem.size()) {
+        if (i + 1 > listOfItems.size()) {
             throw new DeletingNoneExistentItem();
         } else {
-            return this.listOfItem.remove(i);
+            return listOfItems.remove(i);
         }
     }
 
@@ -70,10 +78,10 @@ public abstract class ListOfItems {
     //MODIFIES: this
     //EFFECTS: changes the status ith Item
     public void changeStatus(int i) throws MarkingNoneExistentItem {
-        if (i + 1 > this.listOfItem.size()) {
+        if (i + 1 > listOfItems.size()) {
             throw new MarkingNoneExistentItem();
         } else {
-            listOfItem.get(i).flipStatus();
+            listOfItems.get(i).flipStatus();
         }
     }
 
@@ -134,4 +142,36 @@ public abstract class ListOfItems {
     //MODIFIES: nothing
     //EFFECTS: returns the PromptAnother
     public abstract String getPromptAnother();
+
+    //REQUIRES: nothing
+    //MODIFIES: nothing
+    //EFFECTS: returns the SavePath
+    public abstract String getSavePath();
+
+    //REQUIRES: nothing
+    //MODIFIES: this
+    //EFFECTS: loads the items in the save file into the list
+    public void load() throws IOException {
+        List<String> lines = Files.readAllLines(Paths.get(getSavePath()));
+        for (String line : lines) {
+            ArrayList<String> parts = split(line);
+            Item i = new Item(parts.get(0), parts.get(1), stringToBoolean(parts.get(2)));
+            addItem(i);
+        }
+    }
+
+    //REQUIRES: nothing
+    //MODIFIES: nothing
+    //EFFECTS saves the items in the list to the save file
+    public void save() throws FileNotFoundException, UnsupportedEncodingException {
+        PrintWriter fileClearer = new PrintWriter(getSavePath(), "UTF-8");
+        fileClearer.close();
+        PrintWriter writer = new PrintWriter(getSavePath(), "UTF-8");
+        for (Item item: listOfItems) {
+            String line = merge(item);
+            writer.println(line);
+        }
+        writer.close();
+    }
+
 }

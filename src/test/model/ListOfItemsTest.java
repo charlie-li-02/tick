@@ -16,10 +16,10 @@ public class ListOfItemsTest {
     private Item i2;
     private Item i3;
     private ListOfItems li;
-    private ArrayList<Item> temp;
 
-    private ArrayList<Item> empty = new ArrayList<>();
-    private ListOfItems addNewTestList = new ListOfToDo(empty);
+
+
+    private ListOfItems addNewTestList = new ListOfToDo();
 
     @BeforeEach
     void setup() {
@@ -27,17 +27,16 @@ public class ListOfItemsTest {
         i2 = new Item("b", "3", true);
         i3 = new Item("c", "7", false);
 
-        temp = new ArrayList<>();
-        temp.add(i1);
-        temp.add(i2);
-        temp.add(i3);
-        li = new ListOfReminder(temp);
+        li = new ListOfReminder();
+        li.addItem(i1);
+        li.addItem(i2);
+        li.addItem(i3);
     }
 
     @Test
     void testAddItem() {
         li.addItem(i1);
-        assertEquals(4, temp.size());
+        assertEquals(4, li.getSize());
         assertEquals(i1, li.get(3));
     }
 

@@ -1,9 +1,6 @@
 package model;
 
-import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.io.PrintWriter;
-import java.io.UnsupportedEncodingException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.ArrayList;
@@ -12,6 +9,8 @@ import java.util.List;
 public class ListOfToDo extends ListOfItems implements Save, Load {
 
     private ArrayList<Item> listOfTDI;
+    private String toDoSavePath = "todos.txt";
+
     public String promptTitle = "Enter a title for your new to do:";
     public String promptAttribute = "Enter a description for your new to do:";
     public String promptAnother = "Do you want to add another to do? (y|n)";
@@ -19,9 +18,9 @@ public class ListOfToDo extends ListOfItems implements Save, Load {
     //REQUIRES: nothing
     //MODIFIES: this
     //EFFECTS: the constructor for To Do
-    public ListOfToDo(ArrayList<Item> ltdi) {
-        super(ltdi);
-        this.listOfTDI = ltdi;
+    public ListOfToDo() {
+        super();
+        this.listOfTDI = new ArrayList<>();
     }
 
     //REQUIRES: nothing
@@ -32,38 +31,12 @@ public class ListOfToDo extends ListOfItems implements Save, Load {
         return tdi;
     }
 
-    //REQUIRES: todos.txt is in the right path
-    //MODIFIES: this, ToDoItem
-    //EFFECTS: reads the save file and adds the saved to do items into the list
-    public void load(String path) throws IOException {
-        List<String> lines = Files.readAllLines(Paths.get(path));
-        for (String line : lines) {
-            ArrayList<String> parts = split(line);
-            Item tdi = new ToDoItem(parts.get(0), parts.get(1), stringToBoolean(parts.get(2)));
-            addItem(tdi);
-        }
-    }
-
-    //REQUIRES: todos.txt is in the right path
-    //MODIFIES: todos.txt
-    //EFFECTS: adds the ToDoItems into the save file
-    public void save(String path) throws FileNotFoundException, UnsupportedEncodingException {
-        PrintWriter fileClearer = new PrintWriter(path, "UTF-8");
-        fileClearer.close();
-        PrintWriter writer = new PrintWriter(path, "UTF-8");
-        for (Item item: this.listOfTDI) {
-            String line = merge(item);
-            writer.println(line);
-        }
-        writer.close();
-    }
-
     //REQUIRES: nothing
     //MODIFIES: nothing
     //EFFECTS: formats the list of items into a list of string
     public ArrayList<String> print() {
         ArrayList<String> result = new ArrayList<>();
-        for (Item i: this.listOfItem) {
+        for (Item i: listOfItems) {
             String s = "Title: " + i.getTitle() + " Description: " + i.getAttribute() + " Done? " + i.getIsDone();
             result.add(s);
         }
@@ -71,25 +44,43 @@ public class ListOfToDo extends ListOfItems implements Save, Load {
     }
 
     //REQUIRES: nothing
+    //MODIFIES: this
+    //EFFECTS: loads the items in the save file into the list
+    public void load() throws IOException {
+        List<String> lines = Files.readAllLines(Paths.get(toDoSavePath));
+        for (String line : lines) {
+            ArrayList<String> parts = split(line);
+            Item i = new ToDoItem(parts.get(0), parts.get(1), stringToBoolean(parts.get(2)));
+            addItem(i);
+        }
+    }
+
+    //REQUIRES: nothing
     //MODIFIES: nothing
     //EFFECTS: returns the PromptTitle
     public String getPromptTitle() {
-        return this.promptTitle;
+        return promptTitle;
     }
 
     //REQUIRES: nothing
     //MODIFIES: nothing
     //EFFECTS: returns the PromptAttribute
     public String getPromptAttribute() {
-        return this.promptAttribute;
+        return promptAttribute;
     }
 
     //REQUIRES: nothing
     //MODIFIES: nothing
     //EFFECTS: returns the PromptAnother
     public String getPromptAnother() {
-        return this.promptAnother;
+        return promptAnother;
     }
 
+    //REQUIRES: nothing
+    //MODIFIES: nothing
+    //EFFECTS: returns the SavePath
+    public String getSavePath() {
+        return toDoSavePath;
+    }
 }
 

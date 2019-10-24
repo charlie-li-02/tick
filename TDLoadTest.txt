@@ -1,3 +1,0 @@
-a;b;false
-c;d;true
-e;f;false
