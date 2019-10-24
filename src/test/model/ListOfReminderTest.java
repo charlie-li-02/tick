@@ -84,6 +84,9 @@ public class ListOfReminderTest {
         assertEquals("a;2;false", savedItems.get(0));
         assertEquals("b;3;true", savedItems.get(1));
         assertEquals("c;7;false", savedItems.get(2));
+
+        PrintWriter fileClearer2 = new PrintWriter(lri.getSavePath(), "UTF-8");
+        fileClearer2.close();
     }
 
     @Test

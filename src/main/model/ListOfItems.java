@@ -151,14 +151,15 @@ public abstract class ListOfItems implements Save, Load {
     //REQUIRES: nothing
     //MODIFIES: this
     //EFFECTS: loads the items in the save file into the list
-    public void load() throws IOException {
-        List<String> lines = Files.readAllLines(Paths.get(getSavePath()));
-        for (String line : lines) {
-            ArrayList<String> parts = split(line);
-            Item i = new Item(parts.get(0), parts.get(1), stringToBoolean(parts.get(2)));
-            addItem(i);
-        }
-    }
+    public abstract void load() throws IOException;
+//    {
+//        List<String> lines = Files.readAllLines(Paths.get(getSavePath()));
+//        for (String line : lines) {
+//            ArrayList<String> parts = split(line);
+//            Item i = new Item(parts.get(0), parts.get(1), stringToBoolean(parts.get(2)));
+//            addItem(i);
+//        }
+//    }
 
     //REQUIRES: nothing
     //MODIFIES: nothing
