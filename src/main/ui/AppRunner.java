@@ -8,7 +8,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Scanner;
 
-public class ToDoList {
+public class AppRunner {
 
     private ArrayList<Item> listOfToDo;
     private ArrayList<Item> listOfReminder;
@@ -33,7 +33,7 @@ public class ToDoList {
     //REQUIRES: nothing
     //MODIFIES: this
     //EFFECTS: constructor for ToDoList
-    private ToDoList() throws IOException {
+    private AppRunner() throws IOException {
         listOfToDo = new ArrayList<>();
         listOfReminder = new ArrayList<>();
         takeInput = new Scanner(System.in);
@@ -204,6 +204,6 @@ public class ToDoList {
     //MODIFIES: this
     //EFFECTS: instantiates a new ToDoList and starts the program
     public static void main(String[] args) throws IOException {
-        new ToDoList();
+        new AppRunner();
     }
 }
