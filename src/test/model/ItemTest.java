@@ -21,7 +21,7 @@ public class ItemTest {
     }
 
     @Test
-    void testGetReminder() {
+    void testGetTitle() {
         assertEquals("water", i1.getTitle());
         assertEquals("eat", i2.getTitle());
         assertFalse("sleep" == i1.getTitle());
@@ -29,7 +29,7 @@ public class ItemTest {
     }
 
     @Test
-    void testGetTime() {
+    void testGetAttribute() {
         assertEquals("2:00", i1.getAttribute());
         assertEquals("6:00", i2.getAttribute());
         assertFalse("5:00" == i1.getAttribute());

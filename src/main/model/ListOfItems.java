@@ -8,11 +8,8 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.io.UnsupportedEncodingException;
-import java.nio.file.Files;
-import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.List;
 
 public abstract class ListOfItems implements Save, Load {
 
@@ -152,14 +149,6 @@ public abstract class ListOfItems implements Save, Load {
     //MODIFIES: this
     //EFFECTS: loads the items in the save file into the list
     public abstract void load() throws IOException;
-//    {
-//        List<String> lines = Files.readAllLines(Paths.get(getSavePath()));
-//        for (String line : lines) {
-//            ArrayList<String> parts = split(line);
-//            Item i = new Item(parts.get(0), parts.get(1), stringToBoolean(parts.get(2)));
-//            addItem(i);
-//        }
-//    }
 
     //REQUIRES: nothing
     //MODIFIES: nothing

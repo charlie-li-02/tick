@@ -7,27 +7,36 @@ import model.*;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
+import java.sql.SQLOutput;
+import java.util.HashSet;
 import java.util.Scanner;
 
 public class AppRunner {
 
     private ListOfItems listOfToDo;
     private ListOfItems listOfReminder;
+    private HomeworkList homeworkList;
     private Scanner takeInput;
 
     // bunch of strings for input options because too long for check style
-    private String optionP1 = "Please enter one of:\n";
-    private String optionP2 = "1 - add a to do\n";
-    private String optionP3 = "2 - add a reminder\n";
-    private String optionP4 = "3 - current to do list\n";
-    private String optionP5 = "4 - current reminder list\n";
-    private String optionP6 = "5 - exit";
+    private static final String optionP1 = "Please enter one of:\n";
+    private static final String optionP2 = "1 - add a to do\n";
+    private static final String optionP3 = "2 - add a reminder\n";
+    private static final String optionP4 = "3 - new homework list\n";
+    private static final String optionP5 = "4 - view current lists\n";
+    private static final String optionP6 = "5 - exit";
 
     //bunch of strings for deleting or marking items because too long for check style
-    private String outOP1 = "Would you like to delete an item or change an item's status?\n";
-    private String outOP2 = "1 - delete an item\n";
-    private String outOP3 = "2 - flip the status of an item\n";
-    private String outOP4 = "3 - no";
+    private static final String outOP1 = "Would you like to delete an item or change an item's status?\n";
+    private static final String outOP2 = "1 - delete an item\n";
+    private static final String outOP3 = "2 - flip the status of an item\n";
+    private static final String outOP4 = "3 - no";
+
+    //bunch of strings for homework options because too long for check style
+    private static final String hwOptionP1 = "Would you like to delete or change an assignment's status?\n";
+    private static final String hwOptionP2 = "1 - delete an assignment\n";
+    private static final String hwOptionP3 = "2 - change the status of an assignment\n";
+    private static final String hwOptionP4 = "3 - no";
 
     //REQUIRES: nothing
     //MODIFIES: this
@@ -36,9 +45,11 @@ public class AppRunner {
         takeInput = new Scanner(System.in);
         listOfToDo = new ListOfToDo();
         listOfReminder = new ListOfReminder();
+        homeworkList = new HomeworkList();
 
         listOfToDo.load();
         listOfReminder.load();
+        homeworkList.load();
         processInput();
 
     }
@@ -62,10 +73,10 @@ public class AppRunner {
                 handleReminder(listOfReminder);
 
             } else if (type.equals("3")) {
-                handlePrintList(listOfToDo);
+                handleHomeworkList();
 
             } else if (type.equals("4")) {
-                handlePrintList(listOfReminder);
+                chooseList();
 
             } else {
                 System.out.println("Your entrance did not match any options, please try again. \n");
@@ -87,6 +98,44 @@ public class AppRunner {
     private void handleReminder(ListOfItems lr) throws IOException {
         processItem(lr);
         lr.save();
+    }
+
+    //REQUIRES: nothing
+    //MODIFIES: HomeworkList
+    //EFFECTS: starts off the processing of adding a homework
+    private void handleHomeworkList() throws FileNotFoundException, UnsupportedEncodingException {
+        System.out.println("enter a course name");
+        Course course = new Course(takeInput.nextLine());
+        HashSet<Homework> setOfHW = new HashSet<>();
+        while (true) {
+            System.out.println("enter the assignment name");
+            String assignment = takeInput.nextLine();
+            System.out.println("enter the due date (ex. sep 1st )");
+            String dueBy = takeInput.nextLine();
+            Homework homework = new Homework(course, assignment, dueBy, false);
+            setOfHW.add(homework);
+            System.out.println("do you want to add another assignment due? (y|n)");
+            String choice = takeInput.nextLine();
+            if (choice.equals("n")) {
+                break;
+            }
+        }
+        homeworkList.addHomeworkList(course, setOfHW);
+        processHomeworkList();
+    }
+
+    //REQUIRES: nothing
+    //MODIFIES: nothing
+    //EFFECTS: prompts the user choices
+    private void processHomeworkList() throws FileNotFoundException, UnsupportedEncodingException {
+        System.out.println("do you want to add assignments for another course? (y|n)");
+        String choice = takeInput.nextLine();
+        if (choice.equals("y")) {
+            handleHomeworkList();
+        } else if (choice.equals("n")) {
+            printHomeworkList();
+        }
+        homeworkList.save();
     }
 
     //REQUIRES: nothing
@@ -127,6 +176,23 @@ public class AppRunner {
 
     //REQUIRES: nothing
     //MODIFIES: nothing
+    //EFFECTS: lets the user choose which list to print out
+    private void chooseList() throws FileNotFoundException, UnsupportedEncodingException {
+        System.out.println("Which list would you like to open?\n" + "1 - to do list\n"
+                + "2 - reminders list\n" + "3 - homework list\n");
+        String choice = takeInput.nextLine();
+        if (choice.equals("1")) {
+            handlePrintList(listOfToDo);
+        } else if (choice.equals("2")) {
+            handlePrintList(listOfReminder);
+        } else if (choice.equals("3")) {
+            printHomeworkList();
+            pickHomeworkList();
+        }
+    }
+
+    //REQUIRES: nothing
+    //MODIFIES: nothing
     //EFFECTS: prints out the list of items
     private void handlePrintList(ListOfItems li) throws FileNotFoundException, UnsupportedEncodingException {
         if (li.getSize() == 0) {
@@ -134,6 +200,21 @@ public class AppRunner {
         } else {
             System.out.println(li.print());
             processOptions(li);
+        }
+    }
+
+    //REQUIRES: nothing
+    //MODIFIES: nothing
+    //EFFECTS: prints out the homework list
+    private void printHomeworkList() {
+        if (homeworkList.homeWorkList.keySet().size() == 0) {
+            System.out.println("You don't have anything in that list!");
+        } else {
+            for (Course c : homeworkList.homeWorkList.keySet()) {
+                String course = c.toString();
+                String hwList = c.getSetOfHomework(homeworkList.homeWorkList).toString();
+                System.out.println(course + " " + hwList);
+            }
         }
     }
 
@@ -157,6 +238,49 @@ public class AppRunner {
         }
 
     }
+
+    //REQUIRES: nothing
+    //MODIFIES: nothing
+    //EFFECTS: lets the user pick which homework list they want to modify
+    private void pickHomeworkList() {
+        while (homeworkList.homeWorkList.keySet().size() > 0) {
+            System.out.println("do you wish to edit any homework lists? (y|n)");
+            String choice = takeInput.nextLine();
+            if (choice.equals("n")) {
+                break;
+            } else {
+                System.out.println("enter a course name to edit its assignments");
+                Course course = new Course(takeInput.nextLine());
+                HashSet<Homework> homework = homeworkList.getHomework(course);
+                if (homework.isEmpty()) {
+                    System.out.println("there is no assignments for that course");
+                } else {
+                    homeworkListOptions(homework);
+                }
+            }
+        }
+    }
+
+    //REQUIRES: nothing
+    //MODIFIES: homework
+    //EFFECTS: gives the user the choice to delete or change the status of a homework item
+    private void homeworkListOptions(HashSet<Homework> homework) {
+        while (homework.size() > 0) {
+            System.out.println(hwOptionP1 + hwOptionP2 + hwOptionP3 + hwOptionP4);
+            String choice = takeInput.nextLine();
+            if (choice.equals("1")) {
+                deleteHomework(homework);
+            } else if (choice.equals("2")) {
+                markHomework(homework);
+            } else if (choice.equals("3")) {
+                break;
+            } else {
+                System.out.println("Try again");
+            }
+        }
+
+    }
+
 
     //REQUIRES: nothing
     //MODIFIES: nothing
@@ -193,6 +317,29 @@ public class AppRunner {
             System.out.println(li.print());
             li.save();
         }
+    }
+
+    //REQUIRES: nothing
+    //MODIFIES: homework, Homework
+    //EFFECTS: deletes the item that matches the user input
+    private void deleteHomework(HashSet<Homework> homework) {
+        System.out.println(homework.toString());
+        System.out.println("enter the name of the assignment you want to delete");
+        String assignment = takeInput.nextLine();
+        System.out.println(homeworkList.delete(assignment, homework));
+        printHomeworkList();
+
+    }
+
+    //REQUIRES: nothing
+    //MODIFIES: homework, Homework
+    //EFFECTS: changes the status of the homework that matches the user input
+    private void markHomework(HashSet<Homework> homework) {
+        System.out.println(homework.toString());
+        System.out.println("enter the name of the assignment you want to change the status of");
+        String assignment = takeInput.nextLine();
+        System.out.println(homeworkList.changeStatus(assignment, homework));
+        printHomeworkList();
     }
 
     //REQUIRES: nothing

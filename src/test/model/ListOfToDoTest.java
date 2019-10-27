@@ -71,6 +71,9 @@ public class ListOfToDoTest {
         assertEquals("e", ltdi.get(2).getTitle());
         assertEquals("f", ltdi.get(2).getAttribute());
         assertFalse(ltdi.get(2).getIsDone());
+
+        PrintWriter fileClearer = new PrintWriter(ltdi.getSavePath(), "UTF-8");
+        fileClearer.close();
     }
 
     @Test

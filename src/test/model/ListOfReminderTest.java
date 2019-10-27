@@ -69,6 +69,9 @@ public class ListOfReminderTest {
         assertEquals("c", lri.get(2).getTitle());
         assertEquals("7", lri.get(2).getAttribute());
         assertFalse(lri.get(2).getIsDone());
+
+        PrintWriter fileClearer = new PrintWriter(lri.getSavePath(), "UTF-8");
+        fileClearer.close();
     }
 
     @Test
