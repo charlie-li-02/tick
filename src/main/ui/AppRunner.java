@@ -7,7 +7,6 @@ import model.*;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
-import java.sql.SQLOutput;
 import java.util.HashSet;
 import java.util.Scanner;
 
@@ -114,9 +113,9 @@ public class AppRunner {
             String dueBy = takeInput.nextLine();
             Homework homework = new Homework(course, assignment, dueBy, false);
             setOfHW.add(homework);
+            course.addHomework(homework);
             System.out.println("do you want to add another assignment due? (y|n)");
-            String choice = takeInput.nextLine();
-            if (choice.equals("n")) {
+            if (takeInput.nextLine().equals("n")) {
                 break;
             }
         }
@@ -242,7 +241,7 @@ public class AppRunner {
     //REQUIRES: nothing
     //MODIFIES: nothing
     //EFFECTS: lets the user pick which homework list they want to modify
-    private void pickHomeworkList() {
+    private void pickHomeworkList() throws FileNotFoundException, UnsupportedEncodingException {
         while (homeworkList.homeWorkList.keySet().size() > 0) {
             System.out.println("do you wish to edit any homework lists? (y|n)");
             String choice = takeInput.nextLine();
@@ -251,11 +250,11 @@ public class AppRunner {
             } else {
                 System.out.println("enter a course name to edit its assignments");
                 Course course = new Course(takeInput.nextLine());
-                HashSet<Homework> homework = homeworkList.getHomework(course);
+                HashSet<Homework> homework = course.getSetOfHomework(homeworkList.homeWorkList);
                 if (homework.isEmpty()) {
                     System.out.println("there is no assignments for that course");
                 } else {
-                    homeworkListOptions(homework);
+                    homeworkListOptions(course, homework);
                 }
             }
         }
@@ -264,12 +263,13 @@ public class AppRunner {
     //REQUIRES: nothing
     //MODIFIES: homework
     //EFFECTS: gives the user the choice to delete or change the status of a homework item
-    private void homeworkListOptions(HashSet<Homework> homework) {
+    private void homeworkListOptions(
+            Course course, HashSet<Homework> homework) throws FileNotFoundException, UnsupportedEncodingException {
         while (homework.size() > 0) {
             System.out.println(hwOptionP1 + hwOptionP2 + hwOptionP3 + hwOptionP4);
             String choice = takeInput.nextLine();
             if (choice.equals("1")) {
-                deleteHomework(homework);
+                deleteHomework(course, homework);
             } else if (choice.equals("2")) {
                 markHomework(homework);
             } else if (choice.equals("3")) {
@@ -278,6 +278,7 @@ public class AppRunner {
                 System.out.println("Try again");
             }
         }
+        homeworkList.save();
 
     }
 
@@ -322,11 +323,11 @@ public class AppRunner {
     //REQUIRES: nothing
     //MODIFIES: homework, Homework
     //EFFECTS: deletes the item that matches the user input
-    private void deleteHomework(HashSet<Homework> homework) {
+    private void deleteHomework(Course course, HashSet<Homework> homework) {
         System.out.println(homework.toString());
         System.out.println("enter the name of the assignment you want to delete");
         String assignment = takeInput.nextLine();
-        System.out.println(homeworkList.delete(assignment, homework));
+        System.out.println(homeworkList.delete(course, assignment, homework));
         printHomeworkList();
 
     }

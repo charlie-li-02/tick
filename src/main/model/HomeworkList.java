@@ -33,12 +33,13 @@ public class HomeworkList implements Save, Load {
     //MODIFIES: this, setOfHomework
     //EFFECTS: deletes the assignment entered if it is in the set, and return the total amount of assignments left
     //         after deleting
-    public String delete(String assignment, HashSet<Homework> setOfHomework) {
+    public String delete(Course course, String assignment, HashSet<Homework> setOfHomework) {
         for (Homework h: setOfHomework) {
             if (h.getAssignment().equals(assignment)) {
                 setOfHomework.remove(h);
+                h.getCourse().removeHomework(h);
                 return "By removing " + assignment + " you have " + setOfHomework.size() + " assignments left for "
-                        + h.getCourse().getCourseName();
+                        + course.getCourseName();
             }
         }
         return "Cannot find assignment matching that name, try again";
@@ -77,22 +78,36 @@ public class HomeworkList implements Save, Load {
     //MODIFIES: HomeworkList
     //EFFECTS: puts the homework list to the course if it already exists, makes a new key if it doesn't
     public void addHomeworkList(Course course, HashSet<Homework> setOfHW) {
+        HashSet<Homework> mergedSet = new HashSet<>();
         if (homeWorkList.keySet().size() == 0) {
             homeWorkList.put(course, setOfHW);
         } else {
             for (Course c: homeWorkList.keySet()) {
                 if (course.equals(c)) {
-                    HashSet<Homework> mergedSet = new HashSet<>();
                     mergedSet.addAll(homeWorkList.get(c));
                     mergedSet.addAll(setOfHW);
-                    homeWorkList.put(c, mergedSet);
                 } else {
-                    homeWorkList.put(course, setOfHW);
+                    mergedSet.addAll(setOfHW);
                 }
             }
+            homeWorkList.put(course, mergedSet);
+        }
+        loadHomeworkIntoCourse(course, setOfHW);
+    }
+
+    //REQUIRES: nothing
+    //MODIFIES: course
+    //EFFECTS: adds homeworkHashSet into course's set of homework
+    public void loadHomeworkIntoCourse(Course course, HashSet<Homework> homeworkHashSet) {
+        for (Homework hw: homeworkHashSet) {
+            course.addHomework(hw);
         }
     }
 
+
+    //REQUIRES: nothing
+    //MODIFIES: this
+    //EFFECTS: loads the saved items into the HashMap
     @Override
     public void load() throws IOException {
         List<String> lines = Files.readAllLines(Paths.get(savePath));
@@ -100,6 +115,7 @@ public class HomeworkList implements Save, Load {
             ArrayList<String> parts = split(line);
             Course course = new Course(parts.get(0));
             Homework homework = new Homework(course, parts.get(1), parts.get(2), stringToBoolean(parts.get(3)));
+            course.addHomework(homework);
             HashSet<Homework> setOfHW = new HashSet<>();
             setOfHW.add(homework);
             addHomeworkList(course, setOfHW);

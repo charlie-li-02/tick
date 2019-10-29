@@ -32,6 +32,16 @@ public class HomeworkTest {
     }
 
     @Test
+    void testSetCourse() {
+
+    }
+
+    @Test
+    void testRemoveCourse() {
+
+    }
+
+    @Test
     void testGetAssignment() {
         assertEquals("lab", hw1.getAssignment());
         assertEquals("ww", hw2.getAssignment());

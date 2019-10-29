@@ -8,6 +8,7 @@ import java.util.HashSet;
 import java.util.Map;
 
 import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class CourseTest {
@@ -49,5 +50,14 @@ public class CourseTest {
         course.getSetOfHomework(homeworkMap);
         course.addHomework(hw3);
         assertEquals(3, course.getSetOfHomework().size());
+        assertEquals(course, hw3.getCourse());
+    }
+
+    @Test
+    void testRemoveHomework() {
+        course.getSetOfHomework(homeworkMap);
+        course.removeHomework(hw1);
+        assertFalse(course.getSetOfHomework().contains(hw1));
+        assertEquals(1, course.getSetOfHomework().size());
     }
 }

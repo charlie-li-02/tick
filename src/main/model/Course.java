@@ -38,12 +38,28 @@ public class Course {
     }
 
     //REQUIRES: nothing
-    //MODIFIES: this
+    //MODIFIES: this, homework
     //EFFECTS: adds homework to the setOfHomework if not already in the set
     public void addHomework(Homework homework) {
         if (!setOfHomework.contains(homework)) {
             setOfHomework.add(homework);
+            homework.setCourse(this);
         }
+    }
+
+    //REQUIRES: nothing
+    //MODIFIES: this, homework
+    //EFFECTS: removes the homework if it's in the set
+    public void removeHomework(Homework homework) {
+        if (setOfHomework.contains(homework)) {
+            setOfHomework.remove(homework);
+            homework.removeCourse(this);
+        }
+    }
+
+    @Override
+    public String toString() {
+        return courseName;
     }
 
     @Override

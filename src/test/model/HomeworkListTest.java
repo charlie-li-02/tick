@@ -3,10 +3,8 @@ package model;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.io.UnsupportedEncodingException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.*;
@@ -48,11 +46,11 @@ public class HomeworkListTest {
     @Test
     void testDelete() {
         assertEquals("Cannot find assignment matching that name, try again"
-                , homeworkList.delete("test", homeworkSet));
+                , homeworkList.delete(c1,"test", homeworkSet));
         assertEquals("By removing lab you have 1 assignments left for cpsc"
-                , homeworkList.delete("lab", homeworkSet));
+                , homeworkList.delete(c1,"lab", homeworkSet));
         assertEquals("By removing quiz you have 0 assignments left for cpsc"
-                , homeworkList.delete("quiz", homeworkSet));
+                , homeworkList.delete(c1,"quiz", homeworkSet));
     }
 
     @Test
@@ -80,8 +78,8 @@ public class HomeworkListTest {
     void testLoad() throws IOException {
         homeworkList.save();
 
-        homeworkList.delete("lab", homeworkSet);
-        homeworkList.delete("quiz", homeworkSet);
+        homeworkList.delete(c1,"lab", homeworkSet);
+        homeworkList.delete(c1,"quiz", homeworkSet);
 
         homeworkList.load();
 
@@ -145,5 +143,38 @@ public class HomeworkListTest {
         homeworkList.setHomeWorkList(homeworkMap);
         assertTrue(homeworkList.homeWorkList.keySet().contains(c1));
         assertFalse(homeworkList.homeWorkList.keySet().contains(c2));
+    }
+
+    @Test
+    void testAddHomeworkList() {
+        c1.getSetOfHomework(homeworkMap);
+        Homework c1HW = new Homework(c1, "hi", "a", false);
+        HashSet<Homework> c1List = new HashSet<>();
+        c1List.add(c1HW);
+        homeworkList.addHomeworkList(c1, c1List);
+        assertEquals(3, c1.getSetOfHomework().size());
+        Homework c1HW2 = new Homework(c1, "hi", "a", false);
+        c1List.add(c1HW2);
+        homeworkList.addHomeworkList(c1, c1List);
+        assertEquals(4, c1.getSetOfHomework().size());
+
+        Course newCourse = new Course("new");
+        Homework newHW = new Homework(newCourse, "new", "new", false);
+        HashSet<Homework> newSet = new HashSet<>();
+        newSet.add(newHW);
+        homeworkList.addHomeworkList(newCourse, newSet);
+        assertEquals(1, newCourse.getSetOfHomework().size());
+    }
+
+    @Test
+    void testLoadHWIntoCourse() {
+        c1.getSetOfHomework(homeworkMap);
+        Homework c1HW = new Homework(c1, "hi", "a", false);
+        Homework c1HW2 = new Homework(c1, "hi", "a", false);
+        HashSet<Homework> c1List = new HashSet<>();
+        c1List.add(c1HW);
+        c1List.add(c1HW2);
+        homeworkList.loadHomeworkIntoCourse(c1, c1List);
+        assertEquals(4, c1.getSetOfHomework().size());
     }
 }

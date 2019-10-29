@@ -20,6 +20,26 @@ public class Homework extends Item {
         return course;
     }
 
+    //REQUIRES: nothing
+    //MODIFIES: this, course
+    //EFFECTS: sets the course
+    public void setCourse(Course course) {
+        if (!course.equals(this.course)) {
+            this.course = course;
+            course.addHomework(this);
+        }
+    }
+
+    //REQUIRES: nothing
+    //MODIFIES: this, course
+    //EFFECTS: removes the course
+    public void removeCourse(Course course) {
+        if (course.equals(this.course)) {
+            this.course = null;
+            course.removeHomework(this);
+        }
+    }
+
 
     public String getAssignment() {
         return assignment;
