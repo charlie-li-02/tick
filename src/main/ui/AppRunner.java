@@ -249,14 +249,25 @@ public class AppRunner {
                 break;
             } else {
                 System.out.println("enter a course name to edit its assignments");
-                Course course = new Course(takeInput.nextLine());
-                HashSet<Homework> homework = course.getSetOfHomework(homeworkList.homeWorkList);
-                if (homework.isEmpty()) {
-                    System.out.println("there is no assignments for that course");
-                } else {
-                    homeworkListOptions(course, homework);
+                try {
+                    getHomeworkList();
+                } catch (NullPointerException e) {
+                    System.out.println("No list matching that course name, try again");
                 }
             }
+        }
+    }
+
+    //REQUIRES: nothing
+    //MODIFIES: nothing
+    //EFFECTS: gets the right homework list according to the course inputted
+    private void getHomeworkList() throws FileNotFoundException, UnsupportedEncodingException {
+        Course course = new Course(takeInput.nextLine());
+        HashSet<Homework> homework = course.getSetOfHomework(homeworkList.homeWorkList);
+        if (homework.isEmpty()) {
+            System.out.println("there is no assignments for that course");
+        } else {
+            homeworkListOptions(course, homework);
         }
     }
 

@@ -164,6 +164,11 @@ public class HomeworkListTest {
         newSet.add(newHW);
         homeworkList.addHomeworkList(newCourse, newSet);
         assertEquals(1, newCourse.getSetOfHomework().size());
+
+        Map<Course, HashSet<Homework>> emptyMap = new HashMap<>();
+        emptyMap.put(newCourse, newSet);
+        assertEquals(1, emptyMap.keySet().size());
+        assertEquals(newSet, emptyMap.get(newCourse));
     }
 
     @Test

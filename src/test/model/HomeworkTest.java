@@ -41,6 +41,8 @@ public class HomeworkTest {
     void testRemoveCourse() {
         hw1.removeCourse(c1);
         assertEquals(null, hw1.getCourse());
+        hw2.removeCourse(c1);
+        assertEquals(c2, hw2.getCourse());
     }
 
     @Test
@@ -79,4 +81,5 @@ public class HomeworkTest {
         hw2.flipStatus();
         assertTrue(hw2.getIsDone());
     }
+
 }

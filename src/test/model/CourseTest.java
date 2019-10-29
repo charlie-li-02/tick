@@ -71,4 +71,10 @@ public class CourseTest {
     void testToString() {
         assertEquals("cpsc", course.toString());
     }
+
+    @Test
+    void testEquals() {
+        Course course = new Course("not the same");
+        assertFalse(this.course.equals(course));
+    }
 }
