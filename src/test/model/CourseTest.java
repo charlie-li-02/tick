@@ -42,6 +42,12 @@ public class CourseTest {
         assertEquals(2, test.size());
         assertTrue(test.contains(hw1));
         assertTrue(test.contains(hw2));
+
+        Course newCourse = new Course("math");
+        Homework newHW = new Homework(newCourse, "new", "new", false);
+
+        assertFalse(test.contains(newHW));
+        assertEquals(null, newCourse.getSetOfHomework(homeworkMap));
     }
 
     @Test
@@ -59,5 +65,10 @@ public class CourseTest {
         course.removeHomework(hw1);
         assertFalse(course.getSetOfHomework().contains(hw1));
         assertEquals(1, course.getSetOfHomework().size());
+    }
+
+    @Test
+    void testToString() {
+        assertEquals("cpsc", course.toString());
     }
 }

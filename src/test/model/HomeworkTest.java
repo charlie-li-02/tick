@@ -33,12 +33,14 @@ public class HomeworkTest {
 
     @Test
     void testSetCourse() {
-
+        hw1.setCourse(c2);
+        assertEquals("cpsc", hw1.getCourse().toString());
     }
 
     @Test
     void testRemoveCourse() {
-
+        hw1.removeCourse(c1);
+        assertEquals(null, hw1.getCourse());
     }
 
     @Test
