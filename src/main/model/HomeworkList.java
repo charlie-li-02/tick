@@ -9,7 +9,7 @@ import java.nio.file.Paths;
 import java.util.*;
 
 public class HomeworkList implements Save, Load {
-    public Map<Course, HashSet<Homework>> homeWorkList;
+    public Map<Course, HashSet<HomeworkItem>> homeWorkList;
     private static final String savePath = "homework.txt";
 
     public HomeworkList() {
@@ -20,7 +20,7 @@ public class HomeworkList implements Save, Load {
     //REQUIRES: nothing
     //MODIFIES: nothing
     //EFFECTS: returns the set of homework associated with the course given
-    public HashSet<Homework> getHomework(Course course) {
+    public HashSet<HomeworkItem> getHomework(Course course) {
         for (Course c: homeWorkList.keySet()) {
             if (c.equals(course)) {
                 return homeWorkList.get(c);
@@ -33,8 +33,8 @@ public class HomeworkList implements Save, Load {
     //MODIFIES: this, setOfHomework
     //EFFECTS: deletes the assignment entered if it is in the set, and return the total amount of assignments left
     //         after deleting
-    public String delete(Course course, String assignment, HashSet<Homework> setOfHomework) {
-        for (Homework h: setOfHomework) {
+    public String delete(Course course, String assignment, HashSet<HomeworkItem> setOfHomework) {
+        for (HomeworkItem h: setOfHomework) {
             if (h.getAssignment().equals(assignment)) {
                 setOfHomework.remove(h);
                 h.getCourse().removeHomework(h);
@@ -49,8 +49,8 @@ public class HomeworkList implements Save, Load {
     //MODIFIES: this, setOfHomework, h
     //EFFECTS: changes the done status of the assignment enter if it is in the set, and returns the total amount of
     //         assignments done out of the total number of assignments
-    public String changeStatus(String assignment, HashSet<Homework> setOfHomework) {
-        for (Homework h: setOfHomework) {
+    public String changeStatus(String assignment, HashSet<HomeworkItem> setOfHomework) {
+        for (HomeworkItem h: setOfHomework) {
             if (h.getAssignment().equals(assignment)) {
                 h.flipStatus();
                 return "Now you have " + getHWDone(setOfHomework) + " assignments done for "
@@ -63,9 +63,9 @@ public class HomeworkList implements Save, Load {
     //REQUIRES: nothing
     //MODIFIES: noting
     //EFFECTS: returns the number of homework that is done in setOfHomework
-    public int getHWDone(HashSet<Homework> setOfHomework) {
+    public int getHWDone(HashSet<HomeworkItem> setOfHomework) {
         int done = 0;
-        for (Homework h: setOfHomework) {
+        for (HomeworkItem h: setOfHomework) {
             if (h.getIsDone()) {
                 done++;
             }
@@ -77,8 +77,8 @@ public class HomeworkList implements Save, Load {
     //REQUIRES: nothing
     //MODIFIES: HomeworkList
     //EFFECTS: puts the homework list to the course if it already exists, makes a new key if it doesn't
-    public void addHomeworkList(Course course, HashSet<Homework> setOfHW) {
-        HashSet<Homework> mergedSet = new HashSet<>();
+    public void addHomeworkList(Course course, HashSet<HomeworkItem> setOfHW) {
+        HashSet<HomeworkItem> mergedSet = new HashSet<>();
         if (homeWorkList.keySet().size() == 0) {
             homeWorkList.put(course, setOfHW);
         } else {
@@ -98,8 +98,8 @@ public class HomeworkList implements Save, Load {
     //REQUIRES: nothing
     //MODIFIES: course
     //EFFECTS: adds homeworkHashSet into course's set of homework
-    public void loadHomeworkIntoCourse(Course course, HashSet<Homework> homeworkHashSet) {
-        for (Homework hw: homeworkHashSet) {
+    public void loadHomeworkIntoCourse(Course course, HashSet<HomeworkItem> homeworkHashSet) {
+        for (HomeworkItem hw: homeworkHashSet) {
             course.addHomework(hw);
         }
     }
@@ -114,9 +114,9 @@ public class HomeworkList implements Save, Load {
         for (String line : lines) {
             ArrayList<String> parts = split(line);
             Course course = new Course(parts.get(0));
-            Homework homework = new Homework(course, parts.get(1), parts.get(2), stringToBoolean(parts.get(3)));
+            HomeworkItem homework = new HomeworkItem(course, parts.get(1), parts.get(2), stringToBoolean(parts.get(3)));
             course.addHomework(homework);
-            HashSet<Homework> setOfHW = new HashSet<>();
+            HashSet<HomeworkItem> setOfHW = new HashSet<>();
             setOfHW.add(homework);
             addHomeworkList(course, setOfHW);
         }
@@ -146,7 +146,7 @@ public class HomeworkList implements Save, Load {
     //EFFECTS: converts homework list into an entry for the save file
     public ArrayList<String> merge(Course course) {
         ArrayList<String> lines = new ArrayList<>();
-        for (Homework h: course.getSetOfHomework(homeWorkList)) {
+        for (HomeworkItem h: course.getSetOfHomework(homeWorkList)) {
             lines.add(course.getCourseName() + ";" + h.getAssignment() + ";" + h.getDueBy() + ";"
                     + booleanToString(h.getIsDone()));
         }
@@ -186,7 +186,7 @@ public class HomeworkList implements Save, Load {
     //REQUIRES: nothing
     //MODIFIES: this
     //EFFECTS: sets the homeworkList
-    public void setHomeWorkList(Map<Course, HashSet<Homework>> homeworkMap) {
+    public void setHomeWorkList(Map<Course, HashSet<HomeworkItem>> homeworkMap) {
         this.homeWorkList = homeworkMap;
     }
 

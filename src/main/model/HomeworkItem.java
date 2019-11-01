@@ -1,13 +1,13 @@
 package model;
 
-public class Homework extends Item {
+public class HomeworkItem extends Item {
 
     private Course course;
     private String assignment;
     private String dueBy;
     private Boolean isDone;
 
-    public Homework(Course course, String assignment, String dueBy, Boolean isDone) {
+    public HomeworkItem(Course course, String assignment, String dueBy, Boolean isDone) {
         super(assignment, dueBy, isDone);
 
         this.course = course;

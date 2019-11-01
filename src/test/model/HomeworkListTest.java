@@ -13,20 +13,20 @@ import static org.junit.jupiter.api.Assertions.*;
 
 public class HomeworkListTest {
     private HomeworkList homeworkList;
-    private Map<Course, HashSet<Homework>> homeworkMap;
+    private Map<Course, HashSet<HomeworkItem>> homeworkMap;
     private Course c1;
     private Course c2;
-    private Homework hw1;
-    private Homework hw2;
-    private HashSet<Homework> homeworkSet;
+    private HomeworkItem hw1;
+    private HomeworkItem hw2;
+    private HashSet<HomeworkItem> homeworkSet;
 
     @BeforeEach
     void setup() {
         homeworkList = new HomeworkList();
         c1 = new Course("cpsc");
         c2 = new Course("math");
-        hw1 = new Homework(c1, "lab", "oct 1st", false);
-        hw2 = new Homework(c1, "quiz", "nov 1st", true);
+        hw1 = new HomeworkItem(c1, "lab", "oct 1st", false);
+        hw2 = new HomeworkItem(c1, "quiz", "nov 1st", true);
         homeworkSet = new HashSet<>();
         homeworkSet.add(hw1);
         homeworkSet.add(hw2);
@@ -148,24 +148,24 @@ public class HomeworkListTest {
     @Test
     void testAddHomeworkList() {
         c1.getSetOfHomework(homeworkMap);
-        Homework c1HW = new Homework(c1, "hi", "a", false);
-        HashSet<Homework> c1List = new HashSet<>();
+        HomeworkItem c1HW = new HomeworkItem(c1, "hi", "a", false);
+        HashSet<HomeworkItem> c1List = new HashSet<>();
         c1List.add(c1HW);
         homeworkList.addHomeworkList(c1, c1List);
         assertEquals(3, c1.getSetOfHomework().size());
-        Homework c1HW2 = new Homework(c1, "hi", "a", false);
+        HomeworkItem c1HW2 = new HomeworkItem(c1, "hi", "a", false);
         c1List.add(c1HW2);
         homeworkList.addHomeworkList(c1, c1List);
         assertEquals(4, c1.getSetOfHomework().size());
 
         Course newCourse = new Course("new");
-        Homework newHW = new Homework(newCourse, "new", "new", false);
-        HashSet<Homework> newSet = new HashSet<>();
+        HomeworkItem newHW = new HomeworkItem(newCourse, "new", "new", false);
+        HashSet<HomeworkItem> newSet = new HashSet<>();
         newSet.add(newHW);
         homeworkList.addHomeworkList(newCourse, newSet);
         assertEquals(1, newCourse.getSetOfHomework().size());
 
-        Map<Course, HashSet<Homework>> emptyMap = new HashMap<>();
+        Map<Course, HashSet<HomeworkItem>> emptyMap = new HashMap<>();
         emptyMap.put(newCourse, newSet);
         assertEquals(1, emptyMap.keySet().size());
         assertEquals(newSet, emptyMap.get(newCourse));
@@ -174,9 +174,9 @@ public class HomeworkListTest {
     @Test
     void testLoadHWIntoCourse() {
         c1.getSetOfHomework(homeworkMap);
-        Homework c1HW = new Homework(c1, "hi", "a", false);
-        Homework c1HW2 = new Homework(c1, "hi", "a", false);
-        HashSet<Homework> c1List = new HashSet<>();
+        HomeworkItem c1HW = new HomeworkItem(c1, "hi", "a", false);
+        HomeworkItem c1HW2 = new HomeworkItem(c1, "hi", "a", false);
+        HashSet<HomeworkItem> c1List = new HashSet<>();
         c1List.add(c1HW);
         c1List.add(c1HW2);
         homeworkList.loadHomeworkIntoCourse(c1, c1List);

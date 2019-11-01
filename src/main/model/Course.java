@@ -7,7 +7,7 @@ import java.util.Objects;
 public class Course {
 
     private String courseName;
-    private HashSet<Homework> setOfHomework;
+    private HashSet<HomeworkItem> setOfHomework;
 
     public Course(String courseName) {
         this.courseName = courseName;
@@ -22,7 +22,7 @@ public class Course {
     //MODIFIES: this
     //EFFECTS: returns the the set mapped to this, also updates the set mapped to this
     //         CALL THIS METHOD BEFORE CALLING THE OVERLOADED getSetOfHomeWork BELOW
-    public HashSet<Homework> getSetOfHomework(Map<Course, HashSet<Homework>> homeworkList) {
+    public HashSet<HomeworkItem> getSetOfHomework(Map<Course, HashSet<HomeworkItem>> homeworkList) {
         if (homeworkList.keySet().contains(this)) {
             this.setOfHomework = homeworkList.get(this);
             return homeworkList.get(this);
@@ -33,14 +33,14 @@ public class Course {
     //REQUIRES: getSetOfHomework(Map) was called before this
     //MODIFIES: nothing
     //EFFECTS: returns the setOfHomework
-    public HashSet<Homework> getSetOfHomework() {
+    public HashSet<HomeworkItem> getSetOfHomework() {
         return this.setOfHomework;
     }
 
     //REQUIRES: nothing
     //MODIFIES: this, homework
     //EFFECTS: adds homework to the setOfHomework if not already in the set
-    public void addHomework(Homework homework) {
+    public void addHomework(HomeworkItem homework) {
         if (!setOfHomework.contains(homework)) {
             setOfHomework.add(homework);
             homework.setCourse(this);
@@ -50,7 +50,7 @@ public class Course {
     //REQUIRES: nothing
     //MODIFIES: this, homework
     //EFFECTS: removes the homework if it's in the set
-    public void removeHomework(Homework homework) {
+    public void removeHomework(HomeworkItem homework) {
         if (setOfHomework.contains(homework)) {
             setOfHomework.remove(homework);
             homework.removeCourse(this);

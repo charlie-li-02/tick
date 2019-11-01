@@ -7,10 +7,10 @@ import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-public class HomeworkTest {
+public class HomeworkItemTest {
 
-    private Homework hw1;
-    private Homework hw2;
+    private HomeworkItem hw1;
+    private HomeworkItem hw2;
     private Course c1;
     private Course c2;
     private static String hw1String = "lab is due on oct 1st, done? false";
@@ -21,8 +21,8 @@ public class HomeworkTest {
     void setup() {
         c1 = new Course("math");
         c2 = new Course("cpsc");
-        hw1 = new Homework(c1, "lab", "oct 1st", false);
-        hw2 = new Homework(c2, "ww", "nov 1st", true);
+        hw1 = new HomeworkItem(c1, "lab", "oct 1st", false);
+        hw2 = new HomeworkItem(c2, "ww", "nov 1st", true);
     }
 
     @Test
