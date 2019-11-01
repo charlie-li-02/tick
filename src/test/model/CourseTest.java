@@ -74,7 +74,12 @@ public class CourseTest {
 
     @Test
     void testEquals() {
-        Course course = new Course("not the same");
-        assertFalse(this.course.equals(course));
+        assertTrue(course.equals(course));
+
+        Course newCourse = new Course("not the same");
+        assertFalse(course.equals(newCourse));
+
+        String notCourse = "cpsc";
+        assertFalse(course.equals(notCourse));
     }
 }
