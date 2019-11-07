@@ -17,6 +17,7 @@ public class AppRunner {
     private ItemOptions itemOptions;
     private HomeworkHandler homeworkHandler;
     private HomeworkOptions homeworkOptions;
+    private WeatherHandler weatherHandler;
 
     // bunch of strings for input options because too long for check style
     private static final String optionP1 = "Please enter one of:\n";
@@ -24,8 +25,7 @@ public class AppRunner {
     private static final String optionP3 = "2 - add a reminder\n";
     private static final String optionP4 = "3 - new homework list\n";
     private static final String optionP5 = "4 - view current lists\n";
-    private static final String optionP6 = "5 - exit";
-
+    private static final String optionP6 = "5 - show me the weather";
 
 
     //REQUIRES: nothing
@@ -40,6 +40,7 @@ public class AppRunner {
         itemOptions = new ItemOptions();
         homeworkHandler = new HomeworkHandler();
         homeworkOptions = new HomeworkOptions();
+        weatherHandler = new WeatherHandler();
 
         listOfToDo.load();
         listOfReminder.load();
@@ -58,7 +59,8 @@ public class AppRunner {
             type = takeInput.nextLine();
 
             if (type.equals("5")) {
-                break;
+                //break;
+                weatherHandler.displayWeather();
 
             } else if (type.equals("1")) {
                 itemHandler.startItem(listOfToDo);
@@ -99,6 +101,9 @@ public class AppRunner {
     //MODIFIES: this
     //EFFECTS: instantiates a new ToDoList and starts the program
     public static void main(String[] args) throws IOException {
+        WeatherHandler initialWeatherHandler = new WeatherHandler();
+        initialWeatherHandler.displayWeather();
+
         new AppRunner();
     }
 }
