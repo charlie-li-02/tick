@@ -5,7 +5,7 @@ import network.ReadWebPageWeather;
 import java.io.IOException;
 import java.text.DecimalFormat;
 
-public class Weather implements AbstractSubject {
+public class Weather extends AbstractSubject {
 
     private WeatherPrinter weatherPrinter;
     private String description;
@@ -15,9 +15,7 @@ public class Weather implements AbstractSubject {
     private static DecimalFormat df = new DecimalFormat("0.00");
     private ReadWebPageWeather readWebPageWeather;
 
-    public Weather() {
-
-    }
+    public Weather() {}
 
     public void getWeather() throws IOException {
         readWebPageWeather = new ReadWebPageWeather();

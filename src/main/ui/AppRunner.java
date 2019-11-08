@@ -25,7 +25,8 @@ public class AppRunner {
     private static final String optionP3 = "2 - add a reminder\n";
     private static final String optionP4 = "3 - new homework list\n";
     private static final String optionP5 = "4 - view current lists\n";
-    private static final String optionP6 = "5 - show me the weather";
+    private static final String optionP6 = "5 - show me the weather\n";
+    private static final String optionP7 = "6 - exit";
 
 
     //REQUIRES: nothing
@@ -55,28 +56,33 @@ public class AppRunner {
     private void processInput() throws IOException {
         String type;
         while (true) {
-            System.out.println(optionP1 + optionP2 + optionP3 + optionP4 + optionP5 + optionP6);
+            System.out.println(optionP1 + optionP2 + optionP3 + optionP4 + optionP5 + optionP6 + optionP7);
             type = takeInput.nextLine();
-
-            if (type.equals("5")) {
-                //break;
-                weatherHandler.displayWeather();
-
-            } else if (type.equals("1")) {
-                itemHandler.startItem(listOfToDo);
-
-            } else if (type.equals("2")) {
-                itemHandler.startItem(listOfReminder);
-
-            } else if (type.equals("3")) {
-                homeworkHandler.makeNewHomework(homeworkList);
-
-            } else if (type.equals("4")) {
-                chooseList();
-
-            } else {
-                System.out.println("Your entrance did not match any options, please try again. \n");
+            if (type.equals("6")) {
+                break;
             }
+            optionLoop(type);
+        }
+    }
+
+    private void optionLoop(String type) throws IOException {
+        if (type.equals("5")) {
+            weatherHandler.displayWeather();
+
+        } else if (type.equals("1")) {
+            itemHandler.startItem(listOfToDo);
+
+        } else if (type.equals("2")) {
+            itemHandler.startItem(listOfReminder);
+
+        } else if (type.equals("3")) {
+            homeworkHandler.makeNewHomework(homeworkList);
+
+        } else if (type.equals("4")) {
+            chooseList();
+
+        } else {
+            System.out.println("Your entrance did not match any options, please try again. \n");
         }
     }
 

@@ -50,7 +50,7 @@ public class ReadWebPageWeather {
 
         JSONArray weatherArray = obj.getJSONArray("weather");
         for (int i = 0; i < weatherArray.length(); i++) {
-            String description = weatherArray.getJSONObject(i).getString("main");
+            String description = weatherArray.getJSONObject(i).getString("description");
             return description;
         }
 
