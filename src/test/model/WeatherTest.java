@@ -6,7 +6,6 @@ import org.junit.jupiter.api.Test;
 
 import java.io.IOException;
 import java.text.DecimalFormat;
-
 import static org.junit.jupiter.api.Assertions.fail;
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -36,22 +35,26 @@ public class WeatherTest {
         } catch (IOException e) {
             fail();
         }
+
     }
 
     @Test
     void testAddObservers() {
-        assertEquals(null, weather.getObservers());
-        WeatherPrinter weatherPrinter = new WeatherPrinter();
-        weather.addObservers(weatherPrinter);
-        assertEquals(weatherPrinter, weather.getObservers());
+        assertEquals(0, weather.getSize());
 
-        WeatherPrinter newWeatherPrinter = new WeatherPrinter();
-        weather.addObservers(newWeatherPrinter);
-        assertEquals(newWeatherPrinter, weather.getObservers());
+        WeatherPrinter weatherPrinter = new WeatherPrinter();
+
+        weather.addObservers(weatherPrinter);
+        assertEquals(1, weather.getSize());
+
+        weather.addObservers(weatherPrinter);
+        assertEquals(2, weather.getSize());
     }
 
     @Test
     void testNotifyObservers() {
+
+        //TESTING WITH THE ACTUAL API
         WeatherPrinter weatherPrinter = new WeatherPrinter();
         weather.addObservers(weatherPrinter);
 
@@ -65,6 +68,34 @@ public class WeatherTest {
         } catch (IOException e) {
             fail();
         }
+
+
+        //TESTING MANUALLY FOR CODE COVERAGE
+        weather.setDescription("Sunny");
+        weather.setTemperature(10.0);
+        weather.setMaxTemp(12.0);
+        weather.setMinTemp(1.0);
+
+        weather.notifyObservers();
+        assertEquals(weather.getDescription(), weatherPrinter.getWeatherDescription());
+        assertEquals(df.format(weather.getTemperature()), weatherPrinter.getTemperature());
+        assertEquals(df.format(weather.getMaxTemp()), weatherPrinter.getMaxTemp());
+        assertEquals(df.format(weather.getMinTemp()), weatherPrinter.getMinTemp());
+
+    }
+
+    @Test
+    void testForSetterAndGetters() {
+        //TESTING SETTING THE FIELDS MANUALLY FOR CODE COVERAGE
+        weather.setDescription("Sunny");
+        weather.setTemperature(10.0);
+        weather.setMaxTemp(12.0);
+        weather.setMinTemp(1.0);
+
+        assertEquals("Sunny", weather.getDescription());
+        assertEquals(10.0, weather.getTemperature());
+        assertEquals(12.0, weather.getMaxTemp());
+        assertEquals(1.0, weather.getMinTemp());
     }
 
 }

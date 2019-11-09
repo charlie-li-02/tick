@@ -7,7 +7,6 @@ import java.text.DecimalFormat;
 
 public class Weather extends AbstractSubject {
 
-    private WeatherPrinter weatherPrinter;
     private String description;
     private Double temperature;
     private Double maxTemp;
@@ -26,14 +25,12 @@ public class Weather extends AbstractSubject {
         minTemp = readWebPageWeather.parseMinTemperature();
     }
 
-    @Override
-    public void addObservers(WeatherPrinter weatherPrinter) {
-        this.weatherPrinter = weatherPrinter;
-    }
 
     @Override
     public void notifyObservers() {
-        weatherPrinter.update(description, df.format(temperature), df.format(maxTemp), df.format(minTemp));
+        for (AbstractObserver observer: observers) {
+            observer.update(description, df.format(temperature), df.format(maxTemp), df.format(minTemp));
+        }
     }
 
     public String getDescription() {
@@ -52,7 +49,20 @@ public class Weather extends AbstractSubject {
         return minTemp;
     }
 
-    public WeatherPrinter getObservers() {
-        return weatherPrinter;
+    public void setDescription(String description) {
+        this.description = description;
     }
+
+    public void setTemperature(Double temp) {
+        this.temperature = temp;
+    }
+
+    public void setMaxTemp(Double maxTemp) {
+        this.maxTemp = maxTemp;
+    }
+
+    public void setMinTemp(Double minTemp) {
+        this.minTemp = minTemp;
+    }
+
 }

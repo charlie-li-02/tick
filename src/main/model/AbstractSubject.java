@@ -1,24 +1,13 @@
 package model;
 
-import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 
 public abstract class AbstractSubject {
 
-    private List<AbstractObserver> observers = new ArrayList<>();
-    private String description;
-    private Double temperature;
-    private Double maxTemp;
-    private Double minTemp;
-    private static DecimalFormat df = new DecimalFormat("0.00");
+    protected List<AbstractObserver> observers = new ArrayList<>();
 
-    public AbstractSubject() {
-        description = null;
-        temperature = null;
-        maxTemp = null;
-        minTemp = null;
-    }
+    public AbstractSubject() {}
 
     public void addObservers(WeatherPrinter weatherPrinter) {
         observers.add(weatherPrinter);
@@ -26,7 +15,15 @@ public abstract class AbstractSubject {
 
     public void notifyObservers() {
         for (AbstractObserver observer: observers) {
-            observer.update(description, df.format(temperature), df.format(maxTemp), df.format(minTemp));
+            observer.update("", "", "", "");
         }
+    }
+
+    public int getSize() {
+        int size = 0;
+        for (AbstractObserver observer: observers) {
+            size++;
+        }
+        return size;
     }
 }
