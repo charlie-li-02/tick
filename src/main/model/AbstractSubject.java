@@ -10,7 +10,9 @@ public abstract class AbstractSubject {
     public AbstractSubject() {}
 
     public void addObservers(WeatherPrinter weatherPrinter) {
-        observers.add(weatherPrinter);
+        if (!observers.contains(weatherPrinter)) {
+            observers.add(weatherPrinter);
+        }
     }
 
     public void notifyObservers() {

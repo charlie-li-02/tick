@@ -48,7 +48,7 @@ public class WeatherTest {
         assertEquals(1, weather.getSize());
 
         weather.addObservers(weatherPrinter);
-        assertEquals(2, weather.getSize());
+        assertEquals(1, weather.getSize());
     }
 
     @Test
