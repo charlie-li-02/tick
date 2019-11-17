@@ -3,50 +3,60 @@ package ui;
 import exceptions.TooManyItemsUndoneException;
 import model.ListOfItems;
 
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.util.Scanner;
 
 
-public class ItemHandler {
+public class ItemHandler implements ActionListener {
     private ItemOptions itemOptions;
     private Scanner takeInput;
+    private Window window;
+    private ListOfItems listOfItems;
 
-    public ItemHandler() {
+    public ItemHandler(Window window, ListOfItems listOfItems) throws IOException {
         takeInput = new Scanner(System.in);
         itemOptions = new ItemOptions();
+        this.window = window;
+        this.listOfItems = listOfItems;
+        startItem();
     }
 
     //REQUIRES: nothing
-    //MODIFIES: ListOfReminder, reminders.txt
-    //EFFECTS: starts off the processing of adding a reminder item
-    public void startItem(ListOfItems listOfItems) throws IOException {
-        makeNewItem(listOfItems);
+    //MODIFIES: listOfItems, save file of the list passed in
+    //EFFECTS: starts off the processing of adding a item
+    public void startItem() throws IOException {
+        window.getEnter().addActionListener(this);
+        window.layoutForAddItem();
+        String promptTitle = listOfItems.getPromptTitle();
+        window.getMainLabel().setText(promptTitle);
         listOfItems.save();
     }
 
     //REQUIRES: nothing
     //MODIFIES: RemainderItem
-    //EFFECTS: creates a new ReminderItem based on the user's input
-    private void makeNewItem(ListOfItems listOfItems) throws FileNotFoundException, UnsupportedEncodingException {
-        while (true) {
-            System.out.println(listOfItems.getPromptTitle());
-            String reminder = takeInput.nextLine();
-            System.out.println(listOfItems.getPromptAttribute());
-            String time = takeInput.nextLine();
-            try {
-                listOfItems.addNewItem(listOfItems.itemMaker(reminder, time));
-                System.out.println(listOfItems.getPromptAnother());
-                String choice = takeInput.nextLine();
-                if (choice.equals("n")) {
-                    itemOptions.processOptions(listOfItems);
-                    break;
-                }
-            } catch (TooManyItemsUndoneException e) {
-                tooManyItems(listOfItems);
-                break;
-            }
+    //EFFECTS: creates a new Item based on the user's input
+    private void makeNewItem(
+            ListOfItems listOfItems, String title, String attribute
+    ) throws FileNotFoundException, UnsupportedEncodingException {
+        try {
+            listOfItems.addNewItem(listOfItems.itemMaker(title, attribute));
+            String addAnother = listOfItems.getPromptAnother();
+            window.getMainLabel().setText(addAnother);
+            window.layoutForAddAnotherItem();
+            window.getYes().addActionListener(this);
+            window.getNo().addActionListener(this);
+//                String choice = takeInput.nextLine();
+//                if (choice.equals("n")) {
+//                    itemOptions.processOptions(listOfItems);
+//                    //break;
+//                }
+        } catch (TooManyItemsUndoneException e) {
+            tooManyItems(listOfItems);
+            //break;
         }
     }
 
@@ -71,6 +81,28 @@ public class ItemHandler {
         } else {
             System.out.println(listOfItems.print());
             itemOptions.processOptions(listOfItems);
+        }
+    }
+
+    @Override
+    public void actionPerformed(ActionEvent e) {
+        try {
+            if (e.getActionCommand().equals("enter")) {
+                String title = window.getTitleTextBox().getText();
+                String attribute = window.getAttributeTextBox().getText();
+                makeNewItem(listOfItems, title, attribute);
+
+            }
+            if (e.getActionCommand().equals("yes")) {
+                startItem();
+            }
+
+            if (e.getActionCommand().equals("no")) {
+                itemOptions.processOptions(listOfItems);
+            }
+
+        } catch (IOException ex) {
+            ex.printStackTrace();
         }
     }
 }

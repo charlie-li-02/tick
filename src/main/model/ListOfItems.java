@@ -132,11 +132,6 @@ public abstract class ListOfItems implements Save, Load {
 
     //REQUIRES: nothing
     //MODIFIES: nothing
-    //EFFECTS: returns the PromptAttribute
-    public abstract String getPromptAttribute();
-
-    //REQUIRES: nothing
-    //MODIFIES: nothing
     //EFFECTS: returns the PromptAnother
     public abstract String getPromptAnother();
 

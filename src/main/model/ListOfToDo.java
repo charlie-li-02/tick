@@ -11,8 +11,7 @@ public class ListOfToDo extends ListOfItems implements Save, Load {
     private ArrayList<Item> listOfTDI;
     private String toDoSavePath = "todos.txt";
 
-    public String promptTitle = "Enter a title for your new to do:";
-    public String promptAttribute = "Enter a description for your new to do:";
+    public String promptTitle = "Enter a title and description for your new to do:";
     public String promptAnother = "Do you want to add another to do? (y|n)";
 
     //REQUIRES: nothing
@@ -60,13 +59,6 @@ public class ListOfToDo extends ListOfItems implements Save, Load {
     //EFFECTS: returns the PromptTitle
     public String getPromptTitle() {
         return promptTitle;
-    }
-
-    //REQUIRES: nothing
-    //MODIFIES: nothing
-    //EFFECTS: returns the PromptAttribute
-    public String getPromptAttribute() {
-        return promptAttribute;
     }
 
     //REQUIRES: nothing

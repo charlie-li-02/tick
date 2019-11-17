@@ -11,8 +11,7 @@ public class ListOfReminder extends ListOfItems implements Save, Load {
     private ArrayList<Item> listOfRI;
     private String reminderSavePath = "reminders.txt";
 
-    public String promptTitle = "Enter a new reminder:";
-    public String promptAttribute = "Enter a time for your new reminder:";
+    public String promptTitle = "Enter a title and a time for your new reminder:";
     public String promptAnother = "Do you want to add another reminder? (y|n)";
 
     //REQUIRES: nothing
@@ -62,12 +61,6 @@ public class ListOfReminder extends ListOfItems implements Save, Load {
         return promptTitle;
     }
 
-    //REQUIRES: nothing
-    //MODIFIES: nothing
-    //EFFECTS: returns the PromptAttribute
-    public String getPromptAttribute() {
-        return promptAttribute;
-    }
 
     //REQUIRES: nothing
     //MODIFIES: nothing

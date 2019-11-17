@@ -107,11 +107,6 @@ public class ListOfReminderTest {
         assertEquals("Enter a new reminder:", temporary);
     }
 
-    @Test
-    void testGetPromptAttribute() {
-        String temporary = lri.getPromptAttribute();
-        assertEquals("Enter a time for your new reminder:", temporary);
-    }
 
     @Test
     void testGetPromptAnother() {

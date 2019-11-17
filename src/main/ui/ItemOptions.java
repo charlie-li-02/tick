@@ -3,11 +3,13 @@ package ui;
 import exceptions.ItemDoesNotExistException;
 import model.ListOfItems;
 
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.io.FileNotFoundException;
 import java.io.UnsupportedEncodingException;
 import java.util.Scanner;
 
-public class ItemOptions {
+public class ItemOptions implements ActionListener {
 
     private Scanner takeInput;
 
@@ -84,5 +86,10 @@ public class ItemOptions {
         int i = takeInput.nextInt();
         takeInput.nextLine();
         return i;
+    }
+
+    @Override
+    public void actionPerformed(ActionEvent e) {
+
     }
 }

@@ -112,12 +112,6 @@ public class ListOfToDoTest {
     }
 
     @Test
-    void testGetPromptAttribute() {
-        String temporary = ltdi.getPromptAttribute();
-        assertEquals("Enter a description for your new to do:", temporary);
-    }
-
-    @Test
     void testGetPromptAnother() {
         String temporary = ltdi.getPromptAnother();
         assertEquals("Do you want to add another to do? (y|n)", temporary);

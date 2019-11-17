@@ -22,15 +22,6 @@ public class AppRunner implements ActionListener {
     private HomeworkOptions homeworkOptions;
     private WeatherHandler weatherHandler;
 
-    // bunch of strings for input options because too long for check style
-    private static final String optionP1 = "Please select one of:\n";
-    private static final String optionP2 = "1 - add a to do\n";
-    private static final String optionP3 = "2 - add a reminder\n";
-    private static final String optionP4 = "3 - new homework list\n";
-    private static final String optionP5 = "4 - view current lists\n";
-    private static final String optionP6 = "5 - show me the weather\n";
-    private static final String optionP7 = "6 - exit";
-
     private Window window;
     private String action = "";
 
@@ -40,12 +31,8 @@ public class AppRunner implements ActionListener {
     //EFFECTS: constructor for ToDoList
     private AppRunner() throws IOException {
         initializeComponents();
-        window = new Window(this);
-        window.initializeGraphics();
-        loadFiles();
-        //processInput();
-        //optionLoop();
 
+        loadFiles();
     }
 
     private void initializeComponents() {
@@ -53,11 +40,13 @@ public class AppRunner implements ActionListener {
         listOfToDo = new ListOfToDo();
         listOfReminder = new ListOfReminder();
         homeworkList = new HomeworkList();
-        itemHandler = new ItemHandler();
+        //itemHandler = new ItemHandler(window);
         itemOptions = new ItemOptions();
         homeworkHandler = new HomeworkHandler();
         homeworkOptions = new HomeworkOptions();
         weatherHandler = new WeatherHandler();
+        window = new Window(this);
+        window.initializeGraphics();
     }
 
     private void loadFiles() throws IOException {
@@ -87,10 +76,10 @@ public class AppRunner implements ActionListener {
             weatherHandler.displayWeather();
 
         } else if (action.equals("1")) {
-            itemHandler.startItem(listOfToDo);
+            itemHandler = new ItemHandler(window, listOfToDo);
 
         } else if (action.equals("2")) {
-            itemHandler.startItem(listOfReminder);
+            itemHandler = new ItemHandler(window, listOfReminder);
 
         } else if (action.equals("3")) {
             homeworkHandler.makeNewHomework(homeworkList);
@@ -139,4 +128,6 @@ public class AppRunner implements ActionListener {
             ex.printStackTrace();
         }
     }
+
+
 }
