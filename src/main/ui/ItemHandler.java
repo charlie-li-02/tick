@@ -19,17 +19,29 @@ public class ItemHandler implements ActionListener {
 
     public ItemHandler(Window window, ListOfItems listOfItems) throws IOException {
         takeInput = new Scanner(System.in);
-        itemOptions = new ItemOptions();
+        itemOptions = new ItemOptions(window, listOfItems);
         this.window = window;
+        addListeners();
         this.listOfItems = listOfItems;
         startItem();
+    }
+
+    private void addListeners() {
+        if (window.getYes().getActionListeners().length == 0) {
+            window.getYes().addActionListener(this);
+        }
+        if (window.getNo().getActionListeners().length == 0) {
+            window.getNo().addActionListener(this);
+        }
+        if (window.getEnter().getActionListeners().length == 0) {
+            window.getEnter().addActionListener(this);
+        }
     }
 
     //REQUIRES: nothing
     //MODIFIES: listOfItems, save file of the list passed in
     //EFFECTS: starts off the processing of adding a item
     public void startItem() throws IOException {
-        window.getEnter().addActionListener(this);
         window.layoutForAddItem();
         String promptTitle = listOfItems.getPromptTitle();
         window.getMainLabel().setText(promptTitle);
@@ -47,8 +59,7 @@ public class ItemHandler implements ActionListener {
             String addAnother = listOfItems.getPromptAnother();
             window.getMainLabel().setText(addAnother);
             window.layoutForAddAnotherItem();
-            window.getYes().addActionListener(this);
-            window.getNo().addActionListener(this);
+            itemOptions.printList();
 //                String choice = takeInput.nextLine();
 //                if (choice.equals("n")) {
 //                    itemOptions.processOptions(listOfItems);
@@ -68,7 +79,7 @@ public class ItemHandler implements ActionListener {
         System.out.println("You have too many items undone, delete or mark an item? (y|n)");
         String choice = takeInput.nextLine();
         if (choice.equals("y")) {
-            itemOptions.processOptions(listOfItems);
+            itemOptions.processOptions();
         }
     }
 
@@ -80,7 +91,7 @@ public class ItemHandler implements ActionListener {
             System.out.println("You don't have anything in that list!");
         } else {
             System.out.println(listOfItems.print());
-            itemOptions.processOptions(listOfItems);
+            itemOptions.processOptions();
         }
     }
 
@@ -91,14 +102,15 @@ public class ItemHandler implements ActionListener {
                 String title = window.getTitleTextBox().getText();
                 String attribute = window.getAttributeTextBox().getText();
                 makeNewItem(listOfItems, title, attribute);
-
+                //itemOptions.printList();
             }
+
             if (e.getActionCommand().equals("yes")) {
                 startItem();
             }
 
             if (e.getActionCommand().equals("no")) {
-                itemOptions.processOptions(listOfItems);
+                itemOptions.processOptions();
             }
 
         } catch (IOException ex) {

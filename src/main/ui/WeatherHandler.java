@@ -6,10 +6,12 @@ import java.io.IOException;
 
 public class WeatherHandler {
 
+    private Window window;
     private Weather weather;
     private WeatherPrinter weatherPrinter;
 
-    public WeatherHandler() {
+    public WeatherHandler(Window window) {
+        this.window = window;
         weather = new Weather();
         weatherPrinter = new WeatherPrinter();
         weather.addObservers(weatherPrinter);
@@ -18,6 +20,7 @@ public class WeatherHandler {
     public void displayWeather() throws IOException {
         weather.getWeather();
         weather.notifyObservers();
-        System.out.println(weatherPrinter.print());
+        window.getWeatherLabel().setText(weatherPrinter.printWeather());
+        window.getTemperatureLabel().setText(weatherPrinter.printTemperature());
     }
 }

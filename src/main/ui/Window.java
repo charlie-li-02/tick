@@ -1,15 +1,17 @@
 package ui;
 
-import model.Item;
-
 import javax.swing.*;
 import java.awt.*;
 
 public class Window extends JFrame {
 
     private JLabel mainLabel;
+    private JLabel displayLabel;
+    private JLabel weatherLabel;
+    private JLabel temperatureLabel;
     private JTextField titleTextBox;
     private JTextField attributeTextBox;
+    private JTextField indexTextBox;
     private JButton button1;
     private JButton button2;
     private JButton button3;
@@ -19,36 +21,50 @@ public class Window extends JFrame {
     private JButton enter;
     private JButton yes;
     private JButton no;
+    private JButton delete;
+    private JButton mark;
+    private JButton dontDeleteOrMark;
 
-    private AppRunner appRunner;
+    //private AppRunner appRunner;
+    //private ItemHandler itemHandler;
+    //private ItemOptions itemOptions;
 
-    private static final String pleaseSelect = "Please select one of:\n";
-    private static final String addToDo = "1 - add a to do\n";
-    private static final String addReminder = "2 - add a reminder\n";
-    private static final String addHW = "3 - new homework list\n";
-    private static final String viewLists = "4 - view current lists\n";
-    private static final String showWeather = "5 - show me the weather\n";
-    private static final String exit = "6 - exit";
-    private ItemOptions itemOptions;
-    private ItemHandler itemHandler;
+    private static final String pleaseSelect = "Please select one of:";
+    private static final String addToDo = "Add a to do";
+    private static final String addReminder = "Add a reminder";
+    private static final String addHW = "New homework list";
+    private static final String viewLists = "View current lists";
+    private static final String showWeather = "Show me the weather";
+    private static final String exit = "Exit";
+    private static final String deleteOrMark = "Enter the item's index and choose an option";
+    private static final String deleteString = "Delete an item";
+    private static final String markString = "Change the status of an item";
+    private static final String noString = "No";
 
-    public Window(AppRunner appRunner) {
+
+    public Window() {
         super("To Do List");
 
-        this.appRunner = appRunner;
         mainLabel = new JLabel("");
+        displayLabel = new JLabel("");
+        weatherLabel = new JLabel("");
+        temperatureLabel = new JLabel("");
         titleTextBox = new JTextField();
         attributeTextBox = new JTextField();
+        indexTextBox = new JTextField();
 
-        button1 = new JButton("");
-        button2 = new JButton("");
-        button3 = new JButton("");
-        button4 = new JButton("");
-        button5 = new JButton("");
-        button6 = new JButton("");
+        button1 = new JButton(addToDo);
+        button2 = new JButton(addReminder);
+        button3 = new JButton(addHW);
+        button4 = new JButton(viewLists);
+        button5 = new JButton(showWeather);
+        button6 = new JButton(exit);
         enter = new JButton("Enter");
         yes = new JButton("Yes");
         no = new JButton("No");
+        delete = new JButton(deleteString);
+        mark = new JButton(markString);
+        dontDeleteOrMark = new JButton(noString);
     }
 
 
@@ -60,19 +76,43 @@ public class Window extends JFrame {
         setResizable(false);
 
         initializeComponents();
-        drawOptions();
+        layoutInitial();
 
         setVisible(true);
     }
 
     private void initializeComponents() {
         mainLabel.setText(pleaseSelect);
+        setLabelBounds();
+        setTextBoxBounds();
+        setButtonBounds();
+        buttonActions();
+    }
+
+    private void setLabelBounds() {
         mainLabel.setBounds(30, 50, 300, 30);
         add(mainLabel);
 
-        titleTextBox.setBounds(50, 400, 300, 20);
-        attributeTextBox.setBounds(50, 430, 300, 20);
+        displayLabel.setBounds(50, 100, 300, 300);
+        add(displayLabel);
 
+        weatherLabel.setBounds(20, 720, 380, 30);
+        add(weatherLabel);
+
+        temperatureLabel.setBounds(20, 740, 380, 30);
+        add(temperatureLabel);
+    }
+
+    private void setTextBoxBounds() {
+        titleTextBox.setBounds(50, 400, 300, 20);
+        add(titleTextBox);
+        attributeTextBox.setBounds(50, 430, 300, 20);
+        add(attributeTextBox);
+        indexTextBox.setBounds(50, 300, 300, 20);
+        add(indexTextBox);
+    }
+
+    private void setButtonBounds() {
         button1.setBounds(30, 90, 200, 30);
         button2.setBounds(30, 130, 200, 30);
         button3.setBounds(30, 170, 200, 30);
@@ -80,18 +120,14 @@ public class Window extends JFrame {
         button5.setBounds(30, 250, 200, 30);
         button6.setBounds(30, 290, 200, 30);
         enter.setBounds(270, 600, 80, 30);
+        yes.setBounds(50, 600, 80, 30);
+        no.setBounds(270, 600, 80, 30);
+        delete.setBounds(30, 90, 200, 30);
+        mark.setBounds(30, 130, 200, 30);
+        dontDeleteOrMark.setBounds(30, 170, 200, 30);
     }
 
-    private void drawOptions() {
-        button1.setText(this.addToDo);
-        button2.setText(this.addReminder);
-        button3.setText(this.addHW);
-        button4.setText(this.viewLists);
-        button5.setText(this.showWeather);
-        button6.setText(this.exit);
-
-        buttonActions();
-
+    private void addButtons() {
         add(button1);
         add(button2);
         add(button3);
@@ -99,7 +135,10 @@ public class Window extends JFrame {
         add(button5);
         add(button6);
         add(enter);
-        enter.setVisible(false);
+        add(yes);
+        add(no);
+        add(delete);
+        add(mark);
     }
 
     private void buttonActions() {
@@ -110,13 +149,35 @@ public class Window extends JFrame {
         button5.setActionCommand("5");
         button6.setActionCommand("6");
         enter.setActionCommand("enter");
+        yes.setActionCommand("yes");
+        no.setActionCommand("no");
+        delete.setActionCommand("delete");
+        mark.setActionCommand("mark");
+        dontDeleteOrMark.setActionCommand("neither");
 
-        button1.addActionListener(appRunner);
-        button2.addActionListener(appRunner);
-        button3.addActionListener(appRunner);
-        button4.addActionListener(appRunner);
-        button5.addActionListener(appRunner);
-        button6.addActionListener(appRunner);
+    }
+
+
+    public void layoutInitial() {
+        addButtons();
+
+        button1.setVisible(true);
+        button2.setVisible(true);
+        button3.setVisible(true);
+        button4.setVisible(true);
+        button5.setVisible(true);
+        button6.setVisible(true);
+        enter.setVisible(false);
+        yes.setVisible(false);
+        no.setVisible(false);
+        delete.setVisible(false);
+        mark.setVisible(false);
+        dontDeleteOrMark.setVisible(false);
+
+        titleTextBox.setVisible(false);
+        attributeTextBox.setVisible(false);
+        indexTextBox.setVisible(false);
+        displayLabel.setVisible(false);
     }
 
     public void layoutForAddItem() {
@@ -133,8 +194,6 @@ public class Window extends JFrame {
         add(attributeTextBox);
         titleTextBox.setVisible(true);
         attributeTextBox.setVisible(true);
-
-
     }
 
     public void layoutForAddAnotherItem() {
@@ -143,19 +202,43 @@ public class Window extends JFrame {
         no.setVisible(true);
         titleTextBox.setVisible(false);
         attributeTextBox.setVisible(false);
-
-        yes.setBounds(50, 600, 80, 30);
-        no.setBounds(270, 600, 80, 30);
-
-        add(yes);
-        add(no);
-
-        yes.setActionCommand("yes");
-        no.setActionCommand("no");
     }
+
+    public void layoutForItemOptions() {
+        mainLabel.setText(deleteOrMark);
+        button1.setVisible(false);
+        button2.setVisible(false);
+        button3.setVisible(false);
+        button4.setVisible(false);
+        button5.setVisible(false);
+        button6.setVisible(false);
+        yes.setVisible(false);
+        no.setVisible(false);
+        enter.setVisible(false);
+        delete.setVisible(true);
+        mark.setVisible(true);
+        dontDeleteOrMark.setVisible(true);
+
+        add(dontDeleteOrMark);
+        indexTextBox.setVisible(true);
+        displayLabel.setVisible(true);
+    }
+
 
     public JLabel getMainLabel() {
         return mainLabel;
+    }
+
+    public JLabel getDisplayLabel() {
+        return displayLabel;
+    }
+
+    public JLabel getWeatherLabel() {
+        return weatherLabel;
+    }
+
+    public JLabel getTemperatureLabel() {
+        return temperatureLabel;
     }
 
     public JTextField getTitleTextBox() {
@@ -165,6 +248,11 @@ public class Window extends JFrame {
     public JTextField getAttributeTextBox() {
         return attributeTextBox;
     }
+
+    public JTextField getIndexTextBox() {
+        return indexTextBox;
+    }
+
 
     public JButton getButton1() {
         return button1;
@@ -201,4 +289,17 @@ public class Window extends JFrame {
     public JButton getNo() {
         return no;
     }
+
+    public JButton getDelete() {
+        return delete;
+    }
+
+    public JButton getMark() {
+        return mark;
+    }
+
+    public JButton getDontDeleteOrMark() {
+        return dontDeleteOrMark;
+    }
+
 }

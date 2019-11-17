@@ -40,22 +40,16 @@ public class WeatherPrinterTest {
     void testPrint() {
         weatherPrinter.update("Sunny", "10", "14", "5");
 
-        String sunnyExpected = "Today's weather in Vancouver: Sunny\n"
-                            + "The temperature today is: 10 °C\n"
-                            + "With a high of: 14 °C\n"
-                            + "And a low of: 5 °C\n";
+        String sunnyExpected = "Today's weather in Vancouver is: Sunny";
 
-        assertEquals(sunnyExpected, weatherPrinter.print());
+        assertEquals(sunnyExpected, weatherPrinter.printWeather());
 
 
         weatherPrinter.update("Rainy", "3", "11", "2");
 
-        String rainyExpected = "Today's weather in Vancouver: Rainy\n"
-                            + "The temperature today is: 3 °C\n"
-                            + "With a high of: 11 °C\n"
-                            + "And a low of: 2 °C\n";
+        String rainyExpected = "Today's weather in Vancouver is: Rainy";
 
-        assertEquals(rainyExpected, weatherPrinter.print());
+        assertEquals(rainyExpected, weatherPrinter.printWeather());
     }
 
 

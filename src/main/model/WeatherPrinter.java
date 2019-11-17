@@ -19,11 +19,14 @@ public class WeatherPrinter implements AbstractObserver {
         this.minTemp = minTemp;
     }
 
-    public String print() {
-        return "Today's weather in Vancouver: " + weatherDescription + "\n"
-                + "The temperature today is: " + temperature + " °C" + "\n"
-                + "With a high of: " + maxTemp + " °C" + "\n"
-                + "And a low of: " + minTemp + " °C" + "\n";
+    public String printWeather() {
+        return "Today's weather in Vancouver: " + weatherDescription;
+    }
+
+    public String printTemperature() {
+        return  "The temperature is: " + temperature + " °C"
+                + ", high of: " + maxTemp + " °C"
+                + " and low of: " + minTemp + " °C";
     }
 
     public String getWeatherDescription() {

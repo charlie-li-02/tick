@@ -31,8 +31,9 @@ public class AppRunner implements ActionListener {
     //EFFECTS: constructor for ToDoList
     private AppRunner() throws IOException {
         initializeComponents();
-
+        setListeners();
         loadFiles();
+        displayWeather();
     }
 
     private void initializeComponents() {
@@ -40,13 +41,31 @@ public class AppRunner implements ActionListener {
         listOfToDo = new ListOfToDo();
         listOfReminder = new ListOfReminder();
         homeworkList = new HomeworkList();
-        //itemHandler = new ItemHandler(window);
-        itemOptions = new ItemOptions();
         homeworkHandler = new HomeworkHandler();
         homeworkOptions = new HomeworkOptions();
-        weatherHandler = new WeatherHandler();
-        window = new Window(this);
+        window = new Window();
         window.initializeGraphics();
+    }
+
+    public void setListeners() {
+        if (window.getButton1().getActionListeners().length == 0) {
+            window.getButton1().addActionListener(this);
+        }
+        if (window.getButton2().getActionListeners().length == 0) {
+            window.getButton2().addActionListener(this);
+        }
+        if (window.getButton3().getActionListeners().length == 0) {
+            window.getButton3().addActionListener(this);
+        }
+        if (window.getButton4().getActionListeners().length == 0) {
+            window.getButton4().addActionListener(this);
+        }
+        if (window.getButton5().getActionListeners().length == 0) {
+            window.getButton5().addActionListener(this);
+        }
+        if (window.getButton6().getActionListeners().length == 0) {
+            window.getButton6().addActionListener(this);
+        }
     }
 
     private void loadFiles() throws IOException {
@@ -109,13 +128,15 @@ public class AppRunner implements ActionListener {
         }
     }
 
+    private void displayWeather() throws IOException {
+        weatherHandler = new WeatherHandler(window);
+        weatherHandler.displayWeather();
+    }
+
     //REQUIRES: nothing
     //MODIFIES: this
     //EFFECTS: instantiates a new ToDoList and starts the program
     public static void main(String[] args) throws IOException {
-        WeatherHandler initialWeatherHandler = new WeatherHandler();
-        initialWeatherHandler.displayWeather();
-
         new AppRunner();
     }
 
