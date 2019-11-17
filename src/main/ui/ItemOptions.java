@@ -3,23 +3,21 @@ package ui;
 import exceptions.ItemDoesNotExistException;
 import model.ListOfItems;
 
-import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
-import java.util.Scanner;
 
 public class ItemOptions implements ActionListener {
 
-    private Scanner takeInput;
+
     private Window window;
     private ListOfItems listOfItems;
 
     public ItemOptions(Window window, ListOfItems listOfItems) {
-        takeInput = new Scanner(System.in);
+
         this.window = window;
         this.listOfItems = listOfItems;
 
@@ -89,7 +87,7 @@ public class ItemOptions implements ActionListener {
         try {
             if (e.getActionCommand().equals("delete")) {
                 delete();
-                System.out.println("Count of listeners: " + ((JButton) e.getSource()).getActionListeners().length);
+//                System.out.println("Count of listeners: " + ((JButton) e.getSource()).getActionListeners().length);
             } else if (e.getActionCommand().equals("mark")) {
                 mark();
             } else if (e.getActionCommand().equals("neither")) {

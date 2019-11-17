@@ -12,7 +12,7 @@ public class ListOfReminder extends ListOfItems implements Save, Load {
     private String reminderSavePath = "reminders.txt";
 
     public String promptTitle = "Enter a title and a time for your new reminder:";
-    public String promptAnother = "Do you want to add another reminder? (y|n)";
+    public String promptAnother = "Do you want to add another reminder?";
 
     //REQUIRES: nothing
     //MODIFIES: this

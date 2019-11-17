@@ -12,7 +12,7 @@ public class ListOfToDo extends ListOfItems implements Save, Load {
     private String toDoSavePath = "todos.txt";
 
     public String promptTitle = "Enter a title and description for your new to do:";
-    public String promptAnother = "Do you want to add another to do? (y|n)";
+    public String promptAnother = "Do you want to add another to do?";
 
     //REQUIRES: nothing
     //MODIFIES: this

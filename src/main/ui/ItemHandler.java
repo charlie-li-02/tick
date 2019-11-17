@@ -5,9 +5,8 @@ import model.ListOfItems;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.io.UnsupportedEncodingException;
+import java.util.ArrayList;
 import java.util.Scanner;
 
 
@@ -36,6 +35,12 @@ public class ItemHandler implements ActionListener {
         if (window.getEnter().getActionListeners().length == 0) {
             window.getEnter().addActionListener(this);
         }
+        for (ActionListener ae: window.getBack().getActionListeners()) {
+            if (ae.equals(this)) {
+                window.getBack().removeActionListener(this);
+            }
+        }
+        window.getBack().addActionListener(this);
     }
 
     //REQUIRES: nothing
@@ -51,23 +56,15 @@ public class ItemHandler implements ActionListener {
     //REQUIRES: nothing
     //MODIFIES: RemainderItem
     //EFFECTS: creates a new Item based on the user's input
-    private void makeNewItem(
-            ListOfItems listOfItems, String title, String attribute
-    ) throws FileNotFoundException, UnsupportedEncodingException {
+    private void makeNewItem(String title, String attribute) {
         try {
             listOfItems.addNewItem(listOfItems.itemMaker(title, attribute));
+            itemOptions.printList();
             String addAnother = listOfItems.getPromptAnother();
             window.getMainLabel().setText(addAnother);
             window.layoutForAddAnotherItem();
-            itemOptions.printList();
-//                String choice = takeInput.nextLine();
-//                if (choice.equals("n")) {
-//                    itemOptions.processOptions(listOfItems);
-//                    //break;
-//                }
         } catch (TooManyItemsUndoneException e) {
-            tooManyItems(listOfItems);
-            //break;
+            tooManyItems();
         }
     }
 
@@ -75,7 +72,7 @@ public class ItemHandler implements ActionListener {
     //MODIFIES: nothing
     //EFFECTS: gives the user the choice to delete or mark an item as done after being prompted that they have
     //         too many items that aren't done
-    private void tooManyItems(ListOfItems listOfItems) throws FileNotFoundException, UnsupportedEncodingException {
+    private void tooManyItems() {
         System.out.println("You have too many items undone, delete or mark an item? (y|n)");
         String choice = takeInput.nextLine();
         if (choice.equals("y")) {
@@ -86,11 +83,15 @@ public class ItemHandler implements ActionListener {
     //REQUIRES: nothing
     //MODIFIES: nothing
     //EFFECTS: prints out the list of items
-    public void printItemList(ListOfItems listOfItems) throws FileNotFoundException, UnsupportedEncodingException {
+    public void printItemList(ListOfItems listOfItems) {
         if (listOfItems.getSize() == 0) {
-            System.out.println("You don't have anything in that list!");
+            window.getDisplayLabel().setText("You don't have anything in that list!");
+            window.getDisplayLabel().setVisible(true);
+            window.getBack().setVisible(true);
         } else {
-            System.out.println(listOfItems.print());
+            ArrayList<String> log = listOfItems.print();
+            window.getDisplayLabel().setText(log.toString());
+            window.getDisplayLabel().setVisible(true);
             itemOptions.processOptions();
         }
     }
@@ -101,8 +102,7 @@ public class ItemHandler implements ActionListener {
             if (e.getActionCommand().equals("enter")) {
                 String title = window.getTitleTextBox().getText();
                 String attribute = window.getAttributeTextBox().getText();
-                makeNewItem(listOfItems, title, attribute);
-                //itemOptions.printList();
+                makeNewItem(title, attribute);
             }
 
             if (e.getActionCommand().equals("yes")) {
@@ -111,6 +111,10 @@ public class ItemHandler implements ActionListener {
 
             if (e.getActionCommand().equals("no")) {
                 itemOptions.processOptions();
+            }
+
+            if (e.getActionCommand().equals("return")) {
+                window.layoutInitial();
             }
 
         } catch (IOException ex) {

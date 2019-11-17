@@ -6,7 +6,7 @@ import java.awt.*;
 public class Window extends JFrame {
 
     private JLabel mainLabel;
-    private JLabel displayLabel;
+    private JTextArea displayLabel;
     private JLabel weatherLabel;
     private JLabel temperatureLabel;
     private JTextField titleTextBox;
@@ -24,10 +24,10 @@ public class Window extends JFrame {
     private JButton delete;
     private JButton mark;
     private JButton dontDeleteOrMark;
-
-    //private AppRunner appRunner;
-    //private ItemHandler itemHandler;
-    //private ItemOptions itemOptions;
+    private JButton toDo;
+    private JButton reminder;
+    private JButton homework;
+    private JButton back;
 
     private static final String pleaseSelect = "Please select one of:";
     private static final String addToDo = "Add a to do";
@@ -39,14 +39,19 @@ public class Window extends JFrame {
     private static final String deleteOrMark = "Enter the item's index and choose an option";
     private static final String deleteString = "Delete an item";
     private static final String markString = "Change the status of an item";
-    private static final String noString = "No";
+    private static final String noString = "Return to main menu";
+    private static final String whichList = "Which list would you like to open?";
+    private static final String toDoButtonString = "To Do List";
+    private static final String reminderButtonString = "Reminder List";
+    private static final String homeworkButtonString = "Homework List";
+    private static final String returnButtonString = "Return";
 
 
     public Window() {
         super("To Do List");
 
         mainLabel = new JLabel("");
-        displayLabel = new JLabel("");
+        displayLabel = new JTextArea("");
         weatherLabel = new JLabel("");
         temperatureLabel = new JLabel("");
         titleTextBox = new JTextField();
@@ -65,6 +70,10 @@ public class Window extends JFrame {
         delete = new JButton(deleteString);
         mark = new JButton(markString);
         dontDeleteOrMark = new JButton(noString);
+        toDo = new JButton(toDoButtonString);
+        reminder = new JButton(reminderButtonString);
+        homework = new JButton(homeworkButtonString);
+        back = new JButton(returnButtonString);
     }
 
 
@@ -87,13 +96,21 @@ public class Window extends JFrame {
         setTextBoxBounds();
         setButtonBounds();
         buttonActions();
+        addButtons();
     }
 
     private void setLabelBounds() {
         mainLabel.setBounds(30, 50, 300, 30);
         add(mainLabel);
 
-        displayLabel.setBounds(50, 100, 300, 300);
+
+        displayLabel.setEditable(false);
+        displayLabel.setCursor(null);
+        displayLabel.setOpaque(false);
+        displayLabel.setFocusable(false);
+        displayLabel.setLineWrap(true);
+        displayLabel.setWrapStyleWord(true);
+        displayLabel.setBounds(50, 400,300, 200);
         add(displayLabel);
 
         weatherLabel.setBounds(20, 720, 380, 30);
@@ -125,6 +142,10 @@ public class Window extends JFrame {
         delete.setBounds(30, 90, 200, 30);
         mark.setBounds(30, 130, 200, 30);
         dontDeleteOrMark.setBounds(30, 170, 200, 30);
+        toDo.setBounds(30, 90, 200, 30);
+        reminder.setBounds(30, 130, 200, 30);
+        homework.setBounds(30, 170, 200, 30);
+        back.setBounds(30, 200, 80, 30);
     }
 
     private void addButtons() {
@@ -139,6 +160,10 @@ public class Window extends JFrame {
         add(no);
         add(delete);
         add(mark);
+        add(toDo);
+        add(reminder);
+        add(homework);
+        add(back);
     }
 
     private void buttonActions() {
@@ -154,13 +179,24 @@ public class Window extends JFrame {
         delete.setActionCommand("delete");
         mark.setActionCommand("mark");
         dontDeleteOrMark.setActionCommand("neither");
-
+        toDo.setActionCommand("to do");
+        reminder.setActionCommand("reminder");
+        homework.setActionCommand("homework");
+        back.setActionCommand("return");
     }
 
 
     public void layoutInitial() {
-        addButtons();
+        mainLabel.setText(pleaseSelect);
+        only6OptionButtons();
 
+        titleTextBox.setVisible(false);
+        attributeTextBox.setVisible(false);
+        indexTextBox.setVisible(false);
+        displayLabel.setVisible(false);
+    }
+
+    private void only6OptionButtons() {
         button1.setVisible(true);
         button2.setVisible(true);
         button3.setVisible(true);
@@ -173,11 +209,10 @@ public class Window extends JFrame {
         delete.setVisible(false);
         mark.setVisible(false);
         dontDeleteOrMark.setVisible(false);
-
-        titleTextBox.setVisible(false);
-        attributeTextBox.setVisible(false);
-        indexTextBox.setVisible(false);
-        displayLabel.setVisible(false);
+        toDo.setVisible(false);
+        reminder.setVisible(false);
+        homework.setVisible(false);
+        back.setVisible(false);
     }
 
     public void layoutForAddItem() {
@@ -190,6 +225,9 @@ public class Window extends JFrame {
         enter.setVisible(true);
         yes.setVisible(false);
         no.setVisible(false);
+        toDo.setVisible(false);
+        reminder.setVisible(false);
+        homework.setVisible(false);
         add(titleTextBox);
         add(attributeTextBox);
         titleTextBox.setVisible(true);
@@ -202,9 +240,18 @@ public class Window extends JFrame {
         no.setVisible(true);
         titleTextBox.setVisible(false);
         attributeTextBox.setVisible(false);
+        displayLabel.setVisible(true);
     }
 
     public void layoutForItemOptions() {
+        only3OptionButtons();
+
+        add(dontDeleteOrMark);
+        indexTextBox.setVisible(true);
+        displayLabel.setVisible(true);
+    }
+
+    private void only3OptionButtons() {
         mainLabel.setText(deleteOrMark);
         button1.setVisible(false);
         button2.setVisible(false);
@@ -218,10 +265,28 @@ public class Window extends JFrame {
         delete.setVisible(true);
         mark.setVisible(true);
         dontDeleteOrMark.setVisible(true);
+        toDo.setVisible(false);
+        reminder.setVisible(false);
+        homework.setVisible(false);
+    }
 
-        add(dontDeleteOrMark);
-        indexTextBox.setVisible(true);
-        displayLabel.setVisible(true);
+    public void layoutForShowLists() {
+        mainLabel.setText(whichList);
+        button1.setVisible(false);
+        button2.setVisible(false);
+        button3.setVisible(false);
+        button4.setVisible(false);
+        button5.setVisible(false);
+        button6.setVisible(false);
+        yes.setVisible(false);
+        no.setVisible(false);
+        enter.setVisible(false);
+        delete.setVisible(false);
+        mark.setVisible(false);
+        dontDeleteOrMark.setVisible(false);
+        toDo.setVisible(true);
+        reminder.setVisible(true);
+        homework.setVisible(true);
     }
 
 
@@ -229,7 +294,7 @@ public class Window extends JFrame {
         return mainLabel;
     }
 
-    public JLabel getDisplayLabel() {
+    public JTextArea getDisplayLabel() {
         return displayLabel;
     }
 
@@ -302,4 +367,19 @@ public class Window extends JFrame {
         return dontDeleteOrMark;
     }
 
+    public JButton getToDo() {
+        return toDo;
+    }
+
+    public JButton getReminder() {
+        return reminder;
+    }
+
+    public JButton getHomework() {
+        return homework;
+    }
+
+    public JButton getBack() {
+        return back;
+    }
 }

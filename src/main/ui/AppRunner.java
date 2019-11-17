@@ -15,9 +15,7 @@ public class AppRunner implements ActionListener {
     private ListOfItems listOfToDo;
     private ListOfItems listOfReminder;
     private HomeworkList homeworkList;
-    private Scanner takeInput;
     private ItemHandler itemHandler;
-    private ItemOptions itemOptions;
     private HomeworkHandler homeworkHandler;
     private HomeworkOptions homeworkOptions;
     private WeatherHandler weatherHandler;
@@ -32,12 +30,12 @@ public class AppRunner implements ActionListener {
     private AppRunner() throws IOException {
         initializeComponents();
         setListeners();
+        setPrintListListeners();
         loadFiles();
         displayWeather();
     }
 
     private void initializeComponents() {
-        takeInput = new Scanner(System.in);
         listOfToDo = new ListOfToDo();
         listOfReminder = new ListOfReminder();
         homeworkList = new HomeworkList();
@@ -47,7 +45,7 @@ public class AppRunner implements ActionListener {
         window.initializeGraphics();
     }
 
-    public void setListeners() {
+    private void setListeners() {
         if (window.getButton1().getActionListeners().length == 0) {
             window.getButton1().addActionListener(this);
         }
@@ -66,6 +64,24 @@ public class AppRunner implements ActionListener {
         if (window.getButton6().getActionListeners().length == 0) {
             window.getButton6().addActionListener(this);
         }
+    }
+
+    private void setPrintListListeners() {
+        if (window.getToDo().getActionListeners().length == 0) {
+            window.getToDo().addActionListener(this);
+        }
+        if (window.getReminder().getActionListeners().length == 0) {
+            window.getReminder().addActionListener(this);
+        }
+        if (window.getHomework().getActionListeners().length == 0) {
+            window.getHomework().addActionListener(this);
+        }
+        for (ActionListener ae: window.getBack().getActionListeners()) {
+            if (ae.equals(this)) {
+                window.getBack().removeActionListener(this);
+            }
+        }
+        window.getBack().addActionListener(this);
     }
 
     private void loadFiles() throws IOException {
@@ -104,7 +120,8 @@ public class AppRunner implements ActionListener {
             homeworkHandler.makeNewHomework(homeworkList);
 
         } else if (action.equals("4")) {
-            chooseList();
+            //chooseList();
+            window.layoutForShowLists();
 
         } else if (action.equals("")) {
             System.out.println("Try again");
@@ -114,17 +131,23 @@ public class AppRunner implements ActionListener {
     //REQUIRES: nothing
     //MODIFIES: nothing
     //EFFECTS: lets the user choose which list to print out
-    private void chooseList() throws FileNotFoundException, UnsupportedEncodingException {
-        System.out.println("Which list would you like to open?\n" + "1 - to do list\n"
-                + "2 - reminders list\n" + "3 - homework list\n");
-        String choice = takeInput.nextLine();
-        if (choice.equals("1")) {
-            itemHandler.printItemList(listOfToDo);
-        } else if (choice.equals("2")) {
-            itemHandler.printItemList(listOfReminder);
-        } else if (choice.equals("3")) {
-            homeworkOptions.printHomeworkList(homeworkList);
-            homeworkHandler.pickHomeworkList(homeworkList);
+    private void chooseList() throws IOException {
+//        System.out.println("Which list would you like to open?\n" + "1 - to do list\n"
+//                + "2 - reminders list\n" + "3 - homework list\n");
+//        String choice = takeInput.nextLine();
+        try {
+            if (action.equals("to do")) {
+                itemHandler.printItemList(listOfToDo);
+            } else if (action.equals("reminder")) {
+                itemHandler.printItemList(listOfReminder);
+            } else if (action.equals("homework")) {
+                homeworkOptions.printHomeworkList(homeworkList);
+                homeworkHandler.pickHomeworkList(homeworkList);
+            }
+        } catch (NullPointerException e) {
+            window.getDisplayLabel().setText("You don't have anything in that list!");
+            window.getDisplayLabel().setVisible(true);
+            window.getBack().setVisible(true);
         }
     }
 
@@ -144,7 +167,16 @@ public class AppRunner implements ActionListener {
     public void actionPerformed(ActionEvent e) {
         action = e.getActionCommand();
         try {
-            optionLoop();
+            if (action.equals("1") | action.equals("2") | action.equals("3")
+                    | action.equals("4") | action.equals("5") | action.equals("")) {
+                optionLoop();
+            } else if (action.equals("to do") | action.equals("reminder") | action.equals("homework")) {
+                chooseList();
+            }
+            if (action.equals("return")) {
+                window.layoutInitial();
+            }
+
         } catch (IOException ex) {
             ex.printStackTrace();
         }
