@@ -5,17 +5,15 @@ import model.*;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.io.UnsupportedEncodingException;
-import java.util.Scanner;
 
 public class AppRunner implements ActionListener {
 
     private ListOfItems listOfToDo;
     private ListOfItems listOfReminder;
     private HomeworkList homeworkList;
-    private ItemHandler itemHandler;
+    private ItemHandler toDoHandler;
+    private ItemHandler reminderHandler;
     private HomeworkHandler homeworkHandler;
     private HomeworkOptions homeworkOptions;
     private WeatherHandler weatherHandler;
@@ -43,6 +41,8 @@ public class AppRunner implements ActionListener {
         homeworkOptions = new HomeworkOptions();
         window = new Window();
         window.initializeGraphics();
+        toDoHandler = new ItemHandler(window, listOfToDo);
+        reminderHandler = new ItemHandler(window, listOfReminder);
     }
 
     private void setListeners() {
@@ -76,7 +76,7 @@ public class AppRunner implements ActionListener {
         if (window.getHomework().getActionListeners().length == 0) {
             window.getHomework().addActionListener(this);
         }
-        for (ActionListener ae: window.getBack().getActionListeners()) {
+        for (ActionListener ae : window.getBack().getActionListeners()) {
             if (ae.equals(this)) {
                 window.getBack().removeActionListener(this);
             }
@@ -90,31 +90,18 @@ public class AppRunner implements ActionListener {
         homeworkList.load();
     }
 
-
-//    //REQUIRES: nothing
-//    //MODIFIES: nothing
-//    //EFFECTS: gives the user the choice of adding a to do, reminder, show current lists, or close the program
-//    private void processInput() throws IOException {
-//        String type;
-//        while (true) {
-//            System.out.println(optionP1 + optionP2 + optionP3 + optionP4 + optionP5 + optionP6 + optionP7);
-//            type = takeInput.nextLine();
-//            if (type.equals("6")) {
-//                break;
-//            }
-//            optionLoop(type);
-//        }
-//    }
-
     private void optionLoop() throws IOException {
         if (action.equals("5")) {
             weatherHandler.displayWeather();
 
         } else if (action.equals("1")) {
-            itemHandler = new ItemHandler(window, listOfToDo);
+            //toDoHandler = new ItemHandler(window, listOfToDo);
+            toDoHandler.startItem();
+            toDoHandler.addListeners(toDoHandler);
 
         } else if (action.equals("2")) {
-            itemHandler = new ItemHandler(window, listOfReminder);
+            reminderHandler.startItem();
+            reminderHandler.addListeners(reminderHandler);
 
         } else if (action.equals("3")) {
             homeworkHandler.makeNewHomework(homeworkList);
@@ -132,22 +119,13 @@ public class AppRunner implements ActionListener {
     //MODIFIES: nothing
     //EFFECTS: lets the user choose which list to print out
     private void chooseList() throws IOException {
-//        System.out.println("Which list would you like to open?\n" + "1 - to do list\n"
-//                + "2 - reminders list\n" + "3 - homework list\n");
-//        String choice = takeInput.nextLine();
-        try {
-            if (action.equals("to do")) {
-                itemHandler.printItemList(listOfToDo);
-            } else if (action.equals("reminder")) {
-                itemHandler.printItemList(listOfReminder);
-            } else if (action.equals("homework")) {
-                homeworkOptions.printHomeworkList(homeworkList);
-                homeworkHandler.pickHomeworkList(homeworkList);
-            }
-        } catch (NullPointerException e) {
-            window.getDisplayLabel().setText("You don't have anything in that list!");
-            window.getDisplayLabel().setVisible(true);
-            window.getBack().setVisible(true);
+        if (action.equals("to do")) {
+            toDoHandler.printItemList(listOfToDo);
+        } else if (action.equals("reminder")) {
+            reminderHandler.printItemList(listOfReminder);
+        } else if (action.equals("homework")) {
+            homeworkOptions.printHomeworkList(homeworkList);
+            homeworkHandler.pickHomeworkList(homeworkList);
         }
     }
 

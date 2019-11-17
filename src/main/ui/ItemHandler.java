@@ -16,47 +16,48 @@ public class ItemHandler implements ActionListener {
     private Window window;
     private ListOfItems listOfItems;
 
-    public ItemHandler(Window window, ListOfItems listOfItems) throws IOException {
+    public ItemHandler(Window window, ListOfItems listOfItems) {
         takeInput = new Scanner(System.in);
         itemOptions = new ItemOptions(window, listOfItems);
         this.window = window;
-        addListeners();
         this.listOfItems = listOfItems;
-        startItem();
     }
 
-    private void addListeners() {
-        if (window.getYes().getActionListeners().length == 0) {
-            window.getYes().addActionListener(this);
+    public void addListeners(ItemHandler itemHandler) {
+        for (ActionListener ae: window.getYes().getActionListeners()) {
+            window.getYes().removeActionListener(ae);
         }
-        if (window.getNo().getActionListeners().length == 0) {
-            window.getNo().addActionListener(this);
+        for (ActionListener ae: window.getNo().getActionListeners()) {
+            window.getNo().removeActionListener(ae);
         }
-        if (window.getEnter().getActionListeners().length == 0) {
-            window.getEnter().addActionListener(this);
+        for (ActionListener ae: window.getEnter().getActionListeners()) {
+            window.getEnter().removeActionListener(ae);
         }
         for (ActionListener ae: window.getBack().getActionListeners()) {
-            if (ae.equals(this)) {
-                window.getBack().removeActionListener(this);
+            if (ae.equals(itemHandler)) {
+                window.getBack().removeActionListener(itemHandler);
             }
         }
-        window.getBack().addActionListener(this);
+        window.getYes().addActionListener(itemHandler);
+        window.getNo().addActionListener(itemHandler);
+        window.getEnter().addActionListener(itemHandler);
+        window.getBack().addActionListener(itemHandler);
     }
 
     //REQUIRES: nothing
     //MODIFIES: listOfItems, save file of the list passed in
     //EFFECTS: starts off the processing of adding a item
-    public void startItem() throws IOException {
+    public void startItem() {
         window.layoutForAddItem();
         String promptTitle = listOfItems.getPromptTitle();
         window.getMainLabel().setText(promptTitle);
-        listOfItems.save();
+
     }
 
     //REQUIRES: nothing
     //MODIFIES: RemainderItem
     //EFFECTS: creates a new Item based on the user's input
-    private void makeNewItem(String title, String attribute) {
+    private void makeNewItem(String title, String attribute) throws IOException {
         try {
             listOfItems.addNewItem(listOfItems.itemMaker(title, attribute));
             itemOptions.printList();
@@ -65,6 +66,8 @@ public class ItemHandler implements ActionListener {
             window.layoutForAddAnotherItem();
         } catch (TooManyItemsUndoneException e) {
             tooManyItems();
+        } finally {
+            listOfItems.save();
         }
     }
 
@@ -100,9 +103,7 @@ public class ItemHandler implements ActionListener {
     public void actionPerformed(ActionEvent e) {
         try {
             if (e.getActionCommand().equals("enter")) {
-                String title = window.getTitleTextBox().getText();
-                String attribute = window.getAttributeTextBox().getText();
-                makeNewItem(title, attribute);
+                enterEvent();
             }
 
             if (e.getActionCommand().equals("yes")) {
@@ -120,5 +121,11 @@ public class ItemHandler implements ActionListener {
         } catch (IOException ex) {
             ex.printStackTrace();
         }
+    }
+
+    private void enterEvent() throws IOException {
+        String title = window.getTitleTextBox().getText();
+        String attribute = window.getAttributeTextBox().getText();
+        makeNewItem(title, attribute);
     }
 }

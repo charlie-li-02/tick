@@ -103,14 +103,13 @@ public class Window extends JFrame {
         mainLabel.setBounds(30, 50, 300, 30);
         add(mainLabel);
 
-
         displayLabel.setEditable(false);
         displayLabel.setCursor(null);
         displayLabel.setOpaque(false);
         displayLabel.setFocusable(false);
         displayLabel.setLineWrap(true);
         displayLabel.setWrapStyleWord(true);
-        displayLabel.setBounds(50, 400,300, 200);
+        displayLabel.setBounds(50, 100,300, 200);
         add(displayLabel);
 
         weatherLabel.setBounds(20, 720, 380, 30);
@@ -130,22 +129,22 @@ public class Window extends JFrame {
     }
 
     private void setButtonBounds() {
-        button1.setBounds(30, 90, 200, 30);
-        button2.setBounds(30, 130, 200, 30);
-        button3.setBounds(30, 170, 200, 30);
-        button4.setBounds(30, 210, 200, 30);
-        button5.setBounds(30, 250, 200, 30);
-        button6.setBounds(30, 290, 200, 30);
+        button1.setBounds(20, 500, 150, 30);
+        button2.setBounds(230, 500, 150, 30);
+        button3.setBounds(20, 550, 150, 30);
+        button4.setBounds(230, 550, 150, 30);
+        button5.setBounds(20, 600, 150, 30);
+        button6.setBounds(230, 600, 150, 30);
         enter.setBounds(270, 600, 80, 30);
         yes.setBounds(50, 600, 80, 30);
         no.setBounds(270, 600, 80, 30);
-        delete.setBounds(30, 90, 200, 30);
-        mark.setBounds(30, 130, 200, 30);
-        dontDeleteOrMark.setBounds(30, 170, 200, 30);
-        toDo.setBounds(30, 90, 200, 30);
-        reminder.setBounds(30, 130, 200, 30);
-        homework.setBounds(30, 170, 200, 30);
-        back.setBounds(30, 200, 80, 30);
+        delete.setBounds(150, 500, 200, 30);
+        mark.setBounds(150, 550, 200, 30);
+        dontDeleteOrMark.setBounds(150, 600, 200, 30);
+        toDo.setBounds(20, 500, 150, 30);
+        reminder.setBounds(230, 500, 150, 30);
+        homework.setBounds(20, 550, 150, 30);
+        back.setBounds(230, 550, 150, 30);
     }
 
     private void addButtons() {

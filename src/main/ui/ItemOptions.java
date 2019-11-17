@@ -87,7 +87,6 @@ public class ItemOptions implements ActionListener {
         try {
             if (e.getActionCommand().equals("delete")) {
                 delete();
-//                System.out.println("Count of listeners: " + ((JButton) e.getSource()).getActionListeners().length);
             } else if (e.getActionCommand().equals("mark")) {
                 mark();
             } else if (e.getActionCommand().equals("neither")) {
