@@ -6,7 +6,6 @@ import model.ListOfItems;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.Scanner;
 
 
@@ -16,9 +15,9 @@ public class ItemHandler implements ActionListener {
     private Window window;
     private ListOfItems listOfItems;
 
-    public ItemHandler(Window window, ListOfItems listOfItems) {
+    public ItemHandler(Window window, ListOfItems listOfItems, ItemOptions itemOptions) {
         takeInput = new Scanner(System.in);
-        itemOptions = new ItemOptions(window, listOfItems);
+        this.itemOptions = itemOptions;
         this.window = window;
         this.listOfItems = listOfItems;
     }
@@ -60,7 +59,7 @@ public class ItemHandler implements ActionListener {
     private void makeNewItem(String title, String attribute) throws IOException {
         try {
             listOfItems.addNewItem(listOfItems.itemMaker(title, attribute));
-            itemOptions.printList();
+            window.display(listOfItems);
             String addAnother = listOfItems.getPromptAnother();
             window.getMainLabel().setText(addAnother);
             window.layoutForAddAnotherItem();
@@ -79,7 +78,8 @@ public class ItemHandler implements ActionListener {
         System.out.println("You have too many items undone, delete or mark an item? (y|n)");
         String choice = takeInput.nextLine();
         if (choice.equals("y")) {
-            itemOptions.processOptions();
+            //itemOptions.processOptions();
+            window.layoutForItemOptions();
         }
     }
 
@@ -88,14 +88,16 @@ public class ItemHandler implements ActionListener {
     //EFFECTS: prints out the list of items
     public void printItemList(ListOfItems listOfItems) {
         if (listOfItems.getSize() == 0) {
-            window.getDisplayLabel().setText("You don't have anything in that list!");
-            window.getDisplayLabel().setVisible(true);
-            window.getBack().setVisible(true);
+//            window.getDisplayLabel().setText("You don't have anything in that list!");
+//            window.getDisplayLabel().setVisible(true);
+//            window.getBack().setVisible(true);
         } else {
-            ArrayList<String> log = listOfItems.print();
-            window.getDisplayLabel().setText(log.toString());
-            window.getDisplayLabel().setVisible(true);
-            itemOptions.processOptions();
+//            ArrayList<String> log = listOfItems.print();
+//            window.getDisplayLabel().setText(log.toString());
+//            window.getDisplayLabel().setVisible(true);
+            window.display(listOfItems);
+//            itemOptions.processOptions();
+            window.layoutForItemOptions();
         }
     }
 
@@ -111,7 +113,8 @@ public class ItemHandler implements ActionListener {
             }
 
             if (e.getActionCommand().equals("no")) {
-                itemOptions.processOptions();
+                //itemOptions.processOptions();
+                window.layoutForItemOptions();
             }
 
             if (e.getActionCommand().equals("return")) {

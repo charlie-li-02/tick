@@ -8,7 +8,6 @@ import java.awt.event.ActionListener;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
-import java.util.ArrayList;
 
 public class ItemOptions implements ActionListener {
 
@@ -21,28 +20,41 @@ public class ItemOptions implements ActionListener {
         this.window = window;
         this.listOfItems = listOfItems;
 
-        addListeners();
+        //addListeners();
     }
 
-    private void addListeners() {
-        if (window.getDelete().getActionListeners().length == 0) {
-            window.getDelete().addActionListener(this);
+    public void addListeners(ItemOptions itemOptions) {
+        for (ActionListener ae: window.getDelete().getActionListeners()) {
+            window.getDelete().removeActionListener(ae);
         }
-        if (window.getMark().getActionListeners().length == 0) {
-            window.getMark().addActionListener(this);
+        for (ActionListener ae: window.getMark().getActionListeners()) {
+            window.getMark().removeActionListener(ae);
         }
-        if (window.getDontDeleteOrMark().getActionListeners().length == 0) {
-            window.getDontDeleteOrMark().addActionListener(this);
+        for (ActionListener ae: window.getDontDeleteOrMark().getActionListeners()) {
+            window.getDontDeleteOrMark().removeActionListener(ae);
         }
+        window.getDelete().addActionListener(itemOptions);
+        window.getMark().addActionListener(itemOptions);
+        window.getDontDeleteOrMark().addActionListener(itemOptions);
+
+//        if (window.getDelete().getActionListeners().length == 0) {
+//            window.getDelete().addActionListener(this);
+//        }
+//        if (window.getMark().getActionListeners().length == 0) {
+//            window.getMark().addActionListener(this);
+//        }
+//        if (window.getDontDeleteOrMark().getActionListeners().length == 0) {
+//            window.getDontDeleteOrMark().addActionListener(this);
+//        }
     }
 
 
     //REQUIRES: nothing
     //MODIFIES: nothing
     //EFFECTS: prompts the user the option to delete or change the status of an item
-    public void processOptions() {
-        window.layoutForItemOptions();
-    }
+//    //public void processOptions() {
+//        window.layoutForItemOptions();
+//    }
 
     //REQUIRES: nothing
     //MODIFIES: nothing
@@ -55,7 +67,7 @@ public class ItemOptions implements ActionListener {
             System.out.println("Invalid index, try again");
         } finally {
             System.out.println(listOfItems.print());
-            printList();
+            window.display(listOfItems);
             listOfItems.save();
         }
 
@@ -72,15 +84,11 @@ public class ItemOptions implements ActionListener {
             System.out.println("Invalid index, try again");
         } finally {
             System.out.println(listOfItems.print());
-            printList();
+
             listOfItems.save();
         }
     }
 
-    public void printList() {
-        ArrayList<String> log = listOfItems.print();
-        window.getDisplayLabel().setText(log.toString());
-    }
 
     @Override
     public void actionPerformed(ActionEvent e) {
@@ -90,7 +98,7 @@ public class ItemOptions implements ActionListener {
             } else if (e.getActionCommand().equals("mark")) {
                 mark();
             } else if (e.getActionCommand().equals("neither")) {
-                printList();
+                window.display(listOfItems);
                 window.layoutInitial();
             }
         } catch (IOException ex) {

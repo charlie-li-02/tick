@@ -14,6 +14,8 @@ public class AppRunner implements ActionListener {
     private HomeworkList homeworkList;
     private ItemHandler toDoHandler;
     private ItemHandler reminderHandler;
+    private ItemOptions toDoOptions;
+    private ItemOptions reminderOptions;
     private HomeworkHandler homeworkHandler;
     private HomeworkOptions homeworkOptions;
     private WeatherHandler weatherHandler;
@@ -31,6 +33,7 @@ public class AppRunner implements ActionListener {
         setPrintListListeners();
         loadFiles();
         displayWeather();
+        displayLists();
     }
 
     private void initializeComponents() {
@@ -41,8 +44,12 @@ public class AppRunner implements ActionListener {
         homeworkOptions = new HomeworkOptions();
         window = new Window();
         window.initializeGraphics();
-        toDoHandler = new ItemHandler(window, listOfToDo);
-        reminderHandler = new ItemHandler(window, listOfReminder);
+        toDoHandler = new ItemHandler(window, listOfToDo, toDoOptions);
+        reminderHandler = new ItemHandler(window, listOfReminder, reminderOptions);
+        toDoOptions = new ItemOptions(window, listOfToDo);
+        toDoOptions.addListeners(toDoOptions);
+        reminderOptions = new ItemOptions(window, listOfReminder);
+        reminderOptions.addListeners(reminderOptions);
     }
 
     private void setListeners() {
@@ -88,6 +95,11 @@ public class AppRunner implements ActionListener {
         listOfToDo.load();
         listOfReminder.load();
         homeworkList.load();
+    }
+
+    private void displayLists() {
+        window.display(listOfToDo);
+        window.display(listOfReminder);
     }
 
     private void optionLoop() throws IOException {

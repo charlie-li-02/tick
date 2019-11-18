@@ -1,7 +1,12 @@
 package ui;
 
+import model.ListOfItems;
+import model.ListOfReminder;
+import model.ListOfToDo;
+
 import javax.swing.*;
 import java.awt.*;
+import java.util.ArrayList;
 
 public class Window extends JFrame {
 
@@ -46,6 +51,9 @@ public class Window extends JFrame {
     private static final String homeworkButtonString = "Homework List";
     private static final String returnButtonString = "Return";
 
+    private ArrayList<JLabel> listOfToDoLabels = new ArrayList<>();
+    private ArrayList<JLabel> listOfReminderLabels = new ArrayList<>();
+
 
     public Window() {
         super("To Do List");
@@ -79,7 +87,7 @@ public class Window extends JFrame {
 
     public void initializeGraphics() {
         setLayout(null);
-        setMinimumSize(new Dimension(400, 800));
+        setMinimumSize(new Dimension(1200, 800));
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
         setResizable(false);
@@ -286,6 +294,49 @@ public class Window extends JFrame {
         toDo.setVisible(true);
         reminder.setVisible(true);
         homework.setVisible(true);
+    }
+
+    public void display(ListOfItems listOfItems) {
+        if (listOfItems instanceof ListOfToDo) {
+            displayToDo(listOfItems);
+        }
+        if (listOfItems instanceof ListOfReminder) {
+            displayReminder(listOfItems);
+        }
+    }
+
+    private void displayToDo(ListOfItems listOfItems) {
+        for (JLabel label: listOfToDoLabels) {
+            label.setVisible(false);
+            remove(label);
+        }
+        listOfToDoLabels.clear();
+        int startY = 100;
+        for (String entry: listOfItems.print()) {
+            JLabel label = new JLabel(entry);
+            add(label);
+            label.setBounds(450, startY, 350, 20);
+            startY += 25;
+            label.setVisible(true);
+            listOfToDoLabels.add(label);
+        }
+    }
+
+    private void displayReminder(ListOfItems listOfItems) {
+        for (JLabel label : listOfReminderLabels) {
+            label.setVisible(false);
+            remove(label);
+        }
+        listOfReminderLabels.clear();
+        int startY = 100;
+        for (String entry : listOfItems.print()) {
+            JLabel label = new JLabel(entry);
+            add(label);
+            label.setBounds(820, startY, 350, 20);
+            startY += 25;
+            label.setVisible(true);
+            listOfReminderLabels.add(label);
+        }
     }
 
 

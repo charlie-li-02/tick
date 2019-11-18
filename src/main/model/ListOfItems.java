@@ -140,6 +140,10 @@ public abstract class ListOfItems implements Save, Load {
     //EFFECTS: returns the SavePath
     public abstract String getSavePath();
 
+    public ArrayList<Item> getListOfItems() {
+        return listOfItems;
+    }
+
     //REQUIRES: nothing
     //MODIFIES: this
     //EFFECTS: loads the items in the save file into the list
