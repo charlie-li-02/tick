@@ -35,16 +35,6 @@ public class ItemOptions implements ActionListener {
         window.getDelete().addActionListener(itemOptions);
         window.getMark().addActionListener(itemOptions);
         window.getDontDeleteOrMark().addActionListener(itemOptions);
-
-//        if (window.getDelete().getActionListeners().length == 0) {
-//            window.getDelete().addActionListener(itemOptions);
-//        }
-//        if (window.getMark().getActionListeners().length == 0) {
-//            window.getMark().addActionListener(itemOptions);
-//        }
-//        if (window.getDontDeleteOrMark().getActionListeners().length == 0) {
-//            window.getDontDeleteOrMark().addActionListener(itemOptions);
-//        }
     }
 
 

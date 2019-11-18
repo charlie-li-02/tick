@@ -18,6 +18,7 @@ public class Window extends JFrame {
     private JLabel reminderTitleLabel;
     private JLabel nothingInToDoLabel;
     private JLabel nothingInReminderLabel;
+    private JLabel tooManyItemsLabel;
 
     //TEXT BOXES
     private JTextField titleTextBox;
@@ -54,13 +55,13 @@ public class Window extends JFrame {
         super("Tick");
 
         mainLabel = new JLabel("");
-        //displayLabel = new JTextArea("");
         weatherLabel = new JLabel("");
         temperatureLabel = new JLabel("");
         toDoTitleLabel = new JLabel("To Dos:");
         reminderTitleLabel = new JLabel("Reminders:");
         nothingInToDoLabel = new JLabel("You have no to dos");
         nothingInReminderLabel = new JLabel("You have no reminders");
+        tooManyItemsLabel = new JLabel("You have too many items undone, delete or mark an item? ");
 
         titleTextBox = new JTextField();
         attributeTextBox = new JTextField();
@@ -120,6 +121,10 @@ public class Window extends JFrame {
 
         temperatureLabel.setBounds(20, 740, 380, 30);
         add(temperatureLabel);
+
+        tooManyItemsLabel.setBounds(30, 100, 400, 20);
+        add(tooManyItemsLabel);
+        tooManyItemsLabel.setVisible(false);
 
         setTodoAndReminderBounds();
     }
@@ -215,6 +220,7 @@ public class Window extends JFrame {
         titleTextBox.setVisible(false);
         attributeTextBox.setVisible(false);
         indexTextBox.setVisible(false);
+        tooManyItemsLabel.setVisible(false);
         setVisible(true);
     }
 
@@ -314,6 +320,7 @@ public class Window extends JFrame {
         setVisible(true);
     }
 
+
     public void display(ListOfItems listOfItems) {
         if (listOfItems instanceof ListOfToDo) {
             displayToDo(listOfItems);
@@ -393,6 +400,10 @@ public class Window extends JFrame {
 
     public JLabel getTemperatureLabel() {
         return temperatureLabel;
+    }
+
+    public JLabel getTooManyItemsLabel() {
+        return tooManyItemsLabel;
     }
 
     public JTextField getTitleTextBox() {

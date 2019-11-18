@@ -86,12 +86,12 @@ public class ItemHandler implements ActionListener {
     //EFFECTS: gives the user the choice to delete or mark an item as done after being prompted that they have
     //         too many items that aren't done
     private void tooManyItems() {
-        System.out.println("You have too many items undone, delete or mark an item? (y|n)");
-        String choice = takeInput.nextLine();
-        if (choice.equals("y")) {
-            whichList();
-            //window.layoutForItemOptions();
-        }
+        window.getTooManyItemsLabel().setVisible(true);
+        window.getTitleTextBox().setVisible(false);
+        window.getAttributeTextBox().setVisible(false);
+        //System.out.println("You have too many items undone, delete or mark an item? (y|n)");
+        //String choice = takeInput.nextLine();
+        whichList();
     }
 
     //REQUIRES: nothing
@@ -120,7 +120,6 @@ public class ItemHandler implements ActionListener {
 
             if (e.getActionCommand().equals("no")) {
                 whichList();
-                //window.layoutForItemOptions();
             }
 
             if (e.getActionCommand().equals("return")) {
