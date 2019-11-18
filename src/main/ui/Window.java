@@ -10,13 +10,19 @@ import java.util.ArrayList;
 
 public class Window extends JFrame {
 
+    //LABELS
     private JLabel mainLabel;
-    private JTextArea displayLabel;
     private JLabel weatherLabel;
     private JLabel temperatureLabel;
+    private JLabel toDoTitleLabel;
+    private JLabel reminderTitleLabel;
+
+    //TEXT BOXES
     private JTextField titleTextBox;
     private JTextField attributeTextBox;
     private JTextField indexTextBox;
+
+    //BUTTONS
     private JButton button1;
     private JButton button2;
     private JButton button3;
@@ -34,54 +40,48 @@ public class Window extends JFrame {
     private JButton homework;
     private JButton back;
 
+    //TEXT FOR BUTTONS
     private static final String pleaseSelect = "Please select one of:";
-    private static final String addToDo = "Add a to do";
-    private static final String addReminder = "Add a reminder";
-    private static final String addHW = "New homework list";
-    private static final String editLists = "Edit current lists";
-    private static final String showWeather = "Show me the weather";
-    private static final String exit = "Exit";
-    private static final String deleteOrMark = "Enter the item's index and choose an option";
-    private static final String deleteString = "Delete an item";
-    private static final String markString = "Change the status of an item";
-    private static final String noString = "Return to main menu";
-    private static final String whichList = "Which list would you like to edit?";
-    private static final String toDoButtonString = "To Do List";
-    private static final String reminderButtonString = "Reminder List";
-    private static final String homeworkButtonString = "Homework List";
-    private static final String returnButtonString = "Return";
+
 
     private ArrayList<JLabel> listOfToDoLabels = new ArrayList<>();
     private ArrayList<JLabel> listOfReminderLabels = new ArrayList<>();
 
 
     public Window() {
-        super("To Do List");
+        super("Tick");
 
         mainLabel = new JLabel("");
-        displayLabel = new JTextArea("");
+        //displayLabel = new JTextArea("");
         weatherLabel = new JLabel("");
         temperatureLabel = new JLabel("");
+        toDoTitleLabel = new JLabel("To Dos:");
+        reminderTitleLabel = new JLabel("Reminders:");
+
         titleTextBox = new JTextField();
         attributeTextBox = new JTextField();
         indexTextBox = new JTextField();
 
-        button1 = new JButton(addToDo);
-        button2 = new JButton(addReminder);
-        button3 = new JButton(addHW);
-        button4 = new JButton(editLists);
-        button5 = new JButton(showWeather);
-        button6 = new JButton(exit);
+        setButtonNames();
+    }
+
+    private void setButtonNames() {
+        button1 = new JButton("Add a to do");
+        button2 = new JButton("Add a reminder");
+        button3 = new JButton("New homework list");
+        button4 = new JButton("Edit current lists");
+        button5 = new JButton("Show me the weather");
+        button6 = new JButton("Exit");
         enter = new JButton("Enter");
         yes = new JButton("Yes");
         no = new JButton("No");
-        delete = new JButton(deleteString);
-        mark = new JButton(markString);
-        dontDeleteOrMark = new JButton(noString);
-        toDo = new JButton(toDoButtonString);
-        reminder = new JButton(reminderButtonString);
-        homework = new JButton(homeworkButtonString);
-        back = new JButton(returnButtonString);
+        delete = new JButton("Delete an item");
+        mark = new JButton("Change the status of an item");
+        dontDeleteOrMark = new JButton("Return to main menu");
+        toDo = new JButton("To Do List");
+        reminder = new JButton("Reminder List");
+        homework = new JButton("Homework List");
+        back = new JButton("Return");
     }
 
 
@@ -111,20 +111,19 @@ public class Window extends JFrame {
         mainLabel.setBounds(30, 50, 300, 30);
         add(mainLabel);
 
-        displayLabel.setEditable(false);
-        displayLabel.setCursor(null);
-        displayLabel.setOpaque(false);
-        displayLabel.setFocusable(false);
-        displayLabel.setLineWrap(true);
-        displayLabel.setWrapStyleWord(true);
-        displayLabel.setBounds(50, 100,300, 200);
-        add(displayLabel);
-
         weatherLabel.setBounds(20, 720, 380, 30);
         add(weatherLabel);
 
         temperatureLabel.setBounds(20, 740, 380, 30);
         add(temperatureLabel);
+
+        toDoTitleLabel.setBounds(450, 70, 300, 20);
+        add(toDoTitleLabel);
+        toDoTitleLabel.setVisible(true);
+
+        reminderTitleLabel.setBounds(820, 70, 300, 20);
+        add(reminderTitleLabel);
+        reminderTitleLabel.setVisible(true);
     }
 
     private void setTextBoxBounds() {
@@ -200,7 +199,6 @@ public class Window extends JFrame {
         titleTextBox.setVisible(false);
         attributeTextBox.setVisible(false);
         indexTextBox.setVisible(false);
-        displayLabel.setVisible(false);
     }
 
     private void only6OptionButtons() {
@@ -247,7 +245,6 @@ public class Window extends JFrame {
         no.setVisible(true);
         titleTextBox.setVisible(false);
         attributeTextBox.setVisible(false);
-        displayLabel.setVisible(true);
     }
 
     public void layoutForItemOptions() {
@@ -255,11 +252,10 @@ public class Window extends JFrame {
 
         add(dontDeleteOrMark);
         indexTextBox.setVisible(true);
-        displayLabel.setVisible(true);
     }
 
     private void only3OptionButtons() {
-        mainLabel.setText(deleteOrMark);
+        mainLabel.setText("Enter the item's index and choose an option");
         button1.setVisible(false);
         button2.setVisible(false);
         button3.setVisible(false);
@@ -278,7 +274,7 @@ public class Window extends JFrame {
     }
 
     public void layoutForShowLists() {
-        mainLabel.setText(whichList);
+        mainLabel.setText("Which list would you like to edit?");
         button1.setVisible(false);
         button2.setVisible(false);
         button3.setVisible(false);
@@ -344,9 +340,6 @@ public class Window extends JFrame {
         return mainLabel;
     }
 
-    public JTextArea getDisplayLabel() {
-        return displayLabel;
-    }
 
     public JLabel getWeatherLabel() {
         return weatherLabel;
