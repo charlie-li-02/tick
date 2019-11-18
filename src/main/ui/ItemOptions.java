@@ -20,10 +20,9 @@ public class ItemOptions implements ActionListener {
         this.window = window;
         this.listOfItems = listOfItems;
 
-        //addListeners();
     }
 
-    public void addListeners(ItemOptions itemOptions) {
+    public void setListener(ItemOptions itemOptions) {
         for (ActionListener ae: window.getDelete().getActionListeners()) {
             window.getDelete().removeActionListener(ae);
         }
@@ -38,23 +37,24 @@ public class ItemOptions implements ActionListener {
         window.getDontDeleteOrMark().addActionListener(itemOptions);
 
 //        if (window.getDelete().getActionListeners().length == 0) {
-//            window.getDelete().addActionListener(this);
+//            window.getDelete().addActionListener(itemOptions);
 //        }
 //        if (window.getMark().getActionListeners().length == 0) {
-//            window.getMark().addActionListener(this);
+//            window.getMark().addActionListener(itemOptions);
 //        }
 //        if (window.getDontDeleteOrMark().getActionListeners().length == 0) {
-//            window.getDontDeleteOrMark().addActionListener(this);
+//            window.getDontDeleteOrMark().addActionListener(itemOptions);
 //        }
     }
 
 
-    //REQUIRES: nothing
-    //MODIFIES: nothing
-    //EFFECTS: prompts the user the option to delete or change the status of an item
-//    //public void processOptions() {
-//        window.layoutForItemOptions();
-//    }
+//    REQUIRES: nothing
+//    MODIFIES: nothing
+//    EFFECTS: prompts the user the option to delete or change the status of an item
+    public void processOptions(ListOfItems listOfItems) {
+        this.listOfItems = listOfItems;
+        window.layoutForItemOptions();
+    }
 
     //REQUIRES: nothing
     //MODIFIES: nothing
@@ -62,6 +62,7 @@ public class ItemOptions implements ActionListener {
     private void delete() throws FileNotFoundException, UnsupportedEncodingException {
         int index = Integer.parseInt(window.getIndexTextBox().getText());
         try {
+            System.out.println(window.getDelete().getActionListeners());
             listOfItems.remove(index);
         } catch (ItemDoesNotExistException e) {
             System.out.println("Invalid index, try again");

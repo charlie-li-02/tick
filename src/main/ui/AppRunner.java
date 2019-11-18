@@ -2,7 +2,6 @@ package ui;
 
 import model.*;
 
-
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
@@ -14,8 +13,8 @@ public class AppRunner implements ActionListener {
     private HomeworkList homeworkList;
     private ItemHandler toDoHandler;
     private ItemHandler reminderHandler;
-    private ItemOptions toDoOptions;
-    private ItemOptions reminderOptions;
+    //private ItemOptions toDoOptions;
+   //private ItemOptions reminderOptions;
     private HomeworkHandler homeworkHandler;
     private HomeworkOptions homeworkOptions;
     private WeatherHandler weatherHandler;
@@ -44,12 +43,15 @@ public class AppRunner implements ActionListener {
         homeworkOptions = new HomeworkOptions();
         window = new Window();
         window.initializeGraphics();
-        toDoHandler = new ItemHandler(window, listOfToDo, toDoOptions);
-        reminderHandler = new ItemHandler(window, listOfReminder, reminderOptions);
-        toDoOptions = new ItemOptions(window, listOfToDo);
-        toDoOptions.addListeners(toDoOptions);
-        reminderOptions = new ItemOptions(window, listOfReminder);
-        reminderOptions.addListeners(reminderOptions);
+
+        //toDoOptions = new ItemOptions(window, listOfToDo);
+        //toDoOptions.setListener(toDoOptions);
+
+        //reminderOptions = new ItemOptions(window, listOfReminder);
+        //reminderOptions.setListener(reminderOptions);
+
+        toDoHandler = new ItemHandler(window, listOfToDo);
+        reminderHandler = new ItemHandler(window, listOfReminder);
     }
 
     private void setListeners() {
@@ -107,13 +109,14 @@ public class AppRunner implements ActionListener {
             weatherHandler.displayWeather();
 
         } else if (action.equals("1")) {
-            //toDoHandler = new ItemHandler(window, listOfToDo);
             toDoHandler.startItem();
             toDoHandler.addListeners(toDoHandler);
+            //toDoOptions.setListener(toDoOptions);
 
         } else if (action.equals("2")) {
             reminderHandler.startItem();
             reminderHandler.addListeners(reminderHandler);
+            //reminderOptions.setListener(reminderOptions);
 
         } else if (action.equals("3")) {
             homeworkHandler.makeNewHomework(homeworkList);

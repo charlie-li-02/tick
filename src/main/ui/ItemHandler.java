@@ -2,6 +2,8 @@ package ui;
 
 import exceptions.TooManyItemsUndoneException;
 import model.ListOfItems;
+import model.ListOfReminder;
+import model.ListOfToDo;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -10,16 +12,25 @@ import java.util.Scanner;
 
 
 public class ItemHandler implements ActionListener {
-    private ItemOptions itemOptions;
+    private ItemOptions toDoOptions;
+    private ItemOptions reminderOptions;
     private Scanner takeInput;
     private Window window;
     private ListOfItems listOfItems;
+    private Boolean isToDo;
 
-    public ItemHandler(Window window, ListOfItems listOfItems, ItemOptions itemOptions) {
+    public ItemHandler(Window window, ListOfItems listOfItems) {
         takeInput = new Scanner(System.in);
-        this.itemOptions = itemOptions;
         this.window = window;
         this.listOfItems = listOfItems;
+        if (listOfItems instanceof ListOfToDo) {
+            toDoOptions = new ItemOptions(window, listOfItems);
+            isToDo = true;
+        }
+        if (listOfItems instanceof ListOfReminder) {
+            reminderOptions = new ItemOptions(window, listOfItems);
+            isToDo = false;
+        }
     }
 
     public void addListeners(ItemHandler itemHandler) {
@@ -78,8 +89,8 @@ public class ItemHandler implements ActionListener {
         System.out.println("You have too many items undone, delete or mark an item? (y|n)");
         String choice = takeInput.nextLine();
         if (choice.equals("y")) {
-            //itemOptions.processOptions();
-            window.layoutForItemOptions();
+            whichList();
+            //window.layoutForItemOptions();
         }
     }
 
@@ -88,16 +99,10 @@ public class ItemHandler implements ActionListener {
     //EFFECTS: prints out the list of items
     public void printItemList(ListOfItems listOfItems) {
         if (listOfItems.getSize() == 0) {
-//            window.getDisplayLabel().setText("You don't have anything in that list!");
-//            window.getDisplayLabel().setVisible(true);
-//            window.getBack().setVisible(true);
+            window.layoutInitial();
         } else {
-//            ArrayList<String> log = listOfItems.print();
-//            window.getDisplayLabel().setText(log.toString());
-//            window.getDisplayLabel().setVisible(true);
             window.display(listOfItems);
-//            itemOptions.processOptions();
-            window.layoutForItemOptions();
+            whichList();
         }
     }
 
@@ -113,8 +118,8 @@ public class ItemHandler implements ActionListener {
             }
 
             if (e.getActionCommand().equals("no")) {
-                //itemOptions.processOptions();
-                window.layoutForItemOptions();
+                whichList();
+                //window.layoutForItemOptions();
             }
 
             if (e.getActionCommand().equals("return")) {
@@ -123,6 +128,16 @@ public class ItemHandler implements ActionListener {
 
         } catch (IOException ex) {
             ex.printStackTrace();
+        }
+    }
+
+    private void whichList() {
+        if (isToDo) {
+            toDoOptions.processOptions(listOfItems);
+            toDoOptions.setListener(toDoOptions);
+        } else {
+            reminderOptions.processOptions(listOfItems);
+            reminderOptions.setListener(reminderOptions);
         }
     }
 

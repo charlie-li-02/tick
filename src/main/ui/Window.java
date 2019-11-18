@@ -38,14 +38,14 @@ public class Window extends JFrame {
     private static final String addToDo = "Add a to do";
     private static final String addReminder = "Add a reminder";
     private static final String addHW = "New homework list";
-    private static final String viewLists = "View current lists";
+    private static final String editLists = "Edit current lists";
     private static final String showWeather = "Show me the weather";
     private static final String exit = "Exit";
     private static final String deleteOrMark = "Enter the item's index and choose an option";
     private static final String deleteString = "Delete an item";
     private static final String markString = "Change the status of an item";
     private static final String noString = "Return to main menu";
-    private static final String whichList = "Which list would you like to open?";
+    private static final String whichList = "Which list would you like to edit?";
     private static final String toDoButtonString = "To Do List";
     private static final String reminderButtonString = "Reminder List";
     private static final String homeworkButtonString = "Homework List";
@@ -69,7 +69,7 @@ public class Window extends JFrame {
         button1 = new JButton(addToDo);
         button2 = new JButton(addReminder);
         button3 = new JButton(addHW);
-        button4 = new JButton(viewLists);
+        button4 = new JButton(editLists);
         button5 = new JButton(showWeather);
         button6 = new JButton(exit);
         enter = new JButton("Enter");
