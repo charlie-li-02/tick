@@ -16,6 +16,8 @@ public class Window extends JFrame {
     private JLabel temperatureLabel;
     private JLabel toDoTitleLabel;
     private JLabel reminderTitleLabel;
+    private JLabel nothingInToDoLabel;
+    private JLabel nothingInReminderLabel;
 
     //TEXT BOXES
     private JTextField titleTextBox;
@@ -57,6 +59,8 @@ public class Window extends JFrame {
         temperatureLabel = new JLabel("");
         toDoTitleLabel = new JLabel("To Dos:");
         reminderTitleLabel = new JLabel("Reminders:");
+        nothingInToDoLabel = new JLabel("You have no to dos");
+        nothingInReminderLabel = new JLabel("You have no reminders");
 
         titleTextBox = new JTextField();
         attributeTextBox = new JTextField();
@@ -117,6 +121,10 @@ public class Window extends JFrame {
         temperatureLabel.setBounds(20, 740, 380, 30);
         add(temperatureLabel);
 
+        setTodoAndReminderBounds();
+    }
+
+    private void setTodoAndReminderBounds() {
         toDoTitleLabel.setBounds(450, 70, 300, 20);
         add(toDoTitleLabel);
         toDoTitleLabel.setVisible(true);
@@ -124,6 +132,14 @@ public class Window extends JFrame {
         reminderTitleLabel.setBounds(820, 70, 300, 20);
         add(reminderTitleLabel);
         reminderTitleLabel.setVisible(true);
+
+        nothingInToDoLabel.setBounds(450, 100, 300, 20);
+        add(nothingInToDoLabel);
+        nothingInToDoLabel.setVisible(false);
+
+        nothingInReminderLabel.setBounds(820, 100, 300, 20);
+        add(nothingInReminderLabel);
+        nothingInReminderLabel.setVisible(false);
     }
 
     private void setTextBoxBounds() {
@@ -199,6 +215,7 @@ public class Window extends JFrame {
         titleTextBox.setVisible(false);
         attributeTextBox.setVisible(false);
         indexTextBox.setVisible(false);
+        setVisible(true);
     }
 
     private void only6OptionButtons() {
@@ -237,6 +254,7 @@ public class Window extends JFrame {
         add(attributeTextBox);
         titleTextBox.setVisible(true);
         attributeTextBox.setVisible(true);
+        setVisible(true);
     }
 
     public void layoutForAddAnotherItem() {
@@ -245,6 +263,7 @@ public class Window extends JFrame {
         no.setVisible(true);
         titleTextBox.setVisible(false);
         attributeTextBox.setVisible(false);
+        setVisible(true);
     }
 
     public void layoutForItemOptions() {
@@ -252,6 +271,7 @@ public class Window extends JFrame {
 
         add(dontDeleteOrMark);
         indexTextBox.setVisible(true);
+        setVisible(true);
     }
 
     private void only3OptionButtons() {
@@ -268,6 +288,7 @@ public class Window extends JFrame {
         delete.setVisible(true);
         mark.setVisible(true);
         dontDeleteOrMark.setVisible(true);
+        setVisible(true);
         toDo.setVisible(false);
         reminder.setVisible(false);
         homework.setVisible(false);
@@ -290,6 +311,7 @@ public class Window extends JFrame {
         toDo.setVisible(true);
         reminder.setVisible(true);
         homework.setVisible(true);
+        setVisible(true);
     }
 
     public void display(ListOfItems listOfItems) {
@@ -302,23 +324,26 @@ public class Window extends JFrame {
     }
 
     private void displayToDo(ListOfItems listOfItems) {
-        for (JLabel label: listOfToDoLabels) {
-            label.setVisible(false);
-            remove(label);
-        }
-        listOfToDoLabels.clear();
-        int startY = 100;
-        for (String entry: listOfItems.print()) {
-            JLabel label = new JLabel(entry);
-            add(label);
-            label.setBounds(450, startY, 350, 20);
-            startY += 25;
-            label.setVisible(true);
-            listOfToDoLabels.add(label);
+        if (listOfItems.getSize() == 0) {
+            generateTodoLabels(listOfItems);
+            displayNothingInList(nothingInToDoLabel);
+        } else {
+            nothingInToDoLabel.setVisible(false);
+            generateTodoLabels(listOfItems);
         }
     }
 
     private void displayReminder(ListOfItems listOfItems) {
+        if (listOfItems.getSize() == 0) {
+            generateReminderLabels(listOfItems);
+            displayNothingInList(nothingInReminderLabel);
+        } else {
+            nothingInReminderLabel.setVisible(false);
+            generateReminderLabels(listOfItems);
+        }
+    }
+
+    private void generateReminderLabels(ListOfItems listOfItems) {
         for (JLabel label : listOfReminderLabels) {
             label.setVisible(false);
             remove(label);
@@ -333,6 +358,27 @@ public class Window extends JFrame {
             label.setVisible(true);
             listOfReminderLabels.add(label);
         }
+    }
+
+    private void generateTodoLabels(ListOfItems listOfItems) {
+        for (JLabel label : listOfToDoLabels) {
+            label.setVisible(false);
+            remove(label);
+        }
+        listOfToDoLabels.clear();
+        int startY = 100;
+        for (String entry : listOfItems.print()) {
+            JLabel label = new JLabel(entry);
+            add(label);
+            label.setBounds(450, startY, 350, 20);
+            startY += 25;
+            label.setVisible(true);
+            listOfToDoLabels.add(label);
+        }
+    }
+
+    private void displayNothingInList(JLabel label) {
+        label.setVisible(true);
     }
 
 

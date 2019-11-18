@@ -99,6 +99,7 @@ public class ItemHandler implements ActionListener {
     //EFFECTS: prints out the list of items
     public void printItemList(ListOfItems listOfItems) {
         if (listOfItems.getSize() == 0) {
+            window.display(listOfItems);
             window.layoutInitial();
         } else {
             window.display(listOfItems);
