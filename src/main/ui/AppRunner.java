@@ -13,8 +13,6 @@ public class AppRunner implements ActionListener {
     private HomeworkList homeworkList;
     private ItemHandler toDoHandler;
     private ItemHandler reminderHandler;
-    //private ItemOptions toDoOptions;
-   //private ItemOptions reminderOptions;
     private HomeworkHandler homeworkHandler;
     private HomeworkOptions homeworkOptions;
     private WeatherHandler weatherHandler;
@@ -43,12 +41,6 @@ public class AppRunner implements ActionListener {
         homeworkOptions = new HomeworkOptions();
         window = new Window();
         window.initializeGraphics();
-
-        //toDoOptions = new ItemOptions(window, listOfToDo);
-        //toDoOptions.setListener(toDoOptions);
-
-        //reminderOptions = new ItemOptions(window, listOfReminder);
-        //reminderOptions.setListener(reminderOptions);
 
         toDoHandler = new ItemHandler(window, listOfToDo);
         reminderHandler = new ItemHandler(window, listOfReminder);
@@ -111,12 +103,10 @@ public class AppRunner implements ActionListener {
         } else if (action.equals("1")) {
             toDoHandler.startItem();
             toDoHandler.addListeners(toDoHandler);
-            //toDoOptions.setListener(toDoOptions);
 
         } else if (action.equals("2")) {
             reminderHandler.startItem();
             reminderHandler.addListeners(reminderHandler);
-            //reminderOptions.setListener(reminderOptions);
 
         } else if (action.equals("3")) {
             homeworkHandler.makeNewHomework(homeworkList);

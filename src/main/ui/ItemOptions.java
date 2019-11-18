@@ -51,13 +51,13 @@ public class ItemOptions implements ActionListener {
     //EFFECTS: asks the user if they wish to remove an item from the list
     private void delete() throws FileNotFoundException, UnsupportedEncodingException {
         int index = Integer.parseInt(window.getIndexTextBox().getText());
+        window.getWarningLabel().setVisible(false);
         try {
-            System.out.println(window.getDelete().getActionListeners());
             listOfItems.remove(index);
         } catch (ItemDoesNotExistException e) {
-            System.out.println("Invalid index, try again");
+            window.getWarningLabel().setText("Invalid index, try again");
+            window.getWarningLabel().setVisible(true);
         } finally {
-            System.out.println(listOfItems.print());
             window.display(listOfItems);
             listOfItems.save();
         }
@@ -69,13 +69,14 @@ public class ItemOptions implements ActionListener {
     //EFFECTS: asks the user if they wish to change the status of an item in the list
     private void mark() throws FileNotFoundException, UnsupportedEncodingException {
         int index = Integer.parseInt(window.getIndexTextBox().getText());
+        window.getWarningLabel().setVisible(false);
         try {
             listOfItems.changeStatus(index);
         } catch (ItemDoesNotExistException e) {
-            System.out.println("Invalid index, try again");
+            window.getWarningLabel().setText("Invalid index, try again");
+            window.getWarningLabel().setVisible(true);
         } finally {
-            System.out.println(listOfItems.print());
-
+            window.display(listOfItems);
             listOfItems.save();
         }
     }

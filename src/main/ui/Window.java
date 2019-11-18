@@ -18,7 +18,7 @@ public class Window extends JFrame {
     private JLabel reminderTitleLabel;
     private JLabel nothingInToDoLabel;
     private JLabel nothingInReminderLabel;
-    private JLabel tooManyItemsLabel;
+    private JLabel warningLabel;
 
     //TEXT BOXES
     private JTextField titleTextBox;
@@ -61,7 +61,7 @@ public class Window extends JFrame {
         reminderTitleLabel = new JLabel("Reminders:");
         nothingInToDoLabel = new JLabel("You have no to dos");
         nothingInReminderLabel = new JLabel("You have no reminders");
-        tooManyItemsLabel = new JLabel("You have too many items undone, delete or mark an item? ");
+        warningLabel = new JLabel("");
 
         titleTextBox = new JTextField();
         attributeTextBox = new JTextField();
@@ -122,9 +122,9 @@ public class Window extends JFrame {
         temperatureLabel.setBounds(20, 740, 380, 30);
         add(temperatureLabel);
 
-        tooManyItemsLabel.setBounds(30, 100, 400, 20);
-        add(tooManyItemsLabel);
-        tooManyItemsLabel.setVisible(false);
+        warningLabel.setBounds(30, 100, 400, 20);
+        add(warningLabel);
+        warningLabel.setVisible(false);
 
         setTodoAndReminderBounds();
     }
@@ -220,7 +220,7 @@ public class Window extends JFrame {
         titleTextBox.setVisible(false);
         attributeTextBox.setVisible(false);
         indexTextBox.setVisible(false);
-        tooManyItemsLabel.setVisible(false);
+        warningLabel.setVisible(false);
         setVisible(true);
     }
 
@@ -402,8 +402,8 @@ public class Window extends JFrame {
         return temperatureLabel;
     }
 
-    public JLabel getTooManyItemsLabel() {
-        return tooManyItemsLabel;
+    public JLabel getWarningLabel() {
+        return warningLabel;
     }
 
     public JTextField getTitleTextBox() {

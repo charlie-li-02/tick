@@ -14,13 +14,11 @@ import java.util.Scanner;
 public class ItemHandler implements ActionListener {
     private ItemOptions toDoOptions;
     private ItemOptions reminderOptions;
-    private Scanner takeInput;
     private Window window;
     private ListOfItems listOfItems;
     private Boolean isToDo;
 
     public ItemHandler(Window window, ListOfItems listOfItems) {
-        takeInput = new Scanner(System.in);
         this.window = window;
         this.listOfItems = listOfItems;
         if (listOfItems instanceof ListOfToDo) {
@@ -86,11 +84,10 @@ public class ItemHandler implements ActionListener {
     //EFFECTS: gives the user the choice to delete or mark an item as done after being prompted that they have
     //         too many items that aren't done
     private void tooManyItems() {
-        window.getTooManyItemsLabel().setVisible(true);
+        window.getWarningLabel().setText("You have too many items undone, delete or mark an item?");
+        window.getWarningLabel().setVisible(true);
         window.getTitleTextBox().setVisible(false);
         window.getAttributeTextBox().setVisible(false);
-        //System.out.println("You have too many items undone, delete or mark an item? (y|n)");
-        //String choice = takeInput.nextLine();
         whichList();
     }
 
