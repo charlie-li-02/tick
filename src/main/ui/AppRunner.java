@@ -148,6 +148,9 @@ public class AppRunner implements ActionListener {
         new AppRunner();
     }
 
+    //REQUIRES: nothing
+    //MODIFIES: this
+    //EFFECTS; listens to 9 different buttons and calls the corresponding methods
     @Override
     public void actionPerformed(ActionEvent e) {
         action = e.getActionCommand();

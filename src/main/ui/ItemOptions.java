@@ -22,6 +22,9 @@ public class ItemOptions implements ActionListener {
 
     }
 
+    //REQUIRES: nothing
+    //MODIFIES: Window, delete button, mark button, dont delete or mark button
+    //EFFECTS: adds the passed in instance of ItemOptions as the only listener for the 3 buttons modified
     public void setListener(ItemOptions itemOptions) {
         for (ActionListener ae: window.getDelete().getActionListeners()) {
             window.getDelete().removeActionListener(ae);
@@ -82,6 +85,9 @@ public class ItemOptions implements ActionListener {
     }
 
 
+    //REQUIRES: nothing
+    //MODIFIES: this
+    //EFFECTS: listens to the 3 buttons and called the corresponding methods
     @Override
     public void actionPerformed(ActionEvent e) {
         try {

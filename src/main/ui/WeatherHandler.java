@@ -10,6 +10,9 @@ public class WeatherHandler {
     private Weather weather;
     private WeatherPrinter weatherPrinter;
 
+    //REQUIRES: nothing
+    //MODIFIES: this, weather
+    //EFFECTS: constructor for WeatherHandler
     public WeatherHandler(Window window) {
         this.window = window;
         weather = new Weather();
@@ -17,6 +20,9 @@ public class WeatherHandler {
         weather.addObservers(weatherPrinter);
     }
 
+    //REQUIRES: nothing
+    //MODIFIES: Window
+    //EFFECTS: sets the text fields of 2 labels after getting the data from weather
     public void displayWeather() throws IOException {
         weather.getWeather();
         weather.notifyObservers();

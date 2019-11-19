@@ -17,10 +17,11 @@ public class ReadWebPageWeather {
     private String vancouver = "https://api.openweathermap.org/data/2.5/weather?q=Vancouver,ca&APPID=";
     private String weatherString;
 
-    public ReadWebPageWeather() {
+    public ReadWebPageWeather() {}
 
-    }
-
+    //REQUIRES: vancouver, apiKey not null
+    //MODIFIES: this
+    //EFFECTS: accesses the weather api and stores the JSON file into weatherString
     public void readWeather() throws IOException {
         BufferedReader br = null;
 
@@ -45,6 +46,9 @@ public class ReadWebPageWeather {
         }
     }
 
+    //REQUIRES: weatherString not null, readWeather called before
+    //MODIFIES: nothing
+    //EFFECTS: parses the JSON file and returns the description of the weather
     public String parseWeather() {
         JSONObject obj = new JSONObject(weatherString);
 
@@ -57,6 +61,9 @@ public class ReadWebPageWeather {
         return null;
     }
 
+    //REQUIRES: weatherString not null, readWeather called before
+    //MODIFIES: nothing
+    //EFFECTS: parses the JSON file and returns the temperature in celsius, originally kelvins in JSON
     public Double parseTemperature() {
         JSONObject obj = new JSONObject(weatherString);
 
@@ -66,6 +73,9 @@ public class ReadWebPageWeather {
         return temperatureInC;
     }
 
+    //REQUIRES: weatherString not null, readWeather called before
+    //MODIFIES: nothing
+    //EFFECTS: parses the JSON file and returns the max temperature in celsius, originally kelvins in JSON
     public Double parseMaxTemperature() {
         JSONObject obj = new JSONObject(weatherString);
 
@@ -75,6 +85,9 @@ public class ReadWebPageWeather {
         return maxTempInC;
     }
 
+    //REQUIRES: weatherString not null, readWeather called before
+    //MODIFIES: nothing
+    //EFFECTS: parses the JSON file and returns the min temperature in celsius, originally kelvins in JSON
     public Double parseMinTemperature() {
         JSONObject obj = new JSONObject(weatherString);
 

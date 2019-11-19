@@ -222,7 +222,9 @@ public class Window extends JFrame {
         back.setActionCommand("return");
     }
 
-
+    //REQUIRES: all the components already added to the frame
+    //MODIFIES: this
+    //EFFECTS: displays the initial lay out
     public void layoutInitial() {
         mainLabel.setText(pleaseSelect);
         only6OptionButtons();
@@ -254,6 +256,9 @@ public class Window extends JFrame {
         back.setVisible(false);
     }
 
+    //REQUIRES: all the components already added to the frame
+    //MODIFIES: this
+    //EFFECTS: displays the lay out for adding an item screen
     public void layoutForAddItem() {
         onlyEnterButton();
         enterTitleLabel.setVisible(true);
@@ -280,6 +285,9 @@ public class Window extends JFrame {
         //homework.setVisible(false);
     }
 
+    //REQUIRES: all the components already added to the frame
+    //MODIFIES: this
+    //EFFECTS: displays the lay out for adding another item
     public void layoutForAddAnotherItem() {
         enter.setVisible(false);
         yes.setVisible(true);
@@ -291,6 +299,9 @@ public class Window extends JFrame {
         setVisible(true);
     }
 
+    //REQUIRES: all the components already added to the frame
+    //MODIFIES: this
+    //EFFECTS: displays the lay out for item options
     public void layoutForItemOptions() {
         only3OptionButtons();
 
@@ -321,6 +332,9 @@ public class Window extends JFrame {
         //homework.setVisible(false);
     }
 
+    //REQUIRES: all the components already added to the frame
+    //MODIFIES: this
+    //EFFECTS: displays the lay out for editing lists
     public void layoutForShowLists() {
         mainLabel.setText("Which list would you like to edit?");
         addToDoButton.setVisible(false);
@@ -341,7 +355,9 @@ public class Window extends JFrame {
         setVisible(true);
     }
 
-
+    //REQUIRES: all the components already added to the frame
+    //MODIFIES: this
+    //EFFECTS: determines what kind of listOfItems was passed in and displays them
     public void display(ListOfItems listOfItems) {
         if (listOfItems instanceof ListOfToDo) {
             displayToDo(listOfItems);

@@ -31,6 +31,9 @@ public class ItemHandler implements ActionListener {
         }
     }
 
+    //REQUIRES: nothing
+    //MODIFIES: Window, yes button, no button, enter button, back button
+    //EFFECTS: adds the passed in instance of ItemHandler as the only listener for the 4 buttons modified
     public void addListeners(ItemHandler itemHandler) {
         for (ActionListener ae: window.getYes().getActionListeners()) {
             window.getYes().removeActionListener(ae);
@@ -104,6 +107,9 @@ public class ItemHandler implements ActionListener {
         }
     }
 
+    //REQUIRES: nothing
+    //MODIFIES: this
+    //EFFECTS: listens to the 4 buttons and calls the corresponding methods when buttons are pressed
     @Override
     public void actionPerformed(ActionEvent e) {
         try {
