@@ -47,23 +47,23 @@ public class AppRunner implements ActionListener {
     }
 
     private void setListeners() {
-        if (window.getButton1().getActionListeners().length == 0) {
-            window.getButton1().addActionListener(this);
+        if (window.getAddToDoButton().getActionListeners().length == 0) {
+            window.getAddToDoButton().addActionListener(this);
         }
-        if (window.getButton2().getActionListeners().length == 0) {
-            window.getButton2().addActionListener(this);
+        if (window.getAddReminderButton().getActionListeners().length == 0) {
+            window.getAddReminderButton().addActionListener(this);
         }
-        if (window.getButton3().getActionListeners().length == 0) {
-            window.getButton3().addActionListener(this);
+//        if (window.getButton3().getActionListeners().length == 0) {
+//            window.getButton3().addActionListener(this);
+//        }
+        if (window.getEditListsButton().getActionListeners().length == 0) {
+            window.getEditListsButton().addActionListener(this);
         }
-        if (window.getButton4().getActionListeners().length == 0) {
-            window.getButton4().addActionListener(this);
+        if (window.getWeatherButton().getActionListeners().length == 0) {
+            window.getWeatherButton().addActionListener(this);
         }
-        if (window.getButton5().getActionListeners().length == 0) {
-            window.getButton5().addActionListener(this);
-        }
-        if (window.getButton6().getActionListeners().length == 0) {
-            window.getButton6().addActionListener(this);
+        if (window.getExitButton().getActionListeners().length == 0) {
+            window.getExitButton().addActionListener(this);
         }
     }
 
@@ -74,9 +74,9 @@ public class AppRunner implements ActionListener {
         if (window.getReminder().getActionListeners().length == 0) {
             window.getReminder().addActionListener(this);
         }
-        if (window.getHomework().getActionListeners().length == 0) {
-            window.getHomework().addActionListener(this);
-        }
+//        if (window.getHomework().getActionListeners().length == 0) {
+//            window.getHomework().addActionListener(this);
+//        }
         for (ActionListener ae : window.getBack().getActionListeners()) {
             if (ae.equals(this)) {
                 window.getBack().removeActionListener(this);
@@ -97,26 +97,28 @@ public class AppRunner implements ActionListener {
     }
 
     private void optionLoop() throws IOException {
-        if (action.equals("5")) {
+        if (action.equals("weather")) {
             weatherHandler.displayWeather();
 
-        } else if (action.equals("1")) {
+        } else if (action.equals("add to do")) {
             toDoHandler.startItem();
             toDoHandler.addListeners(toDoHandler);
 
-        } else if (action.equals("2")) {
+        } else if (action.equals("add reminder")) {
             reminderHandler.startItem();
             reminderHandler.addListeners(reminderHandler);
 
-        } else if (action.equals("3")) {
-            homeworkHandler.makeNewHomework(homeworkList);
-
-        } else if (action.equals("4")) {
-            //chooseList();
+        } else if (action.equals("edit lists")) {
             window.layoutForShowLists();
 
-        } else if (action.equals("")) {
-            System.out.println("Try again");
+//            else if (action.equals("3")) {
+//            homeworkHandler.makeNewHomework(homeworkList);
+//        }
+
+        } else if (action.equals("exit")) {
+            listOfToDo.save();
+            listOfReminder.save();
+            System.exit(1);
         }
     }
 
@@ -150,8 +152,8 @@ public class AppRunner implements ActionListener {
     public void actionPerformed(ActionEvent e) {
         action = e.getActionCommand();
         try {
-            if (action.equals("1") | action.equals("2") | action.equals("3")
-                    | action.equals("4") | action.equals("5") | action.equals("")) {
+            if (action.equals("add to do") | action.equals("add reminder") | action.equals("edit lists")
+                    | action.equals("weather") | action.equals("exit")) {
                 optionLoop();
             } else if (action.equals("to do") | action.equals("reminder") | action.equals("homework")) {
                 chooseList();
