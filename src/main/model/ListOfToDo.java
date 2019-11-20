@@ -37,7 +37,7 @@ public class ListOfToDo extends ListOfItems implements Save, Load {
         ArrayList<String> result = new ArrayList<>();
         for (int i = 0; i < listOfItems.size(); i++) {
             String s = i + 1 + ". Title: " + listOfItems.get(i).getTitle()
-                    + " Description: " + listOfItems.get(i).getAttribute() + " Done? " + listOfItems.get(i).getIsDone();
+                    + " Description: " + listOfItems.get(i).getAttribute();
             result.add(s);
         }
         return result;

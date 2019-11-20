@@ -150,6 +150,8 @@ public class ItemHandler implements ActionListener {
     private void enterEvent() throws IOException {
         String title = window.getTitleTextBox().getText();
         String attribute = window.getAttributeTextBox().getText();
+        window.getTitleTextBox().setText("");
+        window.getAttributeTextBox().setText("");
         makeNewItem(title, attribute);
     }
 }

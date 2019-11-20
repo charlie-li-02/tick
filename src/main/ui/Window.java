@@ -1,5 +1,6 @@
 package ui;
 
+import model.Item;
 import model.ListOfItems;
 import model.ListOfReminder;
 import model.ListOfToDo;
@@ -60,10 +61,16 @@ public class Window extends JFrame {
     //IMAGES
     private BufferedImage backgroundImage = ImageIO.read(new File("background.jpg"));
     private JLabel background = new JLabel(new ImageIcon(backgroundImage));
+    private BufferedImage done = ImageIO.read((new File("done.jpg")));
+    //private JLabel doneCheck = new JLabel(new ImageIcon(done));     //todo
+    private BufferedImage undone = ImageIO.read(new File("undone.jpg"));
+    //private JLabel undoneCheck = new JLabel(new ImageIcon(undone));   //todo
     private JLabel weatherIcon = new JLabel(new ImageIcon());
 
     private ArrayList<JLabel> listOfToDoLabels = new ArrayList<>();
     private ArrayList<JLabel> listOfReminderLabels = new ArrayList<>();
+    private ArrayList<JLabel> listOfToDoChecks = new ArrayList<>();
+    private ArrayList<JLabel> listOfReminderChecks = new ArrayList<>();
     private ArrayList<JButton> listOfButtons = new ArrayList<>();
 
 
@@ -139,12 +146,12 @@ public class Window extends JFrame {
         background.add(reminderTitleLabel);
         reminderTitleLabel.setVisible(true);
 
-        nothingInToDoLabel.setBounds(430, 100, 300, 20);
+        nothingInToDoLabel.setBounds(450, 100, 300, 20);
         nothingInToDoLabel.setFont(new Font(null, Font.PLAIN, 12));
         background.add(nothingInToDoLabel);
         nothingInToDoLabel.setVisible(false);
 
-        nothingInReminderLabel.setBounds(810, 100, 300, 20);
+        nothingInReminderLabel.setBounds(830, 100, 300, 20);
         nothingInReminderLabel.setFont(new Font(null, Font.PLAIN, 12));
         background.add(nothingInReminderLabel);
         nothingInReminderLabel.setVisible(false);
@@ -387,20 +394,24 @@ public class Window extends JFrame {
 
     private void displayToDo(ListOfItems listOfItems) {
         if (listOfItems.getSize() == 0) {
+            generateToDoChecks(listOfItems);
             generateTodoLabels(listOfItems);
             displayNothingInList(nothingInToDoLabel);
         } else {
             nothingInToDoLabel.setVisible(false);
+            generateToDoChecks(listOfItems);
             generateTodoLabels(listOfItems);
         }
     }
 
     private void displayReminder(ListOfItems listOfItems) {
         if (listOfItems.getSize() == 0) {
+            generateReminderChecks(listOfItems);
             generateReminderLabels(listOfItems);
             displayNothingInList(nothingInReminderLabel);
         } else {
             nothingInReminderLabel.setVisible(false);
+            generateReminderChecks(listOfItems);
             generateReminderLabels(listOfItems);
         }
     }
@@ -415,11 +426,55 @@ public class Window extends JFrame {
         for (String entry : listOfItems.print()) {
             JLabel label = new JLabel(entry);
             background.add(label);
-            label.setBounds(810, startY, 350, 20);
+            label.setBounds(830, startY, 350, 20);
             label.setFont(new Font(null, Font.PLAIN, 12));
             startY += 25;
             label.setVisible(true);
             listOfReminderLabels.add(label);
+        }
+    }
+
+    private void generateReminderChecks(ListOfItems listOfItems) {
+        for (JLabel check: listOfReminderChecks) {
+            check.setVisible(false);
+            remove(check);
+        }
+        listOfReminderChecks.clear();
+        int startY = 100;
+        for (Item item: listOfItems.listOfItems) {
+            JLabel check = new JLabel();
+            getCheck(item, check);
+            background.add(check);
+            check.setBounds(810, startY, 20, 20);
+            check.setVisible(true);
+            startY += 25;
+            listOfReminderChecks.add(check);
+        }
+    }
+
+    private void generateToDoChecks(ListOfItems listOfItems) {
+        for (JLabel check: listOfToDoChecks) {
+            check.setVisible(false);
+            remove(check);
+        }
+        listOfToDoChecks.clear();
+        int startY = 100;
+        for (Item item: listOfItems.listOfItems) {
+            JLabel check = new JLabel();
+            getCheck(item, check);
+            check.setBounds(430, startY, 20, 20);
+            background.add(check);
+            check.setVisible(true);
+            startY += 25;
+            listOfToDoChecks.add(check);
+        }
+    }
+
+    private void getCheck(Item item, JLabel check) {
+        if (item.getIsDone()) {
+            check.setIcon(new ImageIcon(done));
+        } else if (!item.getIsDone()) {
+            check.setIcon(new ImageIcon(undone));
         }
     }
 
@@ -433,7 +488,7 @@ public class Window extends JFrame {
         for (String entry : listOfItems.print()) {
             JLabel label = new JLabel(entry);
             background.add(label);
-            label.setBounds(430, startY, 350, 20);
+            label.setBounds(450, startY, 350, 20);
             label.setFont(new Font(null, Font.PLAIN, 12));
             startY += 25;
             label.setVisible(true);

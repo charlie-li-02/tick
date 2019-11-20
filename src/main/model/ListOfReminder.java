@@ -37,7 +37,7 @@ public class ListOfReminder extends ListOfItems implements Save, Load {
         ArrayList<String> result = new ArrayList<>();
         for (int i = 0; i < listOfItems.size(); i++) {
             String s = i + 1 + ". Remind me to " + listOfItems.get(i).getTitle()
-                    + " at " + listOfItems.get(i).getAttribute() + " Done? " + listOfItems.get(i).getIsDone();
+                    + " at " + listOfItems.get(i).getAttribute();
             result.add(s);
         }
         return result;
