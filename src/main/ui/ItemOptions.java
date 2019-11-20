@@ -32,12 +32,8 @@ public class ItemOptions implements ActionListener {
         for (ActionListener ae: window.getMark().getActionListeners()) {
             window.getMark().removeActionListener(ae);
         }
-//        for (ActionListener ae: window.getDontDeleteOrMark().getActionListeners()) {
-//            window.getDontDeleteOrMark().removeActionListener(ae);
-//        }
         window.getDelete().addActionListener(itemOptions);
         window.getMark().addActionListener(itemOptions);
-//        window.getDontDeleteOrMark().addActionListener(itemOptions);
     }
 
 
@@ -98,10 +94,6 @@ public class ItemOptions implements ActionListener {
             } else if (e.getActionCommand().equals("mark")) {
                 mark();
             }
-//            else if (e.getActionCommand().equals("neither")) {
-//                window.display(listOfItems);
-//                window.layoutInitial();
-//            }
         } catch (IOException ex) {
             ex.printStackTrace();
         }

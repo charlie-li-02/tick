@@ -8,7 +8,6 @@ import model.ListOfToDo;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
-import java.util.Scanner;
 
 
 public class ItemHandler implements ActionListener {
@@ -35,12 +34,6 @@ public class ItemHandler implements ActionListener {
     //MODIFIES: Window, yes button, no button, enter button, back button
     //EFFECTS: adds the passed in instance of ItemHandler as the only listener for the 4 buttons modified
     public void addListeners(ItemHandler itemHandler) {
-//        for (ActionListener ae: window.getYes().getActionListeners()) {
-//            window.getYes().removeActionListener(ae);
-//        }
-//        for (ActionListener ae: window.getNo().getActionListeners()) {
-//            window.getNo().removeActionListener(ae);
-//        }
         for (ActionListener ae: window.getEnter().getActionListeners()) {
             window.getEnter().removeActionListener(ae);
         }
@@ -49,8 +42,6 @@ public class ItemHandler implements ActionListener {
                 window.getBack().removeActionListener(itemHandler);
             }
         }
-//        window.getYes().addActionListener(itemHandler);
-//        window.getNo().addActionListener(itemHandler);
         window.getEnter().addActionListener(itemHandler);
         window.getBack().addActionListener(itemHandler);
     }
@@ -74,7 +65,6 @@ public class ItemHandler implements ActionListener {
             window.display(listOfItems);
             String addAnother = listOfItems.getPromptAnother();
             window.getMainLabel().setText(addAnother);
- //           window.layoutForAddAnotherItem();
         } catch (TooManyItemsUndoneException e) {
             tooManyItems();
         } finally {
@@ -119,14 +109,6 @@ public class ItemHandler implements ActionListener {
             if (e.getActionCommand().equals("enter")) {
                 enterEvent();
             }
-
-//            if (e.getActionCommand().equals("yes")) {
-//                startItem();
-//            }
-//
-//            if (e.getActionCommand().equals("no")) {
-//                whichList();
-//            }
 
             if (e.getActionCommand().equals("return")) {
                 window.layoutInitial();

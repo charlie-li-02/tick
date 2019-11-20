@@ -44,14 +44,10 @@ public class Window extends JFrame {
     private JButton weatherButton = new JButton("Refresh");
     private JButton exitButton = new JButton("Exit");
     private JButton enter = new JButton("Enter");
-//    private JButton yes = new JButton("Yes");
-//    private JButton no = new JButton("No");
     private JButton delete = new JButton("Delete an item");
     private JButton mark = new JButton("Mark done/undone");
-   // private JButton dontDeleteOrMark = new JButton("Return to main menu");
     private JButton toDo = new JButton("To Do List");
     private JButton reminder = new JButton("Reminder List");
-    //private JButton homework;
     private JButton back = new JButton("Return");
 
 
@@ -62,9 +58,7 @@ public class Window extends JFrame {
     private BufferedImage backgroundImage = ImageIO.read(new File("background.jpg"));
     private JLabel background = new JLabel(new ImageIcon(backgroundImage));
     private BufferedImage done = ImageIO.read((new File("done.jpg")));
-    //private JLabel doneCheck = new JLabel(new ImageIcon(done));     //todo
     private BufferedImage undone = ImageIO.read(new File("undone.jpg"));
-    //private JLabel undoneCheck = new JLabel(new ImageIcon(undone));   //todo
     private JLabel weatherIcon = new JLabel(new ImageIcon());
 
     private ArrayList<JLabel> listOfToDoLabels = new ArrayList<>();
@@ -198,14 +192,10 @@ public class Window extends JFrame {
         weatherButton.setBounds(425, 740, 80, 30);
         exitButton.setBounds(1085, 740, 80, 30);
         enter.setBounds(270, 600, 150, 30);
-//        yes.setBounds(50, 600, 80, 30);
-//        no.setBounds(270, 600, 80, 30);
         delete.setBounds(20, 500, 150, 30);
         mark.setBounds(20, 550, 150, 30);
-        //dontDeleteOrMark.setBounds(150, 600, 200, 30);
         toDo.setBounds(20, 500, 150, 30);
         reminder.setBounds(20, 550, 150, 30);
-        //homework.setBounds(20, 550, 150, 30);
         back.setBounds(20, 600, 150, 30);
     }
 
@@ -216,11 +206,8 @@ public class Window extends JFrame {
         listOfButtons.add(weatherButton);
         listOfButtons.add(exitButton);
         listOfButtons.add(enter);
-//        listOfButtons.add(yes);
-//        listOfButtons.add(no);
         listOfButtons.add(delete);
         listOfButtons.add(mark);
-        //listOfButtons.add(dontDeleteOrMark);
         listOfButtons.add(toDo);
         listOfButtons.add(reminder);
         listOfButtons.add(back);
@@ -243,11 +230,8 @@ public class Window extends JFrame {
         weatherButton.setActionCommand("weather");
         exitButton.setActionCommand("exit");
         enter.setActionCommand("enter");
- //       yes.setActionCommand("yes");
- //       no.setActionCommand("no");
         delete.setActionCommand("delete");
         mark.setActionCommand("mark");
-        //dontDeleteOrMark.setActionCommand("neither");
         toDo.setActionCommand("to do");
         reminder.setActionCommand("reminder");
         back.setActionCommand("return");
@@ -264,7 +248,6 @@ public class Window extends JFrame {
         titleTextBox.setVisible(false);
         attributeTextBox.setVisible(false);
         indexTextBox.setVisible(false);
-        //warningLabel.setVisible(false);
         setVisible(true);
     }
 
@@ -275,11 +258,8 @@ public class Window extends JFrame {
         weatherButton.setVisible(true);
         exitButton.setVisible(true);
         enter.setVisible(false);
-   ///     yes.setVisible(false);
-   //     no.setVisible(false);
         delete.setVisible(false);
         mark.setVisible(false);
-        //dontDeleteOrMark.setVisible(false);
         toDo.setVisible(false);
         reminder.setVisible(false);
         back.setVisible(false);
@@ -306,29 +286,11 @@ public class Window extends JFrame {
         addReminderButton.setVisible(false);
         editListsButton.setVisible(false);
         enter.setVisible(true);
-  //      yes.setVisible(false);
-  //      no.setVisible(false);
-        //dontDeleteOrMark.setVisible(false);
         toDo.setVisible(false);
         reminder.setVisible(false);
         back.setVisible(true);
         setVisible(true);
     }
-
-//    //REQUIRES: all the components already added to the frame
-//    //MODIFIES: this
-//    //EFFECTS: displays the lay out for adding another item
-//    public void layoutForAddAnotherItem() {
-//        enter.setVisible(false);
-// //       yes.setVisible(true);
-//  //      no.setVisible(true);
-//        back.setVisible(true);
-//        enterTitleLabel.setVisible(false);
-//        enterDescriptionLabel.setVisible(false);
-//        titleTextBox.setVisible(false);
-//        attributeTextBox.setVisible(false);
-//        setVisible(true);
-//    }
 
     //REQUIRES: all the components already added to the frame
     //MODIFIES: this
@@ -347,12 +309,9 @@ public class Window extends JFrame {
         addToDoButton.setVisible(false);
         addReminderButton.setVisible(false);
         editListsButton.setVisible(false);
-  //      yes.setVisible(false);
-   //     no.setVisible(false);
         enter.setVisible(false);
         delete.setVisible(true);
         mark.setVisible(true);
-        //dontDeleteOrMark.setVisible(true);
         setVisible(true);
         toDo.setVisible(false);
         reminder.setVisible(false);
@@ -368,12 +327,9 @@ public class Window extends JFrame {
         addToDoButton.setVisible(false);
         addReminderButton.setVisible(false);
         editListsButton.setVisible(false);
-//        yes.setVisible(false);
- //       no.setVisible(false);
         enter.setVisible(false);
         delete.setVisible(false);
         mark.setVisible(false);
-        //dontDeleteOrMark.setVisible(false);
         toDo.setVisible(true);
         reminder.setVisible(true);
         back.setVisible(true);
@@ -571,14 +527,6 @@ public class Window extends JFrame {
         return enter;
     }
 
-//    public JButton getYes() {
-//        return yes;
-//    }
-//
-//    public JButton getNo() {
-//        return no;
-//    }
-
     public JButton getDelete() {
         return delete;
     }
@@ -586,10 +534,6 @@ public class Window extends JFrame {
     public JButton getMark() {
         return mark;
     }
-//
-//    public JButton getDontDeleteOrMark() {
-//        return dontDeleteOrMark;
-//    }
 
     public JButton getToDo() {
         return toDo;
@@ -598,10 +542,6 @@ public class Window extends JFrame {
     public JButton getReminder() {
         return reminder;
     }
-
-//    public JButton getHomework() {
-//        return homework;
-//    }
 
     public JButton getBack() {
         return back;

@@ -53,9 +53,6 @@ public class AppRunner implements ActionListener {
         if (window.getAddReminderButton().getActionListeners().length == 0) {
             window.getAddReminderButton().addActionListener(this);
         }
-//        if (window.getButton3().getActionListeners().length == 0) {
-//            window.getButton3().addActionListener(this);
-//        }
         if (window.getEditListsButton().getActionListeners().length == 0) {
             window.getEditListsButton().addActionListener(this);
         }
@@ -74,9 +71,7 @@ public class AppRunner implements ActionListener {
         if (window.getReminder().getActionListeners().length == 0) {
             window.getReminder().addActionListener(this);
         }
-//        if (window.getHomework().getActionListeners().length == 0) {
-//            window.getHomework().addActionListener(this);
-//        }
+
         for (ActionListener ae : window.getBack().getActionListeners()) {
             if (ae.equals(this)) {
                 window.getBack().removeActionListener(this);
@@ -110,10 +105,6 @@ public class AppRunner implements ActionListener {
 
         } else if (action.equals("edit lists")) {
             window.layoutForEditLists();
-
-//            else if (action.equals("3")) {
-//            homeworkHandler.makeNewHomework(homeworkList);
-//        }
 
         } else if (action.equals("exit")) {
             listOfToDo.save();
