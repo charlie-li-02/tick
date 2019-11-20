@@ -2,6 +2,7 @@ package model;
 
 import network.ReadWebPageWeather;
 
+import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.text.DecimalFormat;
 
@@ -11,7 +12,8 @@ public class Weather extends AbstractSubject {
     private Double temperature;
     private Double maxTemp;
     private Double minTemp;
-    private static DecimalFormat df = new DecimalFormat("0.00");
+    private BufferedImage icon;
+    private static DecimalFormat df = new DecimalFormat("0");
     private ReadWebPageWeather readWebPageWeather;
 
     public Weather() {}
@@ -23,13 +25,14 @@ public class Weather extends AbstractSubject {
         temperature = readWebPageWeather.parseTemperature();
         maxTemp = readWebPageWeather.parseMaxTemperature();
         minTemp = readWebPageWeather.parseMinTemperature();
+        icon = readWebPageWeather.weatherIcon();
     }
 
 
     @Override
     public void notifyObservers() {
         for (AbstractObserver observer: observers) {
-            observer.update(description, df.format(temperature), df.format(maxTemp), df.format(minTemp));
+            observer.update(description, df.format(temperature), df.format(maxTemp), df.format(minTemp), icon);
         }
     }
 

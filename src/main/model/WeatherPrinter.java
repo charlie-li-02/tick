@@ -1,38 +1,59 @@
 package model;
 
+import java.awt.image.BufferedImage;
+
 public class WeatherPrinter implements AbstractObserver {
 
     private String weatherDescription;
     private String temperature;
     private String maxTemp;
     private String minTemp;
+    private BufferedImage icon;
 
 
     public WeatherPrinter() {}
 
 
     @Override
-    public void update(String weatherDescription, String temperature, String maxTemp, String minTemp) {
+    public void update(String weatherDescription, String temperature, String maxTemp, String minTemp,
+                       BufferedImage icon) {
         this.weatherDescription = weatherDescription;
         this.temperature = temperature;
         this.maxTemp = maxTemp;
         this.minTemp = minTemp;
+        this.icon = icon;
     }
 
     //REQUIRES: weatherDescription not null
     //MODIFIES: nothing
     //EFFECTS: formats the weather message
     public String printWeather() {
-        return "Today's weather in Vancouver: " + weatherDescription;
+        return weatherDescription;
     }
 
-    //REQUIRES: temperature, maxTemp, minTemp not null
+    //REQUIRES: temperature not null
     //MODIFIES: nothing
     //EFFECTS: formats the temperature message
     public String printTemperature() {
-        return  "The temperature is: " + temperature + " °C"
-                + ", high of: " + maxTemp + " °C"
-                + " and low of: " + minTemp + " °C";
+        return  temperature + "°C";
+    }
+
+    //REQUIRES: maxTemp not null
+    //MODIFIES: nothing
+    //EFFECTS: formats the max temperature message
+    public String printMaxTemp() {
+        return "high: " + maxTemp + "°C";
+    }
+
+    //REQUIRES: minTemp not null
+    //MODIFIES: nothing
+    //EFFECTS: formats the min temperature message
+    public String printMinTemp() {
+        return  "low:  " + minTemp + "°C";
+    }
+
+    public BufferedImage getIcon() {
+        return icon;
     }
 
     public String getWeatherDescription() {

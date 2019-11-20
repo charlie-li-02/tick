@@ -21,14 +21,14 @@ public class WeatherPrinterTest {
         assertEquals(null, weatherPrinter.getMaxTemp());
         assertEquals(null, weatherPrinter.getMinTemp());
 
-        weatherPrinter.update("Sunny", "10", "14", "5");
+        weatherPrinter.update("Sunny", "10", "14", "5", null);
 
         assertEquals("Sunny", weatherPrinter.getWeatherDescription());
         assertEquals("10", weatherPrinter.getTemperature());
         assertEquals("14", weatherPrinter.getMaxTemp());
         assertEquals("5", weatherPrinter.getMinTemp());
 
-        weatherPrinter.update("Rainy", "3", "11", "2");
+        weatherPrinter.update("Rainy", "3", "11", "2", null);
 
         assertEquals("Rainy", weatherPrinter.getWeatherDescription());
         assertEquals("3", weatherPrinter.getTemperature());
@@ -38,14 +38,14 @@ public class WeatherPrinterTest {
 
     @Test
     void testPrint() {
-        weatherPrinter.update("Sunny", "10", "14", "5");
+        weatherPrinter.update("Sunny", "10", "14", "5", null);
 
         String sunnyExpected = "Today's weather in Vancouver is: Sunny";
 
         assertEquals(sunnyExpected, weatherPrinter.printWeather());
 
 
-        weatherPrinter.update("Rainy", "3", "11", "2");
+        weatherPrinter.update("Rainy", "3", "11", "2", null);
 
         String rainyExpected = "Today's weather in Vancouver is: Rainy";
 

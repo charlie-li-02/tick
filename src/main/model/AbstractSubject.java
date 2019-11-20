@@ -17,7 +17,7 @@ public abstract class AbstractSubject {
 
     public void notifyObservers() {
         for (AbstractObserver observer: observers) {
-            observer.update("", "", "", "");
+            observer.update("", "", "", "", null);
         }
     }
 

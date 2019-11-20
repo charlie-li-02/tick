@@ -2,6 +2,8 @@ package ui;
 
 import model.Weather;
 import model.WeatherPrinter;
+
+import javax.swing.*;
 import java.io.IOException;
 
 public class WeatherHandler {
@@ -28,5 +30,8 @@ public class WeatherHandler {
         weather.notifyObservers();
         window.getWeatherLabel().setText(weatherPrinter.printWeather());
         window.getTemperatureLabel().setText(weatherPrinter.printTemperature());
+        window.getMaxTempLabel().setText(weatherPrinter.printMaxTemp());
+        window.getMinTempLabel().setText(weatherPrinter.printMinTemp());
+        window.getWeatherIcon().setIcon(new ImageIcon(weatherPrinter.getIcon()));
     }
 }

@@ -33,7 +33,7 @@ public class AppRunner implements ActionListener {
         displayLists();
     }
 
-    private void initializeComponents() {
+    private void initializeComponents() throws IOException {
         listOfToDo = new ListOfToDo();
         listOfReminder = new ListOfReminder();
         homeworkList = new HomeworkList();
@@ -109,7 +109,7 @@ public class AppRunner implements ActionListener {
             reminderHandler.addListeners(reminderHandler);
 
         } else if (action.equals("edit lists")) {
-            window.layoutForShowLists();
+            window.layoutForEditLists();
 
 //            else if (action.equals("3")) {
 //            homeworkHandler.makeNewHomework(homeworkList);
@@ -157,11 +157,15 @@ public class AppRunner implements ActionListener {
         try {
             if (action.equals("add to do") | action.equals("add reminder") | action.equals("edit lists")
                     | action.equals("weather") | action.equals("exit")) {
+                window.getWarningLabel().setVisible(false);
                 optionLoop();
             } else if (action.equals("to do") | action.equals("reminder") | action.equals("homework")) {
+                window.getWarningLabel().setVisible(false);
                 chooseList();
             }
             if (action.equals("return")) {
+                window.display(listOfToDo);
+                window.display(listOfReminder);
                 window.layoutInitial();
             }
 

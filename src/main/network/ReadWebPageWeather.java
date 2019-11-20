@@ -1,14 +1,17 @@
 package network;
 
 
+import java.awt.image.BufferedImage;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.net.MalformedURLException;
 import java.net.URL;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+import javax.imageio.ImageIO;
 
 
 public class ReadWebPageWeather {
@@ -95,6 +98,25 @@ public class ReadWebPageWeather {
         double minTempInC = minTemp - 273.15;
 
         return minTempInC;
+    }
+
+    public URL parseIcon() throws MalformedURLException {
+        JSONObject obj = new JSONObject(weatherString);
+
+        JSONArray weatherArray = obj.getJSONArray("weather");
+        for (int i = 0; i < weatherArray.length(); i++) {
+            String icon = weatherArray.getJSONObject(i).getString("icon");
+            String iconURL = "http://openweathermap.org/img/wn/" + icon + "@2x.png";
+            URL url = new URL(iconURL);
+            return url;
+        }
+
+        return null;
+    }
+
+    public BufferedImage weatherIcon() throws IOException {
+        BufferedImage iconImage = ImageIO.read(parseIcon());
+        return iconImage;
     }
 
 }

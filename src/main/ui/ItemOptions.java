@@ -32,12 +32,12 @@ public class ItemOptions implements ActionListener {
         for (ActionListener ae: window.getMark().getActionListeners()) {
             window.getMark().removeActionListener(ae);
         }
-        for (ActionListener ae: window.getDontDeleteOrMark().getActionListeners()) {
-            window.getDontDeleteOrMark().removeActionListener(ae);
-        }
+//        for (ActionListener ae: window.getDontDeleteOrMark().getActionListeners()) {
+//            window.getDontDeleteOrMark().removeActionListener(ae);
+//        }
         window.getDelete().addActionListener(itemOptions);
         window.getMark().addActionListener(itemOptions);
-        window.getDontDeleteOrMark().addActionListener(itemOptions);
+//        window.getDontDeleteOrMark().addActionListener(itemOptions);
     }
 
 
@@ -53,11 +53,11 @@ public class ItemOptions implements ActionListener {
     //MODIFIES: nothing
     //EFFECTS: asks the user if they wish to remove an item from the list
     private void delete() throws FileNotFoundException, UnsupportedEncodingException {
-        int index = Integer.parseInt(window.getIndexTextBox().getText());
-        window.getWarningLabel().setVisible(false);
         try {
-            listOfItems.remove(index);
-        } catch (ItemDoesNotExistException e) {
+            int index = Integer.parseInt(window.getIndexTextBox().getText());
+            window.getWarningLabel().setVisible(false);
+            listOfItems.remove(index - 1);
+        } catch (ItemDoesNotExistException | NumberFormatException e) {
             window.getWarningLabel().setText("Invalid index, try again");
             window.getWarningLabel().setVisible(true);
         } finally {
@@ -71,11 +71,11 @@ public class ItemOptions implements ActionListener {
     //MODIFIES: nothing
     //EFFECTS: asks the user if they wish to change the status of an item in the list
     private void mark() throws FileNotFoundException, UnsupportedEncodingException {
-        int index = Integer.parseInt(window.getIndexTextBox().getText());
-        window.getWarningLabel().setVisible(false);
         try {
-            listOfItems.changeStatus(index);
-        } catch (ItemDoesNotExistException e) {
+            int index = Integer.parseInt(window.getIndexTextBox().getText());
+            window.getWarningLabel().setVisible(false);
+            listOfItems.changeStatus(index - 1);
+        } catch (ItemDoesNotExistException | NumberFormatException e) {
             window.getWarningLabel().setText("Invalid index, try again");
             window.getWarningLabel().setVisible(true);
         } finally {
@@ -95,10 +95,11 @@ public class ItemOptions implements ActionListener {
                 delete();
             } else if (e.getActionCommand().equals("mark")) {
                 mark();
-            } else if (e.getActionCommand().equals("neither")) {
-                window.display(listOfItems);
-                window.layoutInitial();
             }
+//            else if (e.getActionCommand().equals("neither")) {
+//                window.display(listOfItems);
+//                window.layoutInitial();
+//            }
         } catch (IOException ex) {
             ex.printStackTrace();
         }

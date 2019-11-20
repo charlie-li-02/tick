@@ -35,12 +35,12 @@ public class ItemHandler implements ActionListener {
     //MODIFIES: Window, yes button, no button, enter button, back button
     //EFFECTS: adds the passed in instance of ItemHandler as the only listener for the 4 buttons modified
     public void addListeners(ItemHandler itemHandler) {
-        for (ActionListener ae: window.getYes().getActionListeners()) {
-            window.getYes().removeActionListener(ae);
-        }
-        for (ActionListener ae: window.getNo().getActionListeners()) {
-            window.getNo().removeActionListener(ae);
-        }
+//        for (ActionListener ae: window.getYes().getActionListeners()) {
+//            window.getYes().removeActionListener(ae);
+//        }
+//        for (ActionListener ae: window.getNo().getActionListeners()) {
+//            window.getNo().removeActionListener(ae);
+//        }
         for (ActionListener ae: window.getEnter().getActionListeners()) {
             window.getEnter().removeActionListener(ae);
         }
@@ -49,8 +49,8 @@ public class ItemHandler implements ActionListener {
                 window.getBack().removeActionListener(itemHandler);
             }
         }
-        window.getYes().addActionListener(itemHandler);
-        window.getNo().addActionListener(itemHandler);
+//        window.getYes().addActionListener(itemHandler);
+//        window.getNo().addActionListener(itemHandler);
         window.getEnter().addActionListener(itemHandler);
         window.getBack().addActionListener(itemHandler);
     }
@@ -74,7 +74,7 @@ public class ItemHandler implements ActionListener {
             window.display(listOfItems);
             String addAnother = listOfItems.getPromptAnother();
             window.getMainLabel().setText(addAnother);
-            window.layoutForAddAnotherItem();
+ //           window.layoutForAddAnotherItem();
         } catch (TooManyItemsUndoneException e) {
             tooManyItems();
         } finally {
@@ -99,9 +99,12 @@ public class ItemHandler implements ActionListener {
     //EFFECTS: prints out the list of items
     public void printItemList(ListOfItems listOfItems) {
         if (listOfItems.getSize() == 0) {
+            window.getWarningLabel().setText("There is nothing in that list");
+            window.getWarningLabel().setVisible(true);
             window.display(listOfItems);
             window.layoutInitial();
         } else {
+            window.getWarningLabel().setVisible(false);
             window.display(listOfItems);
             whichList();
         }
@@ -117,13 +120,13 @@ public class ItemHandler implements ActionListener {
                 enterEvent();
             }
 
-            if (e.getActionCommand().equals("yes")) {
-                startItem();
-            }
-
-            if (e.getActionCommand().equals("no")) {
-                whichList();
-            }
+//            if (e.getActionCommand().equals("yes")) {
+//                startItem();
+//            }
+//
+//            if (e.getActionCommand().equals("no")) {
+//                whichList();
+//            }
 
             if (e.getActionCommand().equals("return")) {
                 window.layoutInitial();
