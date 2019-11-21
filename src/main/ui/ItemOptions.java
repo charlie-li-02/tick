@@ -54,9 +54,10 @@ public class ItemOptions implements ActionListener {
             window.getWarningLabel().setVisible(false);
             listOfItems.remove(index - 1);
             window.getIndexTextBox().setText("");
-        } catch (ItemDoesNotExistException | NumberFormatException e) {
+        } catch (ItemDoesNotExistException | NumberFormatException | ArrayIndexOutOfBoundsException e) {
             window.getWarningLabel().setText("Invalid index, try again");
             window.getWarningLabel().setVisible(true);
+            window.getIndexTextBox().setText("");
         } finally {
             window.display(listOfItems);
             listOfItems.save();
@@ -73,9 +74,10 @@ public class ItemOptions implements ActionListener {
             window.getWarningLabel().setVisible(false);
             listOfItems.changeStatus(index - 1);
             window.getIndexTextBox().setText("");
-        } catch (ItemDoesNotExistException | NumberFormatException e) {
+        } catch (ItemDoesNotExistException | NumberFormatException | ArrayIndexOutOfBoundsException e) {
             window.getWarningLabel().setText("Invalid index, try again");
             window.getWarningLabel().setVisible(true);
+            window.getIndexTextBox().setText("");
         } finally {
             window.display(listOfItems);
             listOfItems.save();

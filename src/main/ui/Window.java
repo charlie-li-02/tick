@@ -159,15 +159,15 @@ public class Window extends JFrame {
         weatherLabel.setFont(new Font(null, Font.PLAIN, 30));
         background.add(weatherLabel);
 
-        temperatureLabel.setBounds(250, 730, 100, 40);
+        temperatureLabel.setBounds(250, 735, 100, 40);
         temperatureLabel.setFont(new Font(null, Font.PLAIN, 40));
         background.add(temperatureLabel);
 
-        maxTempLabel.setBounds(330, 730, 100, 20);
+        maxTempLabel.setBounds(330, 735, 100, 20);
         maxTempLabel.setFont(new Font(null, Font.PLAIN, 15));
         background.add(maxTempLabel);
 
-        minTempLabel.setBounds(330, 750, 100, 20);
+        minTempLabel.setBounds(330, 755, 100, 20);
         minTempLabel.setFont(new Font(null, Font.PLAIN, 15));
         background.add(minTempLabel);
 
