@@ -24,6 +24,7 @@ public class Window extends JFrame {
     private JLabel minTempLabel = new JLabel("");
     private JLabel enterTitleLabel = new JLabel("Title:");
     private JLabel enterDescriptionLabel = new JLabel("Description/Time:");
+    private JLabel enterIndexLabel = new JLabel("Index:");
     private JLabel toDoTitleLabel = new JLabel("To Dos:");
     private JLabel reminderTitleLabel = new JLabel("Reminders:");
     private JLabel nothingInToDoLabel = new JLabel("You have no to dos");
@@ -39,7 +40,6 @@ public class Window extends JFrame {
     //BUTTONS
     private JButton addToDoButton = new JButton("Add a to do");
     private JButton addReminderButton = new JButton("Add a reminder");
-    //private JButton button3 = new JButton("New homework list");
     private JButton editListsButton = new JButton("Edit current lists");
     private JButton weatherButton = new JButton("Refresh");
     private JButton exitButton = new JButton("Exit");
@@ -109,7 +109,7 @@ public class Window extends JFrame {
     }
 
     private void setLabelBounds() {
-        mainLabel.setBounds(30, 70, 380, 200);
+        mainLabel.setBounds(30, 70, 380, 100);
         background.add(mainLabel);
 
 
@@ -121,7 +121,11 @@ public class Window extends JFrame {
         enterDescriptionLabel.setFont(new Font(null, Font.PLAIN, 12));
         background.add(enterDescriptionLabel);
 
-        warningLabel.setBounds(50, 280, 400, 20);
+        enterIndexLabel.setBounds(50, 280, 400, 20);
+        enterIndexLabel.setFont(new Font(null, Font.PLAIN, 12));
+        background.add(enterIndexLabel);
+
+        warningLabel.setBounds(50, 250, 400, 20);
         warningLabel.setFont(new Font(null, Font.PLAIN, 15));
         background.add(warningLabel);
         warningLabel.setVisible(false);
@@ -245,6 +249,7 @@ public class Window extends JFrame {
         only6OptionButtons();
         enterTitleLabel.setVisible(false);
         enterDescriptionLabel.setVisible(false);
+        enterIndexLabel.setVisible(false);
         titleTextBox.setVisible(false);
         attributeTextBox.setVisible(false);
         indexTextBox.setVisible(false);
@@ -274,6 +279,7 @@ public class Window extends JFrame {
         onlyEnterButton();
         enterTitleLabel.setVisible(true);
         enterDescriptionLabel.setVisible(true);
+        enterIndexLabel.setVisible(false);
         background.add(titleTextBox);
         background.add(attributeTextBox);
         titleTextBox.setVisible(true);
@@ -300,6 +306,7 @@ public class Window extends JFrame {
 
         enterTitleLabel.setVisible(false);
         enterDescriptionLabel.setVisible(false);
+        enterIndexLabel.setVisible(true);
         indexTextBox.setVisible(true);
         setVisible(true);
     }
@@ -418,8 +425,8 @@ public class Window extends JFrame {
         for (Item item: listOfItems.listOfItems) {
             JLabel check = new JLabel();
             getCheck(item, check);
-            check.setBounds(430, startY, 20, 20);
             background.add(check);
+            check.setBounds(430, startY, 20, 20);
             check.setVisible(true);
             startY += 25;
             listOfToDoChecks.add(check);
